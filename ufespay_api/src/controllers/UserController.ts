@@ -1,10 +1,35 @@
-class UserController {
-  setDependencies(userRepository, walletRepository){
+import { Request, Response } from 'express';
+
+import { IUserRepository } from '../database/repositories/UserRepository';
+import { IWalletRepository } from '../database/repositories/WalletRepository';
+
+export interface IUserController {
+  userRepository: IUserRepository;
+  walletRepository: IWalletRepository;
+  setDependencies: (
+    userRepository: IUserRepository,
+    walletRepository: IWalletRepository,
+  ) => void;
+  create: (req: Request, res: Response) => Promise<Response>;
+  delete: (req: Request, res: Response) => Promise<Response>;
+  update: (req: Request, res: Response) => Promise<Response>;
+  index: (req: Request, res: Response) => Promise<Response>;
+  list: (req: Request, res: Response) => Promise<Response>;
+}
+
+class UserController implements IUserController {
+  userRepository: IUserRepository;
+  walletRepository: IWalletRepository;
+
+  setDependencies (
+    userRepository: IUserRepository,
+    walletRepository: IWalletRepository,
+  ){
     this.userRepository = userRepository;
     this.walletRepository = walletRepository;
   }
 
-  async create(req, res) {
+  async create(req: Request, res: Response) {
     try {
       const { name, email, password } = req.body;
   
@@ -19,7 +44,7 @@ class UserController {
       const wallet = await this.walletRepository.create();
   
       // create user
-      const user = await this.userRepository.create(name, email, password, wallet._id);
+      const user = await this.userRepository.create({name, email, password, walletId: wallet._id});
   
       return res.status(200).json({ user });
     } catch (e) {
@@ -28,7 +53,7 @@ class UserController {
     }
   }
 
-  async index(req, res) {
+  async index(req: Request, res: Response) {
     try {
       const { userId } = req;
   
@@ -45,7 +70,7 @@ class UserController {
     }
   }
 
-  async list(req, res) {
+  async list(req: Request, res: Response) {
     try {
       const { userId } = req;
 
@@ -58,7 +83,7 @@ class UserController {
     }
   }
 
-  async update(req, res) {
+  async update(req: Request, res: Response) {
     try {
       const { userId } = req;
       const { name, email, newPassword, password } = req.body;
@@ -84,7 +109,7 @@ class UserController {
     }
   }
 
-  async delete(req, res) {
+  async delete(req: Request, res: Response) {
     try {
       const { userId } = req;
 

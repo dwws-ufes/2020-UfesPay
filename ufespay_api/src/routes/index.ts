@@ -1,16 +1,16 @@
 import { Router } from 'express';
 
-import ensureAuth from '../middlewares/ensureAuth.js'
+import ensureAuth from '../middlewares/ensureAuth'
 
-import UserController from '../controllers/UserController.js';
-import SessionController from '../controllers/SessionController.js';
-import TransactionController from '../controllers/TransactionController.js';
-import CommentController from '../controllers/CommentController.js';
+import UserController from '../controllers/UserController';
+import SessionController from '../controllers/SessionController';
+import TransactionController from '../controllers/TransactionController';
+import CommentController from '../controllers/CommentController';
 
-import UserRepository from '../database/repositories/UserRepository.js';
-import WalletRepository from '../database/repositories/WalletRepository.js';
-import TransactionRepository from '../database/repositories/TransactionRepository.js';
-import CommentRepository from '../database/repositories/CommentRepository.js';
+import UserRepository from '../database/repositories/UserRepository';
+import WalletRepository from '../database/repositories/WalletRepository';
+import TransactionRepository from '../database/repositories/TransactionRepository';
+import CommentRepository from '../database/repositories/CommentRepository';
 
 const userController = new UserController();
 const sessionController = new SessionController();
