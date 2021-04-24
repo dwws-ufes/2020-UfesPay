@@ -5,17 +5,48 @@
   "main": "src/server.js",
   "type": "module",
   "dependencies": {
+    "@tsed/ajv": "^6.44.0",
+    "@tsed/cli": "^3.0.2",
+    "@tsed/common": "^6.44.0",
+    "@tsed/core": "^6.44.0",
+    "@tsed/di": "^6.44.0",
+    "@tsed/exceptions": "^6.44.0",
+    "@tsed/json-mapper": "^6.44.0",
+    "@tsed/passport": "^6.44.0",
+    "@tsed/platform-express": "^6.44.0",
+    "@tsed/schema": "^6.44.0",
+    "@tsed/socketio": "^6.44.0",
+    "@tsed/swagger": "^6.44.0",
+    "@tsed/typeorm": "^6.44.0",
     "cors": "^2.8.5",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import-helpers": "^1.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.2"
+    "mongoose": "^5.12.2",
+    "pg": "^8.6.0",
+    "typeorm": "^0.2.32"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "typescript": "^4.2.4"
+  },
+  "tsed": {
+    "packageManager": "yarn",
+    "convention": "default"
   },
   "scripts": {
-    "dev:server": "nodemon src/server.js"
+    "dev:server": "nodemon src/server.js",
+    "prettier": "prettier '{src,test}/**/*.ts' --write",
+    "tsc": "tsc --project tsconfig.compile.json",
+    "dev:server-tsc": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" src/serverts.ts",
+    "typeorm": "tsed typeorm",
+    "update:tsed": "yarn add @tsed/ajv @tsed/cli @tsed/common @tsed/core @tsed/di @tsed/exceptions @tsed/json-mapper @tsed/passport @tsed/platform-express @tsed/schema @tsed/socketio @tsed/swagger @tsed/typeorm"
   },
   "repository": {
     "type": "git",
