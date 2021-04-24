@@ -1,4 +1,4 @@
-import User, { IUser } from '../models/User';
+import User, { IUserDocument } from '../models/User';
 
 interface CreateUserDTO {
   name: string;
@@ -8,19 +8,18 @@ interface CreateUserDTO {
 } 
 
 export interface IUserRepository {
-  create: (data: CreateUserDTO) => Promise<IUser>;
-  getOthers: (id: string) => Promise<IUser[]>;
-  findById: (id: string) => Promise<IUser>;
-  findByEmail: (email: string) => Promise<IUser>;
+  create: (data: CreateUserDTO) => Promise<IUserDocument>;
+  getOthers: (id: string) => Promise<IUserDocument[]>;
+  findById: (id: string) => Promise<IUserDocument | null>;
+  findByEmail: (email: string) => Promise<IUserDocument | null>;
   delete: (email: string) => Promise<void>;
-  update: (id: string, newUserData: object) => Promise<IUser>;
+  update: (id: string, newUserData: object) => Promise<IUserDocument | null>;
 }
 
 class UserRepository implements IUserRepository {
   async create({name, email, password, walletId}: CreateUserDTO) {
     const newUser = new User({ name, email, password, wallet: walletId });
     await newUser.save();
-    delete newUser.password;
     return newUser;
   }
   
@@ -43,6 +42,8 @@ class UserRepository implements IUserRepository {
       id,
       newUserData,
     );
+
+    if(!changedUser) return null;
 
     const updatedUser = await changedUser.save();
 

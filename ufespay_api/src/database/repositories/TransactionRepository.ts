@@ -1,10 +1,10 @@
-import Transaction, { ITransaction } from '../models/Transaction';
+import Transaction, { ITransactionDocument } from '../models/Transaction';
 
 export interface ITransactionRepository {
-  create: (data: object) => Promise<ITransaction>;
-  getAll: () => Promise<ITransaction[]>;
-  findById: (id: string) => Promise<ITransaction>;
-  save: (transaction: ITransaction) => Promise<ITransaction>;
+  create: (data: object) => Promise<ITransactionDocument>;
+  getAll: () => Promise<ITransactionDocument[]>;
+  findById: (id: string) => Promise<ITransactionDocument | null>;
+  save: (transaction: ITransactionDocument) => Promise<ITransactionDocument>;
   delete: (id: string) => Promise<void>;
 }
 
@@ -34,7 +34,7 @@ class TransactionRepository implements ITransactionRepository {
     return Transaction.findById(id).populate('likes');
   }
 
-  async save(transaction: ITransaction) {
+  async save(transaction: ITransactionDocument) {
     return transaction.save();
   }
 

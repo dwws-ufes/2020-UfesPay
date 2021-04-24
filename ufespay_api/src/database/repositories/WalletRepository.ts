@@ -1,9 +1,9 @@
-import Wallet, { IWallet } from '../models/Wallet';
+import Wallet, { IWalletDocument } from '../models/Wallet';
 
 export interface IWalletRepository {
-  create: () => Promise<IWallet>;
-  findById: (id: string) => Promise<IWallet>;
-  save: (wallet: IWallet) => Promise<IWallet>;
+  create: () => Promise<IWalletDocument>;
+  findById: (id: string) => Promise<IWalletDocument | null>;
+  save: (wallet: IWalletDocument) => Promise<IWalletDocument>;
   delete: (id: string) => Promise<void>;
 }
 
@@ -18,7 +18,7 @@ class WalletRepository implements IWalletRepository {
     return Wallet.findById(id);
   }
 
-  async save(wallet: IWallet) {
+  async save(wallet: IWalletDocument) {
     return wallet.save();
   }
 
