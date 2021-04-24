@@ -1,7 +1,15 @@
-import Transaction from '../models/Transaction.js';
+import Transaction, { ITransaction } from '../models/Transaction';
 
-class TransactionRepository {
-  async create(data) {
+export interface ITransactionRepository {
+  create: (data: object) => Promise<ITransaction>;
+  getAll: () => Promise<ITransaction[]>;
+  findById: (id: string) => Promise<ITransaction>;
+  save: (transaction: ITransaction) => Promise<ITransaction>;
+  delete: (id: string) => Promise<void>;
+}
+
+class TransactionRepository implements ITransactionRepository {
+  async create(data: object) {
     const newTransaction = new Transaction(data);
     await newTransaction.save();
     return newTransaction;
@@ -22,15 +30,15 @@ class TransactionRepository {
     return transaction;
   }
 
-  async findById(id) {
+  async findById(id: string) {
     return Transaction.findById(id).populate('likes');
   }
 
-  async save(transaction) {
+  async save(transaction: ITransaction) {
     return transaction.save();
   }
 
-  async delete(id) {
+  async delete(id: string) {
     await Transaction.deleteOne({ _id: id });
   }
 }
