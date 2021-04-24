@@ -1,10 +1,32 @@
-class CommentController {
-  setDependencies(transactionRepository, commentRepository){
+import { Request, Response } from 'express';
+
+import { ICommentRepository } from '../database/repositories/CommentRepository';
+import { ITransactionRepository } from '../database/repositories/TransactionRepository';
+
+export interface ICommentController {
+  transactionRepository: ITransactionRepository;
+  commentRepository: ICommentRepository;
+  setDependencies: (
+    transactionRepository: ITransactionRepository,
+    commentRepository: ICommentRepository,
+  ) => void;
+  create: (req: Request, res: Response) => Promise<Response>;
+  delete: (req: Request, res: Response) => Promise<Response>;
+}
+
+class CommentController implements ICommentController {
+  transactionRepository: ITransactionRepository;
+  commentRepository: ICommentRepository;
+
+  setDependencies(
+    transactionRepository: ITransactionRepository,
+    commentRepository: ICommentRepository,
+  ){
     this.transactionRepository = transactionRepository;
     this.commentRepository = commentRepository;
   }
 
-  async create(req, res) {
+  async create(req: Request, res: Response) {
     try {
       const { text, transactionId } = req.body;
       const { userId } = req;
@@ -17,7 +39,7 @@ class CommentController {
 
       const comment = await this.commentRepository.create({text, author: userId});
   
-      transaction.comments.push(comment);
+      transaction?.comments?.push(comment);
       await this.transactionRepository.save(transaction);
   
       return res.status(200).json({ comment });
@@ -28,12 +50,12 @@ class CommentController {
    
   }
 
-  async delete(req, res) {
+  async delete(req: Request, res: Response) {
     try {
       const { userId } = req;
       const { id } = req.query;
       
-      const comment = await this.commentRepository.findById(id);
+      const comment = await this.commentRepository.findById(id as string);
 
       if (!comment) {
         return res.status(400).json({ message: 'Comment not found.'});
@@ -43,7 +65,7 @@ class CommentController {
         return res.status(400).json({ message: 'You cannot delete this comment.'});
       }
 
-      await this.commentRepository.delete(id);
+      await this.commentRepository.delete(id as string);
 
       return res.status(200).send();
     } catch (e) {

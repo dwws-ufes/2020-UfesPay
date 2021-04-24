@@ -18,6 +18,10 @@ SECRET=secret
 PORT=3003
 `
 
+## To start mongodb on ubuntu
+
+`sudo systemctl start mongod`
+
 ## Available Scripts
 
 In the project directory, you can run:

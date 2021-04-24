@@ -1,11 +1,39 @@
-class TransactionController {
-  setDependencies(transactionRepository, userRepository, walletRepository){
+import { Request, Response } from 'express';
+
+import { IUserRepository } from '../database/repositories/UserRepository';
+import { IWalletRepository } from '../database/repositories/WalletRepository';
+import { ITransactionRepository } from '../database/repositories/TransactionRepository';
+
+export interface ITransactionController {
+  transactionRepository: ITransactionRepository;
+  userRepository: IUserRepository;
+  walletRepository: IWalletRepository;
+  setDependencies: (
+    transactionRepository: ITransactionRepository,
+    userRepository: IUserRepository,
+    walletRepository: IWalletRepository,
+  ) => void;
+  create: (req: Request, res: Response) => Promise<Response>;
+  list: (req: Request, res: Response) => Promise<Response>;
+  toggleLike: (req: Request, res: Response) => Promise<Response>;
+}
+
+class TransactionController implements ITransactionController {
+  transactionRepository: ITransactionRepository;
+  userRepository: IUserRepository;
+  walletRepository: IWalletRepository;
+
+  setDependencies(
+    transactionRepository: ITransactionRepository,
+    userRepository: IUserRepository,
+    walletRepository: IWalletRepository,
+  ){
     this.transactionRepository = transactionRepository;
     this.userRepository = userRepository;
     this.walletRepository = walletRepository;
   }
 
-  async list(req, res) {
+  async list(req: Request, res: Response) {
     try {
       const transactions = await this.transactionRepository.getAll();
   
@@ -16,7 +44,7 @@ class TransactionController {
     }
   }
 
-  async create(req, res) {
+  async create(req: Request, res: Response) {
     try {
       const { receiverId, value, message } = req.body;
       const { userId } = req;
@@ -59,7 +87,7 @@ class TransactionController {
     }
   }
 
-  async toggleLike(req, res) {
+  async toggleLike(req: Request, res: Response) {
     try {
       const { userId } = req;
       const { transactionId } = req.body;
