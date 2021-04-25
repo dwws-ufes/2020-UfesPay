@@ -15,10 +15,10 @@ declare class UserController implements IUserController {
     userRepository: IUserRepository;
     walletRepository: IWalletRepository;
     setDependencies(userRepository: IUserRepository, walletRepository: IWalletRepository): void;
-    create(req: Request, res: Response): Promise<any>;
-    index(req: Request, res: Response): Promise<any>;
-    list(req: Request, res: Response): Promise<any>;
-    update(req: Request, res: Response): Promise<any>;
-    delete(req: Request, res: Response): Promise<any>;
+    create(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    index(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    list(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    update(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    delete(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
 }
 export default UserController;

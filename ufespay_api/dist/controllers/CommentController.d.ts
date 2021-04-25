@@ -12,7 +12,7 @@ declare class CommentController implements ICommentController {
     transactionRepository: ITransactionRepository;
     commentRepository: ICommentRepository;
     setDependencies(transactionRepository: ITransactionRepository, commentRepository: ICommentRepository): void;
-    create(req: Request, res: Response): Promise<any>;
-    delete(req: Request, res: Response): Promise<any>;
+    create(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    delete(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
 }
 export default CommentController;

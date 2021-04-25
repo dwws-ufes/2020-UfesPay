@@ -9,7 +9,7 @@ export interface ISessionController {
 declare class SessionController implements ISessionController {
     userRepository: IUserRepository;
     setDependencies(userRepository: IUserRepository): void;
-    signIn(req: Request, res: Response): Promise<any>;
-    signOut(req: Request, res: Response): Promise<any>;
+    signIn(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    signOut(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
 }
 export default SessionController;

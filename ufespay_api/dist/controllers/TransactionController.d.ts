@@ -16,8 +16,8 @@ declare class TransactionController implements ITransactionController {
     userRepository: IUserRepository;
     walletRepository: IWalletRepository;
     setDependencies(transactionRepository: ITransactionRepository, userRepository: IUserRepository, walletRepository: IWalletRepository): void;
-    list(req: Request, res: Response): Promise<any>;
-    create(req: Request, res: Response): Promise<any>;
-    toggleLike(req: Request, res: Response): Promise<any>;
+    list(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    create(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    toggleLike(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
 }
 export default TransactionController;

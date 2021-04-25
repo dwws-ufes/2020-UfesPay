@@ -60,6 +60,10 @@ class TransactionController implements ITransactionController {
       const emitterWallet = await this.walletRepository.findById(emitter.wallet);
       const receiverWallet = await this.walletRepository.findById(receiver.wallet);
 
+      if((emitterWallet == null)||(receiverWallet == null)){
+        return res.status(400).json({ message: 'Cound not find emitter or receiver wallets'});
+      }
+
       if (emitterWallet.balance < value) {
         return res.status(400).json({ message: 'Not enought money'});
       }
@@ -98,18 +102,21 @@ class TransactionController implements ITransactionController {
         return res.status(400).json({ message: 'Transaction not found.'});
       }
 
-      const alreadyLiked = transaction.likes.filter(
-        likeAuthor => String(likeAuthor._id) === String(userId)
-      );
-
-      if (alreadyLiked.length) {
-        transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor._id === userId);
+      if(transaction.likes){
+        const alreadyLiked = transaction.likes.filter(
+          likeAuthor => String(likeAuthor._id) === String(userId)
+        );
+  
+        if (alreadyLiked.length) {
+          transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor._id === userId);
+          await this.transactionRepository.save(transaction);
+          return res.status(200).send();
+        }
+  
+        transaction.likes.push(userId);
         await this.transactionRepository.save(transaction);
-        return res.status(200).send();
       }
 
-      transaction.likes.push(userId);
-      await this.transactionRepository.save(transaction);
 
       return res.status(200).send();
     } catch (e) {

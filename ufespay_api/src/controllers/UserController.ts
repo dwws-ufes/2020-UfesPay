@@ -90,15 +90,21 @@ class UserController implements IUserController {
 
       const user = await this.userRepository.findById(userId);
 
+      if( user == null) {
+        return res.status(400).json({ message: 'User not found.' });
+      } 
+
       if(newPassword && user.password !== password) {
         return res.status(400).json({ message: 'Wrong password.' });
       } 
 
       const newUserData = { name, email, password: newPassword };
 
-      Object.keys(newUserData).forEach(key => {
+      //review code 
+
+      /*Object.keys(newUserData).forEach(key => {
         if (!newUserData[key]) delete newUserData[key];
-      });
+      });*/
 
       const updatedUser = await this.userRepository.update(userId, newUserData);
 
