@@ -13,7 +13,7 @@ import { Comment } from './Comment';
 export class Transaction {
   @PrimaryGeneratedColumn('uuid')
   @Property()
-  id: number;
+  id: string;
 
   //message: { type: String },
   @Column()

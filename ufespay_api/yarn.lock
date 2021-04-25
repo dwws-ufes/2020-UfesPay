@@ -315,7 +315,7 @@
     swagger-ui-dist "^3.46.0"
     tslib "2.1.0"
 
-"@tsed/typeorm@^6.44.0":
+"@tsed/typeorm@^6.45.0":
   version "6.45.0"
   resolved "https://registry.yarnpkg.com/@tsed/typeorm/-/typeorm-6.45.0.tgz#9934b1752d2f79923d9475d55d0212971db2a6e9"
   integrity sha512-rU4mhffDPZu31cLe0q5OWr3OpjkNtPLNJxlBd164/GCnwG6HzU4rhEVKmHBHADn4eIMk6uPvSpa/HY11f/TGEw==

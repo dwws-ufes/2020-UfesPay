@@ -13,7 +13,7 @@ import { Transaction } from './Transaction';
 export class Wallet {
   @PrimaryGeneratedColumn('uuid')
   @Property()
-  id: number;
+  id: string;
 
   @Column({ type: 'float' })
   @Minimum(0)

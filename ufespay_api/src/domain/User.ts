@@ -3,7 +3,7 @@ import {
 } from '@tsed/schema';
 
 import {
-  Column, Entity, OneToOne, PrimaryGeneratedColumn,JoinColumn, 
+  Column, Entity, OneToOne, PrimaryGeneratedColumn,JoinColumn, CreateDateColumn,UpdateDateColumn,
 } from 'typeorm';
 
 import { Wallet } from './Wallet';
@@ -12,7 +12,7 @@ import { Wallet } from './Wallet';
 export class User {
   @PrimaryGeneratedColumn('uuid')
   @Property()
-  id: number;
+  id: string;
 
   @Column()
   @Maximum(40)
@@ -33,4 +33,10 @@ export class User {
   @OneToOne(() => Wallet)
   @JoinColumn()
   wallet: Wallet; 
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
