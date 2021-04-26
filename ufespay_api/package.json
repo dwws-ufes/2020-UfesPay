@@ -13,7 +13,7 @@
     "@tsed/json-mapper": "^6.44.0",
     "@tsed/passport": "^6.44.0",
     "@tsed/platform-express": "^6.44.0",
-    "@tsed/schema": "^6.44.0",
+    "@tsed/schema": "^6.45.0",
     "@tsed/socketio": "^6.44.0",
     "@tsed/swagger": "^6.44.0",
     "@tsed/typeorm": "^6.45.0",
@@ -46,7 +46,6 @@
   },
   "scripts": {
     "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules  src/server.ts",
-    "dev:server-pg": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules  src/serverts.ts",
     "prettier": "prettier '{src,test}/**/*.ts' --write",
     "tsc": "tsc --project tsconfig.compile.json",
     "typeorm": "tsed typeorm"

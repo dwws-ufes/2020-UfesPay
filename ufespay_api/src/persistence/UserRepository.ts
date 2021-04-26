@@ -12,9 +12,10 @@ export class UserRepository extends Repository<User> {
     }
 
     ReadAll() : Promise<User[]>{
-        return this.find({
+      return this.find();
+      /*  return this.find({
           relations: ['wallet'],
-        });
+        });*/
     }
 
     GetUserByEmail( userEmail: string): Promise<User>{

@@ -289,7 +289,7 @@
     express "^4.17.1"
     multer "^1.4.2"
 
-"@tsed/schema@6.45.0", "@tsed/schema@^6.44.0":
+"@tsed/schema@6.45.0", "@tsed/schema@^6.45.0":
   version "6.45.0"
   resolved "https://registry.yarnpkg.com/@tsed/schema/-/schema-6.45.0.tgz#46a1be5d4ffcf24a13b4c8eff4328b75b228cae4"
   integrity sha512-6K6UeN+xFG1ncMkPSWobO4atZnkSHd6rs/FnC57LKX5MHNzbrk2sRjazTUnyjhADf/vW+StDu/9Yu/jAdDPCFw==
