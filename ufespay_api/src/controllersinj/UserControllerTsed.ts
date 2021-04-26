@@ -1,10 +1,10 @@
 import { BodyParams, Controller, Get, Inject, Post,  Request } from '@tsed/common';
-import { BadRequest } from '@tsed/exceptions';
+import { BadRequest , NotFound} from '@tsed/exceptions';
 import {User} from '../domain/User'
 import { UserService } from '../application/UserService';
 import {Returns} from "@tsed/schema";
 
-@Controller('/userinject')
+@Controller('/user')
 export class UserControllerTsed {
     @Inject(UserService)
     private userService: UserService;
@@ -27,17 +27,21 @@ export class UserControllerTsed {
         if (!user.name) throw new BadRequest('Required field name is empty');
         if (!user.email) throw new BadRequest('Required field email is empty');
         if (!user.password) throw new BadRequest('Required password name is empty');
-        try {
-            const newUser = await this.userService.CreateUser(user);
-            if (newUser!=null){
-              return newUser;
-            }
-            else{
-              throw new BadRequest('Could not create user'); 
-            }
-        } catch (e) {
-          console.log(e);
-          throw new BadRequest('Error trying to create user')
+         
+
+        const existentUser = await this.userService.GetUserByEmail(user.email);
+
+        if (existentUser!=null){
+          throw new BadRequest('E-mail already in use.')
+        } 
+               
+        const newUser = await this.userService.CreateUser(user);
+
+        if (newUser!=null){
+          return newUser;
         }
-      }    
+        else{
+              throw new BadRequest('Could not create user'); 
+          }
+        }           
 }

@@ -30,9 +30,9 @@ export class User {
   @Required()
   password: string;
 
-  /*@OneToOne(() => Wallet)
+ @OneToOne(() => Wallet)
   @JoinColumn()
-  wallet: Wallet; */
+  wallet: Wallet; 
 
   @CreateDateColumn()
   created_at: Date;

@@ -4,7 +4,7 @@ import {
 } from '@tsed/schema';
 
 import {
-  Column, Entity, PrimaryGeneratedColumn,JoinColumn,CreateDateColumn,
+  Column, Entity, PrimaryGeneratedColumn,JoinColumn,CreateDateColumn,OneToMany,
 } from 'typeorm';
 
 import { Transaction } from './Transaction';

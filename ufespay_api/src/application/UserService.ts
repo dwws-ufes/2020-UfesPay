@@ -1,18 +1,17 @@
 import { Inject, Service } from '@tsed/di';
 
 import { User } from '../domain/User';
+import { UserRepository } from '../persistence/UserRepository';
 
 @Service()
 export class UserService {
-    //@Inject(UserRepository)
-    //private readonly userRepo: UserRepository;
+    @Inject(UserRepository)
+    private readonly userRepo: UserRepository;
 
     //@Inject(WalletRepository)
     //private readonly walletRepo: WalletRepository;
 
-    async CreateUser(user: Pick<User, 'name' | 'email' | 'password'>) {
-      //throw new BadRequest('CPF inválido');
-      
+    async CreateUser(user: Pick<User, 'name' | 'email' | 'password'>) {     
       // create user at repository
       /*const newUser = await this.dao.Create({
         ...user,
@@ -20,34 +19,26 @@ export class UserService {
         address: await this.addressService.CreateAddress(user.address),
         cpf,
       });*/
+
+      const newUser =await this.userRepo.Create(user);
   
-      return null;
+      return newUser;
     }
 
       async ListAllUsers() {
-        //const users = await this.dao.ReadAll();
-    
-        //return Promise.all(users.map((user) => this.GetUserDTO(user)));
-        return null;
+        const users = await this.userRepo.ReadAll();
+
+        return users;
     }
 
     async GetUserByEmail(email: string) {
-        
-        /*const [user] = await this.dao.ReadWith({
-          where: { email },
-        });*/
-    
-        return null;
+        const user = await this.userRepo.GetUserByEmail(email);
+        return user;
     }
 
     async GetUserById(userId: string) {
-        //const user = await this.dao.Read(userId);
-    
-        /*return {
-          ...(await this.GetUserDTO(user)),
-          cpf: User.GetFormmatedCpf(user.cpf),
-        };*/
-        return null;
+        const user = await this.userRepo.GetUserById(userId);
+        return user;
       }
 
       

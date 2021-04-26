@@ -5,14 +5,14 @@ import { Injectable } from '@tsed/di';
 import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
 
 @EntityRepository(User)
-@Injectable()
 export class UserRepository extends Repository<User> {
     Create(user: Partial<User>) : Promise<User> {
         return this.save(user);
     }
 
     ReadAll() : Promise<User[]>{
-      return this.find();
+      const users = this.find({ relations: ['wallet'] });
+      return users;
       /*  return this.find({
           relations: ['wallet'],
         });*/
