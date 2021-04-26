@@ -1,7 +1,7 @@
 import { User } from './User';
 import { Comment } from './Comment';
 export declare class Transaction {
-    id: number;
+    id: string;
     message: string;
     value: number;
     emitter: User;

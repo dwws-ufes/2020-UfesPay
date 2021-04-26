@@ -1,5 +1,5 @@
 export declare class Wallet {
-    id: number;
+    id: string;
     balance: number;
     created_at: Date;
 }

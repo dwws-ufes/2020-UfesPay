@@ -1,7 +1,5 @@
 import { BodyParams, Controller, Delete, Get, HeaderParams, Inject, Post, Put, Request } from '@tsed/common';
 import { BadRequest, NotFound } from '@tsed/exceptions';
-import { Authorize } from '@tsed/passport';
-import { EntityNotFoundError } from 'typeorm';
 import {User} from '../domain/User'
 import { UserService } from '../application/UserService';
 
