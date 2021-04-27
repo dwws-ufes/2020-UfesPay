@@ -3,11 +3,13 @@ import {
 } from '@tsed/schema';
 
 import {
-  Column, Entity, PrimaryGeneratedColumn,JoinColumn,CreateDateColumn,OneToMany,OneToOne,
+  Column, Entity, PrimaryGeneratedColumn,JoinColumn,CreateDateColumn,OneToMany,OneToOne,ManyToMany, JoinTable,ManyToOne,
 } from 'typeorm';
 
 import { User } from './User';
 import { Comment } from './Comment';
+import { Wallet } from './Wallet';
+
 
 @Entity()
 export class Transaction {
@@ -40,12 +42,16 @@ export class Transaction {
 
   
   //likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  //@OneToMany(() => User, (ad) => ad.owner)
-  //likes: User[];
+  @ManyToMany(() => User)
+  @JoinTable()
+  likes: User[];
 
   //comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   @OneToMany(() => Comment, (newComment) => newComment.transaction)
   comments: Comment[];
+
+  @ManyToOne(() => Wallet, (wallet) => wallet.transactions)
+  wallet: Wallet;
   
   //created_at: { type: Date, default: new Date() }
   @CreateDateColumn()

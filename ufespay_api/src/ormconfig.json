@@ -7,7 +7,7 @@
   "password": "admin",
   "database": "ufespay",
   "synchronize": true,
-  "logging": "all",
+  "logging": false,
   "entities": [
     "${rootDir}/domain/**/*.{js,ts}"
   ],

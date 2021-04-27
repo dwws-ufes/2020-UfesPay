@@ -6,31 +6,42 @@ import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-    Create(user: Partial<User>) : Promise<User> {
+    Create(user: Partial<User>, userWallet : Wallet) : Promise<User> {
+        user.wallet = userWallet;
         return this.save(user);
     }
 
     ReadAll() : Promise<User[]>{
-      const users = this.find({ relations: ['wallet'] });
-      return users;
-      /*  return this.find({
+       return this.find({
           relations: ['wallet'],
-        });*/
+        });
     }
 
-    GetUserByEmail( userEmail: string): Promise<User>{
-        return (this.findOneOrFail({
-            where: [
-              { email: userEmail}
-            ]
-          }));
+    GetUserByEmail( email: string):Promise<User | undefined> {
+      return this.findOne({
+        relations: ['wallet'],
+        where: { email },
+      });
     }
 
-    GetUserById(userId: string) : Promise<User>{
-        return (this.findOneOrFail({
-            where: [
-              { id: userId}
-            ]
-          }));
+    GetUserById(id: string) : Promise<User | undefined> {
+      return this.findOne({
+        relations: ['wallet'],
+        where: { id },
+      });
     }
+
+    async Delete(user : User) {
+      await this.delete(user);
+  }
+
+  GetOthers(userId: string) : Promise<User[] | undefined> {
+    const otherUsers = this.createQueryBuilder("User") .where("User.id <> :id", { id: userId }).getMany()
+    return otherUsers;
+  }
+
+  async Update(id: string, user: User) {
+    this.update(id, user);
+  }
+  
 }

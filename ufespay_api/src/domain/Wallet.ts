@@ -23,6 +23,6 @@ export class Wallet {
   @CreateDateColumn()
   created_at: Date;
 
-  //@OneToMany(() => Transaction, (transac) => transac.category)
-  //transactions: Transaction[];
+  @OneToMany(type => Transaction, (transac) => transac.emitter.wallet)
+  transactions: Transaction[];
 }

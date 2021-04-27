@@ -39,4 +39,14 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  /*
+  import bcrypt from 'bcrypt';
+  static GetEncryptedPassword(password: string) {
+    return bcrypt.hashSync(password, 8);
+  }
+
+  isValidPassword(unencryptedPassword: string) {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }*/
 }

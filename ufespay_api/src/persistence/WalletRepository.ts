@@ -6,7 +6,23 @@ import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
 
 @EntityRepository(Wallet)
 export class WalletRepository extends Repository<Wallet> {
-    Create(newWallet: Partial<Wallet>) : Promise<Wallet> {
+    Create() : Promise<Wallet> {
+        const newWallet = new Wallet();
+        newWallet.balance = 0;
         return this.save(newWallet);
     }
+
+    async Delete(id: string) {
+        await this.delete(id);
+    }
+
+    /*
+      async Update(id: string, ad: Partial<Advertising>) {
+    await this.repository.update(id, ad);
+  }
+
+  async Delete(id: string) {
+    await this.repository.delete(id);
+  }
+    */
 }

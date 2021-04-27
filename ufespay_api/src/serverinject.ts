@@ -24,7 +24,7 @@ export const rootDir = __dirname;
   typeorm: [typeormConfig as any],
   // search all controllers under a directories to endpoint below
   mount: {
-    '/rest': [`${rootDir}/controllersinj/**/*.ts`],
+    '/': [`${rootDir}/controllersinj/**/*.ts`],
   },
 })  
 

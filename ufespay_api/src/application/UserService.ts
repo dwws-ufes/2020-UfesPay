@@ -2,26 +2,21 @@ import { Inject, Service } from '@tsed/di';
 
 import { User } from '../domain/User';
 import { UserRepository } from '../persistence/UserRepository';
+import { WalletService } from '../application/WalletService';
 
 @Service()
 export class UserService {
     @Inject(UserRepository)
     private readonly userRepo: UserRepository;
 
-    //@Inject(WalletRepository)
-    //private readonly walletRepo: WalletRepository;
+    @Inject(WalletService)
+    private readonly walletService: WalletService;
 
     async CreateUser(user: Pick<User, 'name' | 'email' | 'password'>) {     
-      // create user at repository
-      /*const newUser = await this.dao.Create({
-        ...user,
-        password: User.GetEncryptedPassword(user.password),
-        address: await this.addressService.CreateAddress(user.address),
-        cpf,
-      });*/
 
-      const newUser =await this.userRepo.Create(user);
-  
+      const newWallet = await this.walletService.Create();
+      const newUser = await this.userRepo.Create(user,newWallet);
+
       return newUser;
     }
 
@@ -41,6 +36,14 @@ export class UserService {
         return user;
       }
 
-      
-
+  async Delete(user: User) {
+        await this.userRepo.Delete(user);
+  }
+   
+ async GetOthers(userId: string) {
+    return await this.userRepo.GetOthers(userId);
+}
+async Update(id: string, user: User) {
+  await this.userRepo.Update(id,user);
+}
 }
