@@ -24,5 +24,5 @@ export const getUser = async () => {
 };
 
 export const getUsers = async () => {
-  return api.get('/users').then(resp => resp.data);
+  return api.get('/user/users').then(resp => resp.data);
 };

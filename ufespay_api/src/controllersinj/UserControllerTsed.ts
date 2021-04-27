@@ -90,7 +90,7 @@ export class UserControllerTsed {
           }
         }           
 
-        @Put()
+        /*@Put()
         async update(@Request('userId') userId : string, 
               request: Request, @BodyParams('name') name: string,  
               @BodyParams('email') email: string,
@@ -119,5 +119,5 @@ export class UserControllerTsed {
           await this.userService.Update(userId,user);
           
           return user;
-        }
+        }*/
 }
