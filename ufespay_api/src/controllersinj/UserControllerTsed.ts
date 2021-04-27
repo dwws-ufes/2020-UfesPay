@@ -90,13 +90,13 @@ export class UserControllerTsed {
           }
         }           
 
-        /*@Put()
-        async update(@Request('userId') userId : string, 
-              request: Request, @BodyParams('name') name: string,  
-              @BodyParams('email') email: string,
-              @BodyParams('newPassword') newPassword: string,
-              @BodyParams('password') password: string,
-              ) : Promise<User> {
+        @Put()
+        async update(@Request('id') userId: string,
+        @BodyParams('name') name: string,
+        @BodyParams('email') email: string,
+        @BodyParams('password') password: string,
+        @BodyParams('newPassword') newPassword: string
+        ) : Promise<User> {
                 if (!name) throw new BadRequest('Required field name is empty');
                 if (!email) throw new BadRequest('Required field email is empty');
                 if (!password) throw new BadRequest('Required password is empty');
@@ -119,5 +119,5 @@ export class UserControllerTsed {
           await this.userService.Update(userId,user);
           
           return user;
-        }*/
+        }
 }
