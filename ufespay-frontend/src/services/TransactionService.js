@@ -19,5 +19,5 @@ export const deleteComment = async id => {
 };
 
 export const toggleLike = async transactionId => {
-  return api.put('/like', { transactionId }).then(resp => resp.data);
+  return api.put('/transaction/like', { transactionId }).then(resp => resp.data);
 };
