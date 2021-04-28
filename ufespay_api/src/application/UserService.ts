@@ -43,7 +43,7 @@ export class UserService {
  async GetOthers(userId: string) {
     return await this.userRepo.GetOthers(userId);
 }
-async Update(id: string, user: User) {
+async Update(id: string, user: Partial<User>) {
   await this.userRepo.Update(id,user);
 }
 }

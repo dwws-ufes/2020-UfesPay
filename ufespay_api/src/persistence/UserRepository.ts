@@ -40,7 +40,7 @@ export class UserRepository extends Repository<User> {
     return otherUsers;
   }
 
-  async Update(id: string, user: User) {
+  async Update(id: string, user: Partial<User>) {
     this.update(id, user);
   }
   

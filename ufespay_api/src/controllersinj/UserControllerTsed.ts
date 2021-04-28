@@ -91,7 +91,7 @@ export class UserControllerTsed {
         }           
 
         @Put()
-        async update(@Request('id') userId: string,
+        async update(@Request('userId') userId: string,
         @BodyParams('name') name: string,
         @BodyParams('email') email: string,
         @BodyParams('password') password: string,
