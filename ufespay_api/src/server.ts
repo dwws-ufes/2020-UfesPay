@@ -3,11 +3,14 @@ import 'dotenv/config';
 import '@tsed/platform-express'; 
 import '@tsed/swagger';
 import '@tsed/typeorm';
+import '@tsed/passport';
 import { $log, PlatformApplication, Request, Response } from '@tsed/common';
 import { Configuration, Inject } from '@tsed/di';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import typeormConfig from './ormconfig.json';
+import cookieParser from 'cookie-parser';
+import methodOverride from 'method-override';
 
 export const rootDir = __dirname;
 
@@ -24,8 +27,11 @@ export const rootDir = __dirname;
   typeorm: [typeormConfig as any],
   // search all controllers under a directories to endpoint below
   mount: {
-    '/': [`${rootDir}/controllersinj/**/*.ts`],
+    '/': [`${rootDir}/controllers/**/*.ts`],
   },
+  componentsScan: [
+    `${rootDir}/security/*.ts` // scan protocols directory
+  ],
 })  
 
 
@@ -41,6 +47,8 @@ export class Server {
       this.app
         .use(cors())
         .use(bodyParser.json())
+        .use(methodOverride())
+        .use(cookieParser())
         .use(
           bodyParser.urlencoded({
             extended: true,

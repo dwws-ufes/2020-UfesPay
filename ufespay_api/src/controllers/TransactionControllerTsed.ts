@@ -4,7 +4,6 @@ import { BodyParams,QueryParams, Controller, Delete, Get, Inject, Post,  Request
 import {TransactionService} from '../application/TransactionService'
 import {WalletService} from '../application/WalletService'
 import {UserService} from '../application/UserService'
-import {Comment} from '../domain/Comment'
 import {Transaction} from '../domain/Transaction';
 
 

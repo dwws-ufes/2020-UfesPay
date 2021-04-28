@@ -1,4 +1,4 @@
-/*import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
 import { IUserRepository } from '../database/repositories/UserRepository';
@@ -51,4 +51,4 @@ class SessionController implements ISessionController{
   }
 }
 
-export default SessionController;*/
+export default SessionController;

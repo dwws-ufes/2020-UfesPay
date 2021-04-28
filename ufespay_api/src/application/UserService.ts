@@ -3,6 +3,7 @@ import { Inject, Service } from '@tsed/di';
 import { User } from '../domain/User';
 import { UserRepository } from '../persistence/UserRepository';
 import { WalletService } from '../application/WalletService';
+import { BadRequest } from '@tsed/exceptions';
 
 @Service()
 export class UserService {
@@ -16,9 +17,14 @@ export class UserService {
     
     //async CreateUser(user: Pick<User, 'name' | 'email' | 'password'>) 
     async CreateUser(user: Partial<User>) {     
-
       const newWallet = await this.walletService.Create();
       user.wallet = newWallet;
+      if (user.password == undefined){
+        throw new BadRequest('Missing user password');
+      }
+      else{
+        user.password = User.getEncryptedPassword(user.password);
+      }
       const newUser = await this.userRepo.Create(user);
 
       return newUser;

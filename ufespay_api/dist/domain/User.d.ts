@@ -7,4 +7,6 @@ export declare class User {
     wallet: Wallet;
     created_at: Date;
     updated_at: Date;
+    static getEncryptedPassword(password: string): string;
+    verifyPassword(unencryptedPassword: string): boolean;
 }
