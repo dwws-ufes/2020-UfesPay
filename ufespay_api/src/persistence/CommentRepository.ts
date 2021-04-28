@@ -1,7 +1,7 @@
 import { Comment } from '../domain/Comment';
 import { User } from '../domain/User';
 
-import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
+import { EntityRepository, Repository  } from 'typeorm';
 
 @EntityRepository(Comment)
 export class CommentRepository extends Repository<Comment> {

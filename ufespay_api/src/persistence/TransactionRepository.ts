@@ -1,6 +1,6 @@
 import { Transaction } from '../domain/Transaction';
 
-import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
+import { EntityRepository, Repository  } from 'typeorm';
 
 @EntityRepository(Transaction)
 export class TransactionRepository extends Repository<Transaction> {
