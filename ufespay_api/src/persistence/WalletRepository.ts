@@ -16,13 +16,15 @@ export class WalletRepository extends Repository<Wallet> {
         await this.delete(id);
     }
 
-    /*
-      async Update(id: string, ad: Partial<Advertising>) {
-    await this.repository.update(id, ad);
+    GetById(id: string) : Promise<Wallet | undefined> {
+      return this.findOne({
+        relations: ['transactions'],
+        where: { id },
+      });
+    }
+
+   async Update(id: string, wallet: Partial<Wallet>) {
+    await this.update(id, wallet);
   }
 
-  async Delete(id: string) {
-    await this.repository.delete(id);
-  }
-    */
 }

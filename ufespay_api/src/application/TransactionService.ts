@@ -16,4 +16,17 @@ export class TransactionService {
   async UpdateTransaction(id: string, transac: Partial<Transaction>) {
     await this.transacRepo.Update(id,transac);
   }
+
+  async ListAllTransactions() : Promise<Transaction[]>{
+    const transacs = await this.transacRepo.ReadAll();
+
+    return transacs;
+}
+
+async CreateTransaction( transac: Partial<Transaction>)  : Promise<Transaction>{     
+
+  const newTransac = await this.transacRepo.Create(transac);
+
+  return newTransac;
+}
 }

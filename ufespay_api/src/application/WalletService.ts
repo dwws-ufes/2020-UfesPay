@@ -9,7 +9,7 @@ export class WalletService {
     @Inject(WalletRepository)
     private readonly walletRepo: WalletRepository;
 
-    async Create() {     
+    async Create() : Promise<Wallet>{     
         const newWallet = await this.walletRepo.Create();
    
         return newWallet;
@@ -17,5 +17,13 @@ export class WalletService {
 
       async Delete(wallet : Wallet  ) {     
         this.walletRepo.delete(wallet.id);
+      }
+
+      async GetWalletById(walletId : string  ) : Promise<Wallet | undefined> {     
+        return this.walletRepo.GetById(walletId);
+      }
+
+      async UpdateWallet(id: string, wallet: Partial<Wallet>)  {     
+        this.walletRepo.Update(id,wallet);
       }
 }

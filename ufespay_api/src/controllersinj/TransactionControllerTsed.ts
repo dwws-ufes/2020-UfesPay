@@ -23,26 +23,62 @@ export class TransactionControllerTsed {
     @Post('/')
     async create(@Request('userId') userId: string,
     @BodyParams('receiverId') receiverId: string,
-    @BodyParams('value') value: string,
+    @BodyParams('value') value: number,
     @BodyParams('message') message: string
-    ) : Promise<Transaction | undefined > {
+    ) : Promise<Transaction> {
        if (!userId) throw new BadRequest('Required field userId is empty');
        if (!receiverId) throw new BadRequest('Required field receiverId  is empty');
        if (!value) throw new BadRequest('Required value is empty');
        if (!message) throw new BadRequest('Required message is empty');
-   
+ 
        try{
-        return undefined;
-       }catch (err) {
+      //get user emitter(origin) and receiver(destination)
+      const emitter = await this.userService.GetUserById(userId);
+      const receiver = await this.userService.GetUserById(receiverId);
+
+      if (!emitter || !receiver) {
+        throw new BadRequest('emitter or receiver not found');
+      }
+
+      const emitterWallet = await this.walletService.GetWalletById(emitter.wallet.id);
+      const receiverWallet = await this.walletService.GetWalletById(receiver.wallet.id);
+      if((emitterWallet == null)||(receiverWallet == null)){
+        throw new BadRequest('Cound not find emitter or receiver wallets');
+      }
+
+      if (emitterWallet.balance < value) {
+        throw new BadRequest('Not enought money');
+      }
+
+      const transaction = await this.transacService.CreateTransaction({
+        message,
+        emitter,
+        receiver,
+        value,
+        likes: [],
+        comments: [],
+      });
+
+      emitterWallet.balance = emitterWallet.balance - value;
+      await this.walletService.UpdateWallet(emitterWallet.id, emitterWallet);
+
+      receiverWallet.balance = receiverWallet.balance + value;
+      await  this.walletService.UpdateWallet(emitterWallet.id, receiverWallet);
+
+
+      return transaction;
+
+      } catch (err) {
         console.log(err);
         throw new BadRequest(err, 'Something went wrong!');
       }
     }
 
     @Get()
-    async list() : Promise<Transaction[] | undefined>{
+    async list() : Promise<Transaction[]>{
         try{
-            return undefined;
+          const transactions = await this.transacService.ListAllTransactions();
+          return  transactions;
            }catch (err) {
             console.log(err);
             throw new BadRequest(err, 'Something went wrong!');
@@ -52,12 +88,38 @@ export class TransactionControllerTsed {
     @Put('/like')
     async toggleLike(@Request('userId') userId: string,
     @BodyParams('transactionId') transactionId: string,
-    ) : Promise<Transaction | undefined > {
+    ) : Promise<Transaction > {
        if (!userId) throw new BadRequest('Required field userId is empty');
        if (!transactionId) throw new BadRequest('Required field transactionId  is empty');
-   
        try{
-        return undefined;
+
+        const transaction = await this.transacService.GetTransactionById(transactionId);
+        const userLiked = await this.userService.GetUserById(userId);
+
+        if (!transaction) {
+         throw new NotFound('Transaction not found');
+        }
+
+        if (!userLiked) {
+          throw new NotFound('User not found');
+         }
+
+        if(transaction.likes){
+          const alreadyLiked = transaction.likes.filter(
+            likeAuthor => String(likeAuthor.id) === String(userId)
+          );
+    
+          if (alreadyLiked.length) {
+            transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor.id === userId);
+            await this.transacService.UpdateTransaction(transaction.id, transaction);
+            return transaction;
+          }
+    
+          transaction.likes.push(userLiked);
+          await this.transacService.UpdateTransaction(transaction.id,transaction);
+        }
+
+        return transaction;
        }catch (err) {
         console.log(err);
         throw new BadRequest(err, 'Something went wrong!');
