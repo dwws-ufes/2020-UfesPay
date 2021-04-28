@@ -14,12 +14,13 @@ export class CommentService {
   }
 
   async GetCommentById(commentId: string) {
-    const comment = await this.commentRepo.GetCommentBy(commentId);
+    const comment = await this.commentRepo.GetById(commentId);
     return comment;
   }
 
-  async CreateComment(comment: Partial<Comment>, author : User) : Promise<Comment> {       
-    const newComment = await this.commentRepo.Create(comment,author);
+  async CreateComment(comment: Partial<Comment>, author : User) : Promise<Comment> {  
+    comment.author = author;
+    const newComment = await this.commentRepo.Create(comment);
     return newComment;
   }
 }

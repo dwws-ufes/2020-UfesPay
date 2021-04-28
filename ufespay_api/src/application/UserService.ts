@@ -12,10 +12,14 @@ export class UserService {
     @Inject(WalletService)
     private readonly walletService: WalletService;
 
-    async CreateUser(user: Pick<User, 'name' | 'email' | 'password'>) {     
+    
+    
+    //async CreateUser(user: Pick<User, 'name' | 'email' | 'password'>) 
+    async CreateUser(user: Partial<User>) {     
 
       const newWallet = await this.walletService.Create();
-      const newUser = await this.userRepo.Create(user,newWallet);
+      user.wallet = newWallet;
+      const newUser = await this.userRepo.Create(user);
 
       return newUser;
     }
@@ -27,12 +31,12 @@ export class UserService {
     }
 
     async GetUserByEmail(email: string) {
-        const user = await this.userRepo.GetUserByEmail(email);
+        const user = await this.userRepo.GetByEmail(email);
         return user;
     }
 
     async GetUserById(userId: string) {
-        const user = await this.userRepo.GetUserById(userId);
+        const user = await this.userRepo.GetById(userId);
         return user;
       }
 

@@ -25,27 +25,5 @@ export class TransactionRepository extends Repository<Transaction> {
  Create(transac: Partial<Transaction>) : Promise<Transaction> {
   return this.save(transac);
 }
-    
-
-  /*
-      Create(user: Partial<User>, userWallet : Wallet) : Promise<User> {
-        user.wallet = userWallet;
-        return this.save(user);
-    }
-
-    ReadAll() : Promise<User[]>{
-       return this.find({
-          relations: ['wallet'],
-        });
-    }
-
-  async Delete(user : User) {
-      await this.delete(user);
-  }
-
-  
-  async Update(id: string, user: User) {
-    this.update(id, user);
-  }*/
   
 }

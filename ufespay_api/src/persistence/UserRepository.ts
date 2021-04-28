@@ -6,8 +6,7 @@ import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-    Create(user: Partial<User>, userWallet : Wallet) : Promise<User> {
-        user.wallet = userWallet;
+    Create(user: Partial<User>) : Promise<User> {
         return this.save(user);
     }
 
@@ -17,14 +16,14 @@ export class UserRepository extends Repository<User> {
         });
     }
 
-    GetUserByEmail( email: string):Promise<User | undefined> {
+    GetByEmail( email: string):Promise<User | undefined> {
       return this.findOne({
         relations: ['wallet'],
         where: { email },
       });
     }
 
-    GetUserById(id: string) : Promise<User | undefined> {
+    GetById(id: string) : Promise<User | undefined> {
       return this.findOne({
         relations: ['wallet'],
         where: { id },

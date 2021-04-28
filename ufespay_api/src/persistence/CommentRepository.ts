@@ -6,8 +6,7 @@ import { EntityRepository, FindManyOptions, Repository  } from 'typeorm';
 @EntityRepository(Comment)
 export class CommentRepository extends Repository<Comment> {
 
-    Create(comment: Partial<Comment>, author : User) : Promise<Comment> {
-        comment.author = author;
+    Create(comment: Partial<Comment>) : Promise<Comment> {
         return this.save(comment);
     }
 
@@ -15,7 +14,7 @@ export class CommentRepository extends Repository<Comment> {
         await this.delete(comment);
     }
 
-    GetCommentBy(id: string) : Promise<Comment | undefined> {
+    GetById(id: string) : Promise<Comment | undefined> {
         return this.findOne({
           relations: ['transaction','author'],
           where: { id },
