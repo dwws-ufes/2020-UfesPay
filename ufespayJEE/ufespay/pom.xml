@@ -19,6 +19,20 @@
     <maven.compiler.target>13</maven.compiler.target>
   </properties>
 
+<repositories>
+	<repository>
+		<releases>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+			<checksumPolicy>fail</checksumPolicy>
+		</releases>
+		<id>br.ufes.inf.nemo</id>
+		<name>Nemo Maven Repository</name>
+		<url>http://dev.nemo.inf.ufes.br/maven2</url>
+		<layout>default</layout>
+	</repository>
+</repositories>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -36,6 +50,11 @@
     <groupId>com.github.adminfaces</groupId>
     <artifactId>admin-template</artifactId>
     <version>1.1.0</version>
+</dependency>
+<dependency>
+    <groupId>br.ufes.inf.nemo</groupId>
+    <artifactId>jbutler-wp</artifactId>
+    <version>1.2.7</version>
 </dependency>
   </dependencies>
 
