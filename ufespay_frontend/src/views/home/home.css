@@ -1,0 +1,25 @@
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  height: 90vh;
+}
+
+
+.profile {
+  color: #fff;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #a4badb;
+}
+
+.timeline {
+  width: 70%;
+  display: flex;
+  flex: 1;
+
+  align-items: center;
+  justify-content: center;
+}

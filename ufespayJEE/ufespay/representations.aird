@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description" uid="_hQyeMF00Eem7Q4kk1okOFA" selectedViews="_vdAFQF00Eem7Q4kk1okOFA" version="14.3.1.202003261200">
+  <semanticResources>Model.frameweb</semanticResources>
+  <semanticResources>Configuration.frameweb</semanticResources>
+  <semanticResources>frameweb/Java.frameweb</semanticResources>
+  <semanticResources>frameweb/jbutler/ApplicationModel_JButler_CDI.frameweb</semanticResources>
+  <semanticResources>frameweb/jbutler/EntityModel_JButler_JPA.frameweb</semanticResources>
+  <semanticResources>frameweb/jbutler/NavigationModel_JButler_JSF_PrimeFaces.frameweb</semanticResources>
+  <semanticResources>frameweb/jbutler/PersistenceModel_JButler.frameweb</semanticResources>
+  <ownedViews xmi:type="viewpoint:DView" uid="_vdAFQF00Eem7Q4kk1okOFA">
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/br.ufes.inf.nemo.FrameWeb_Martins2015.design/description/FrameWeb.odesign#//@ownedViewpoints[name='']"/>
+  </ownedViews>
+</viewpoint:DAnalysis>

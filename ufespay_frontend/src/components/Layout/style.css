@@ -1,0 +1,17 @@
+.layout-container {
+}
+
+.layout-content {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  height: 95vh;
+}
+
+.side {
+  max-width: 100px;
+}
+
+.main {
+  flex:1;
+}

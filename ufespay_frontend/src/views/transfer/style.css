@@ -1,0 +1,23 @@
+.transaction-container {
+  display: flex;
+  flex: 1;
+  height: 90vh;
+}
+
+.transaction-content {
+  width: 100%;
+  padding: 50px 100px;
+  align-items: center;
+  justify-content: center;
+  background-color: #a4badb;
+}
+
+.email {
+  color: grey;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.transaction-field {
+  margin-bottom: 20px;
+}

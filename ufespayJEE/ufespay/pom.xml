@@ -51,6 +51,22 @@
     <artifactId>admin-template</artifactId>
     <version>1.1.0</version>
 </dependency>
+  <!-- new repositories -->
+  <dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>font-awesome</artifactId>
+    <version>5.15.2</version>
+  </dependency>
+    <dependency>
+    <groupId>org.primefaces</groupId>
+    <artifactId>primefaces</artifactId>
+    <version>8.0</version>
+  </dependency>
+  <dependency>
+      <groupId>org.omnifaces</groupId>
+      <artifactId>omnifaces</artifactId>
+      <version>2.7.1</version>
+  </dependency>
 <dependency>
     <groupId>br.ufes.inf.nemo</groupId>
     <artifactId>jbutler-wp</artifactId>

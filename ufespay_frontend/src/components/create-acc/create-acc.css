@@ -1,0 +1,17 @@
+#create-acc {
+    color: #5047B7;
+    background-color: #fff;
+}
+
+#form-create-acc {
+
+    padding: 20px;
+
+    width: 500px;
+
+    margin: 40px auto 0;
+}
+
+.Button, .TextField{
+    width: 100%;
+}
