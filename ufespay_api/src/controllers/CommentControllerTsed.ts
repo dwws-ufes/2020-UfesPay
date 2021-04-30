@@ -1,6 +1,6 @@
 
 import { BadRequest , NotFound} from '@tsed/exceptions';
-import { BodyParams,QueryParams, Controller, Delete, Get, Inject, Post,  Request, Put } from '@tsed/common';
+import { BodyParams,QueryParams, Controller, Delete, Inject, Post,  Request, Put } from '@tsed/common';
 import {CommentService} from '../application/CommentService'
 import {TransactionService} from '../application/TransactionService'
 import {UserService} from '../application/UserService'

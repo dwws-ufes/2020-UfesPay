@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Navigate } from 'react-router'
+//import { Router, Route, Switch } from "react-router";
+import { Link } from 'react-router'
 
 import './styles.css'
 
@@ -45,7 +46,7 @@ class Login extends Component {
 
         event.preventDefault()
     }
-    
+
 
     handleTextFieldChange = (field, event) => {
         this.setState({
@@ -117,7 +118,7 @@ class Login extends Component {
                                     Entrar
                                 </Button>
 
-                                { this.state.toNext && <Navigate to="home" /> }
+                                { this.state.toNext && <Link to="home" /> }
 
                             </form>
 

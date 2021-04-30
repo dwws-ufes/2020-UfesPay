@@ -1,8 +1,8 @@
-import {Req, Inject} from "@tsed/common";
+/*import {Req, Inject} from "@tsed/common";
 import {Arg, OnInstall, OnVerify, Protocol} from "@tsed/passport";
 import {BasicStrategy} from "passport-http";
 import {UserService} from "../application/UserService";
-import jwt from 'jsonwebtoken';
+import {IStrategyOptions, Strategy} from "passport-local";
 
 @Protocol({
   name: "basic",
@@ -36,4 +36,8 @@ export class BasicProtocol implements OnVerify  {
 
     return user;
   }
-}
+
+  $onInstall(strategy: Strategy): void {
+    // intercept the strategy instance to adding extra configuration
+  }
+}*/
