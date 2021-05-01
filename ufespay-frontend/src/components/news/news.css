@@ -1,0 +1,14 @@
+
+.container-transactions-list {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.content-transactions-list {
+display: flex;
+flex-direction: column-reverse;
+justify-content: center;
+align-items: center;
+padding: 30px 100px;
+}

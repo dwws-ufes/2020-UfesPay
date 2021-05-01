@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import api from '../services/api';
@@ -10,6 +11,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const history = useHistory();
+
   const [user, setUser] = useState(() => {
     const accessToken = localStorage.getItem('@ufespay:authToken');
     const userString = localStorage.getItem('@ufespay:user');
@@ -19,19 +21,25 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logIn = useCallback(async (email, password) => {
+
     const resp = await signIn(email, password);
     const { user: userLogged, token } = resp;
     api.defaults.headers.common.authorization = `Bearer ${token}`;
+
     localStorage.setItem('@ufespay:authToken', token);
     localStorage.setItem('@ufespay:user', JSON.stringify(userLogged));
-    setUser(userLogged);
+    setUser(userLogged)
+
   }, []);
 
   const refreshUser = useCallback(async () => {
     const resp = await getUser();
     localStorage.setItem('@ufespay:user', JSON.stringify(resp.user));
     setUser(resp.user);
+
   }, []);
+
+
 
   const logOut = useCallback(async () => {
     await signOut();
@@ -40,7 +48,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('@ufespay:user');
     history.push('/');
     setUser(undefined);
+
   }, [history]);
+
+
 
   return (
     <AuthContext.Provider value={{ user, logOut, logIn, refreshUser }}>

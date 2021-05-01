@@ -1,7 +1,7 @@
 import React from 'react';
 import Navtop from '../navtop';
 
-import './style.css';
+import './layout.css';
 
 function Layout({ children }) {
   return (

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import './styles.css';
+import './profile.css';
 
 import { Button, TextField } from '@material-ui/core';
 

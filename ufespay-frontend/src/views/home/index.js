@@ -1,30 +1,21 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 
-import '../modal.css'
+// import '../modal.css';
+import './home.css';
 
-import Navtop from '../../components/navtop'
-import News from '../../components/news'
-import Profile from '../../components/profile'
+import News from '../../components/news';
+import Profile from '../../components/profile';
 
 export default function Home() {
-
-    return (
-        <div id="home">
-
-            <Navtop />
-
-            <div className="body">
-
-                <div className="left-side">
-                    <News />
-                </div>
-
-                <div className="right-side">
-                    <Profile />
-                </div>
-
-            </div>
-            
-        </div>
-    )
+  return (
+    <div className="content">
+      <div className="timeline">
+        <News />
+      </div>
+      <div className="profile">
+        <Profile />
+      </div>
+    </div>
+  );
 }

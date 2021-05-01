@@ -1,6 +1,8 @@
 #create-acc {
     color: #5047B7;
     background-color: #fff;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr; */
 }
 
 #form-create-acc {

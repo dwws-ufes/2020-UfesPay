@@ -1,21 +1,16 @@
 import React from 'react';
+import './landing-page.css';
 
-import './styles.css'
+import Login from '../../components/login';
+import CreateAcc from '../../components/create-acc';
 
-import Login from '../../components/login'
-import CreateAcc from '../../components/create-acc'
-
-function LandingPage(props) {
-
-    return (
-        <div id="landing-page">
-
-            <CreateAcc />
-
-            <Login auth={(login) => {props.callback(login)}}/>
-
-        </div>
-    )
+function LandingPage() {
+  return (
+    <div id="landing-page">
+      <CreateAcc />
+      <Login />
+    </div>
+  );
 }
 
 export default LandingPage;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -8,7 +9,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { Typography, TextField } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { grey, red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Delete, Send } from '@material-ui/icons';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
@@ -18,10 +19,11 @@ import {
   toggleLike,
 } from '../../services/TransactionService';
 
-import './styles.css';
+import './transfer-card.css';
+
 import { useAuth } from '../../hooks/auth';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginBottom: 20,
@@ -81,7 +83,7 @@ const TransferCard = ({ transaction }) => {
 
   const handleDeleteComment = useCallback(
     id => {
-      deleteComment(id).then(() => {
+      deleteComment(id).then(resp => {
         const updatedTransaction = { ...transac };
         updatedTransaction.comments = updatedTransaction.comments.filter(
           comment => comment._id !== id,
