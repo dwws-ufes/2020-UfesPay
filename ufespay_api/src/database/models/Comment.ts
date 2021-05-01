@@ -1,23 +1,35 @@
-import { Document, Model, model, Types, Schema } from 'mongoose';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-import { IUserDocument } from './User';
+import User from '../models/User';
 
-export interface IComment {
+@Entity('comment')
+class Comment {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
   text: string;
-  author: Types.ObjectId | Record<string, unknown>;
+
+  @Column()
+  author_id: string;
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'author_id' })
+  author: User;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
-
-export interface ICommentDocument extends IComment, Document {
-  author: IUserDocument["_id"];
-}
-
-export type ICommentModel =  Model<ICommentDocument>;
-
-const CommentSchema = new Schema<ICommentDocument, ICommentModel>({
-  text: { type: String, required: true },
-  author: { type: Types.ObjectId, ref: 'User', required: true },
-});
-
-const Comment = model('Comment', CommentSchema);
 
 export default Comment;

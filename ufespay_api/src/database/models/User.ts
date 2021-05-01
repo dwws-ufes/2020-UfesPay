@@ -1,27 +1,43 @@
-import { Document, Model, model, Types, Schema } from 'mongoose';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Exclude } from 'class-transformer';
 
-import { IWalletDocument } from './Wallet';
+import Wallet from '../models/Wallet';
 
-export interface IUser {
+@Entity('user')
+class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
   name: string;
+
+  @Column()
   email: string;
+
+  @Column()
+  @Exclude()
   password: string;
-  wallet: Types.ObjectId | Record<string, unknown>;
+
+  @Column()
+  wallet_id: string;
+
+  @OneToOne(() => Wallet)
+  @JoinColumn({ name: 'wallet_id' })
+  wallet: Wallet;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
-
-export interface IUserDocument extends IUser, Document {
-  wallet: IWalletDocument["_id"];
-}
-
-export type IUserModel =  Model<IUserDocument>;
-
-const UserSchema = new Schema<IUserDocument, IUserModel>({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  wallet: { type: Types.ObjectId, ref: 'Wallet', required: true },
-});
-
-const User = model('User', UserSchema);
 
 export default User;

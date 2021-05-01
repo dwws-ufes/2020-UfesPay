@@ -1,37 +1,63 @@
-import { Document, Model, model, Types, Schema } from 'mongoose';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 
-import { IUserDocument } from './User';
-import { ICommentDocument } from './Comment';
+import User from '../models/User';
+import Comment from '../models/Comment';
 
-export interface ITransaction {
-  message?: string;
+@Entity('transaction')
+class Transaction {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  message: string;
+
+  @Column()
   value: number;
-  emitter: Types.ObjectId | Record<string, unknown>;
-  receiver: Types.ObjectId | Record<string, unknown>;
-  likes?: Types.ObjectId[] | Record<string, unknown>[];
-  comments?: Types.ObjectId[] | Record<string, unknown>[];
-  created_at?: Date;
+
+  @Column()
+  emitter_id: string;
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'emitter_id' })
+  emitter: User;
+
+  @Column()
+  receiver_id: string;
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'receiver_id' })
+  receiver: User;
+
+  @Column()
+  likes_id: string;
+
+  @OneToMany(() => User, () => null)
+  @JoinColumn({ name: 'likes_id' })
+  likes: User[];
+
+  @Column()
+  comments_id: string;
+
+  @OneToMany(() => Comment, () => null)
+  @JoinColumn({ name: 'comments_id' })
+  comments: Comment[];
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
-
-export interface ITransactionDocument extends ITransaction, Document {
-  emitter: IUserDocument["_id"];
-  receiver: IUserDocument["_id"];
-  likes?:  IUserDocument["_id"][];
-  comments?:  ICommentDocument["_id"][];
-}
-
-export type ITransactionModel =  Model<ITransactionDocument>;
-
-const TransactionSchema = new Schema<ITransactionDocument, ITransactionModel>({
-  message: { type: String },
-  value: { type: Number, required: true },
-  emitter: { type: Types.ObjectId, ref: 'User', required: true },
-  receiver: { type: Types.ObjectId, ref: 'User', required: true },
-  likes: [{ type: Types.ObjectId, ref: 'User' }],
-  comments: [{ type: Types.ObjectId, ref: 'Comment' }],
-  created_at: { type: Date, default: new Date() },
-});
-
-const Transaction = model('Transaction', TransactionSchema);
 
 export default Transaction;

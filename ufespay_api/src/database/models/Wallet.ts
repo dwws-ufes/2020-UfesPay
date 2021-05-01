@@ -1,17 +1,24 @@
-import { Document, Model, model, Types, Schema } from 'mongoose';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-export interface IWallet {
+@Entity('wallet')
+class Wallet {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
   balance: number;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
-
-export interface IWalletDocument extends IWallet, Document {}
-
-export type IWalletModel =  Model<IWalletDocument>
-
-const WalletSchema = new Schema<IWalletDocument, IWalletModel>({
-  balance: { type: Number, default: 3000, required: true },
-});
-
-const Wallet = model('Wallet', WalletSchema);
 
 export default Wallet;
