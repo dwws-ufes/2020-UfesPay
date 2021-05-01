@@ -1,45 +1,59 @@
-import Transaction, { ITransactionDocument } from '../models/Transaction';
+import { Repository, getRepository } from 'typeorm';
+import Transaction from '../models/Transaction';
 
 export interface ITransactionRepository {
-  create: (data: object) => Promise<ITransactionDocument>;
-  getAll: () => Promise<ITransactionDocument[]>;
-  findById: (id: string) => Promise<ITransactionDocument | null>;
-  save: (transaction: ITransactionDocument) => Promise<ITransactionDocument>;
+  create: (data: object) => Promise<Transaction>;
+  getAll: () => Promise<Transaction[]>;
+  findById: (id: string) => Promise<Transaction | undefined>;
+  save: (transaction: Transaction) => Promise<Transaction>;
   delete: (id: string) => Promise<void>;
 }
 
 class TransactionRepository implements ITransactionRepository {
+  private ormRepository: Repository<Transaction>;
+
+  constructor() {
+    this.ormRepository = getRepository(Transaction);
+  }
+
   async create(data: object) {
-    const newTransaction = new Transaction(data);
-    await newTransaction.save();
+    const newTransaction = this.ormRepository.create(data);
+    await this.ormRepository.save(newTransaction);
     return newTransaction;
   }
 
   async getAll() {
-    const transaction = await Transaction.find({})
-      .populate('emitter receiver', 'name email')
-      .populate('comments')
-      .populate({
-        path : 'comments',
-        populate : {
-          path : 'author',
-          select: 'name email'
-        }
-      })
-      .exec();
-    return transaction;
+    // const transaction = await Transaction.find({})
+    //   .populate('emitter receiver', 'name email')
+    //   .populate('comments')
+    //   .populate({
+    //     path : 'comments',
+    //     populate : {
+    //       path : 'author',
+    //       select: 'name email'
+    //     }
+    //   })
+    //   .exec();
+    const transactions = await this.ormRepository.find();
+
+    return transactions || [];
   }
 
   async findById(id: string) {
-    return Transaction.findById(id).populate('likes');
+    // return Transaction.findById(id).populate('likes');
+    const findTransaction = await this.ormRepository.findOne({
+      where: { id },
+    });
+
+    return findTransaction || undefined;
   }
 
-  async save(transaction: ITransactionDocument) {
-    return transaction.save();
+  async save(transaction: Transaction) {
+    return this.ormRepository.save(transaction);
   }
 
   async delete(id: string) {
-    await Transaction.deleteOne({ _id: id });
+    await this.ormRepository.delete({ id });
   }
 }
 

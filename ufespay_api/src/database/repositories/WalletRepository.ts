@@ -1,29 +1,40 @@
-import Wallet, { IWalletDocument } from '../models/Wallet';
+import Wallet from '../models/Wallet';
+import { Repository, getRepository } from 'typeorm';
 
-export interface IWalletRepository {
-  create: () => Promise<IWalletDocument>;
-  findById: (id: string) => Promise<IWalletDocument | null>;
-  save: (wallet: IWalletDocument) => Promise<IWalletDocument>;
+export interface IWalletRepository{
+  create: () => Promise<Wallet>;
+  findById: (id: string) => Promise<Wallet | undefined>;
+  save: (wallet: Wallet) => Promise<Wallet>;
   delete: (id: string) => Promise<void>;
 }
 
 class WalletRepository implements IWalletRepository {
+  private ormRepository: Repository<Wallet>;
+
+  constructor() {
+    this.ormRepository = getRepository(Wallet);
+  }
+
   async create() {
-    const newWallet = new Wallet({});
-    await newWallet.save();
+    const newWallet = this.ormRepository.create({});
+    await this.ormRepository.save(newWallet);
     return newWallet;
   }
 
   async findById(id: string) {
-    return Wallet.findById(id);
+    const findWallet = await this.ormRepository.findOne({
+      where: { id },
+    });
+
+    return findWallet || undefined;
   }
 
-  async save(wallet: IWalletDocument) {
-    return wallet.save();
+  async save(wallet: Wallet) {
+    return this.ormRepository.save(wallet);
   }
 
   async delete(id: string) {
-    await Wallet.deleteOne({ _id: id });
+    await this.ormRepository.delete({ id });
   }
 }
 
