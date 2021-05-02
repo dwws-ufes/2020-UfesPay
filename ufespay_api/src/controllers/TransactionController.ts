@@ -52,13 +52,18 @@ class TransactionController implements ITransactionController {
       // check if email already exist
       const emitter = await this.userRepository.findById(userId);
       const receiver = await this.userRepository.findById(receiverId);
+      console.log(emitter?.name, receiver?.name)
 
       if (!emitter || !receiver) {
         return res.status(400).json({ message: 'Users not found.'});
       }
 
-      const emitterWallet = await this.walletRepository.findById(emitter.wallet);
-      const receiverWallet = await this.walletRepository.findById(receiver.wallet);
+      const emitterWallet = await this.walletRepository.findById(emitter.wallet.id);
+      const receiverWallet = await this.walletRepository.findById(receiver.wallet.id);
+
+      if (!emitterWallet || !receiverWallet) {
+        return res.status(400).json({ message: 'Users not found.'});
+      }
 
       if (emitterWallet.balance < value) {
         return res.status(400).json({ message: 'Not enought money'});
@@ -99,11 +104,11 @@ class TransactionController implements ITransactionController {
       }
 
       const alreadyLiked = transaction.likes.filter(
-        likeAuthor => String(likeAuthor._id) === String(userId)
+        likeAuthor => String(likeAuthor.id) === String(userId)
       );
 
       if (alreadyLiked.length) {
-        transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor._id === userId);
+        transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor.id === userId);
         await this.transactionRepository.save(transaction);
         return res.status(200).send();
       }

@@ -44,7 +44,7 @@ class UserController implements IUserController {
       const wallet = await this.walletRepository.create();
   
       // create user
-      const user = await this.userRepository.create({name, email, password, walletId: wallet._id});
+      const user = await this.userRepository.create({name, email, password, wallet});
   
       return res.status(200).json({ user });
     } catch (e) {

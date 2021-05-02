@@ -43,6 +43,12 @@ class TransactionRepository implements ITransactionRepository {
     // return Transaction.findById(id).populate('likes');
     const findTransaction = await this.ormRepository.findOne({
       where: { id },
+      join: {
+        alias: "transaction",
+        leftJoinAndSelect: {
+            profile: "transaction.likes",
+        }
+      }
     });
 
     return findTransaction || undefined;

@@ -1,5 +1,5 @@
 import User from '../models/User';
-import { Repository, getRepository, Not, getConnectionManager, getConnection } from 'typeorm';
+import { Repository, getRepository, Not } from 'typeorm';
 import Wallet from '../models/Wallet';
 
 interface CreateUserDTO {
@@ -22,8 +22,7 @@ class UserRepository implements IUserRepository {
   ormRepository: Repository<User>;
 
   constructor() {
-    // this.ormRepository = getRepository<User>(User);
-    this.ormRepository = getConnection('default').getRepository(User);
+    this.ormRepository = getRepository(User);
   }
 
   async create({name, email, password, wallet}: CreateUserDTO) {
@@ -38,27 +37,37 @@ class UserRepository implements IUserRepository {
   }
   
   async findByEmail(email: string) {
-    // const user = await User.findOne({ email: email }, 'id name email wallet password').populate('wallet').exec();
     const findUser = await this.ormRepository.findOne({
       where: { email },
+      join: {
+        alias: "user",
+        leftJoinAndSelect: {
+            profile: "user.wallet",
+        }
+      }
     });
 
     return findUser || undefined;
   }
 
   async findById(id: string) {
-    // const user = await User.findById(id, 'id name email wallet password').populate('wallet').exec();
     const findUser = await this.ormRepository.findOne({
       where: { id },
+      join: {
+        alias: "user",
+        leftJoinAndSelect: {
+            profile: "user.wallet",
+        }
+      }
     });
 
     return findUser || undefined;
   }
 
   async getOthers(id: string) {
-    // return User.find({ _id: { $ne: String(id) } }, 'name email');
     const findUsers = await this.ormRepository.find({
       where: { id: Not(id) },
+      select: ['name', 'email'],
     });
 
     return findUsers || [];

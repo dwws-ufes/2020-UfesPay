@@ -11,7 +11,7 @@ class Wallet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({default: 3000})
   balance: number;
 
   @CreateDateColumn()

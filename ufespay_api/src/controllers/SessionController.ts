@@ -33,7 +33,7 @@ class SessionController implements ISessionController{
         return res.status(400).json({ message: 'Wrong password!' });
       }
       
-      const id = user._id;
+      const id = user.id;
 
       const token = jwt.sign({ id }, process.env.SECRET || 'default', {
         expiresIn: 20 * 60,

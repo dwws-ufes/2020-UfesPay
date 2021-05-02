@@ -2,13 +2,11 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 import User from '../models/User';
@@ -19,7 +17,7 @@ class Transaction {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({nullable: true})
   message: string;
 
   @Column()
@@ -28,25 +26,25 @@ class Transaction {
   @Column()
   emitter_id: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, () => null)
   @JoinColumn({ name: 'emitter_id' })
   emitter: User;
 
   @Column()
   receiver_id: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, () => null)
   @JoinColumn({ name: 'receiver_id' })
   receiver: User;
 
-  @Column()
+  @Column({nullable: true})
   likes_id: string;
 
   @OneToMany(() => User, () => null)
   @JoinColumn({ name: 'likes_id' })
   likes: User[];
 
-  @Column()
+  @Column({nullable: true})
   comments_id: string;
 
   @OneToMany(() => Comment, () => null)
