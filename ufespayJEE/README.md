@@ -17,7 +17,7 @@ O sistema UfesPay é uma aplicação web que permite a transferência de saldo e
 1. Clone o projeto para o seu computador:
 git clone 
 
-2. Siga os passos do Tutorial do [Jbutler] (https://github.com/dwws-ufes/jbutler/wiki/Tutorial00#tool-installation-and-configuration) ( Secção *ool installation and configuration*) com as seguintes alterações:
+2. Siga os passos do Tutorial do [Jbutler](https://github.com/dwws-ufes/jbutler/wiki/Tutorial00#tool-installation-and-configuration) ( Seção *Tool installation and configuration*) com as seguintes alterações:
 
 
 
