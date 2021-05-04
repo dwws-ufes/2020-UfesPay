@@ -60,4 +60,4 @@ Neste mesmo arquivo, incluia dentro da tag `<drivers>`
     </dependencies>
 </module>
 ```
-*Copie para este folder o driver JDBC do postreSQL baixado anteriormente;
+* Copie para este folder o driver JDBC do postreSQL baixado anteriormente;
