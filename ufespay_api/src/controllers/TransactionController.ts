@@ -1,11 +1,39 @@
-class TransactionController {
-  setDependencies(transactionRepository, userRepository, walletRepository){
+import { Request, Response } from 'express';
+
+import { IUserRepository } from '../database/repositories/UserRepository';
+import { IWalletRepository } from '../database/repositories/WalletRepository';
+import { ITransactionRepository } from '../database/repositories/TransactionRepository';
+
+export interface ITransactionController {
+  transactionRepository: ITransactionRepository;
+  userRepository: IUserRepository;
+  walletRepository: IWalletRepository;
+  setDependencies: (
+    transactionRepository: ITransactionRepository,
+    userRepository: IUserRepository,
+    walletRepository: IWalletRepository,
+  ) => void;
+  create: (req: Request, res: Response) => Promise<Response>;
+  list: (req: Request, res: Response) => Promise<Response>;
+  toggleLike: (req: Request, res: Response) => Promise<Response>;
+}
+
+class TransactionController implements ITransactionController {
+  transactionRepository: ITransactionRepository;
+  userRepository: IUserRepository;
+  walletRepository: IWalletRepository;
+
+  setDependencies(
+    transactionRepository: ITransactionRepository,
+    userRepository: IUserRepository,
+    walletRepository: IWalletRepository,
+  ){
     this.transactionRepository = transactionRepository;
     this.userRepository = userRepository;
     this.walletRepository = walletRepository;
   }
 
-  async list(req, res) {
+  async list(req: Request, res: Response) {
     try {
       const transactions = await this.transactionRepository.getAll();
   
@@ -16,7 +44,7 @@ class TransactionController {
     }
   }
 
-  async create(req, res) {
+  async create(req: Request, res: Response) {
     try {
       const { receiverId, value, message } = req.body;
       const { userId } = req;
@@ -29,8 +57,12 @@ class TransactionController {
         return res.status(400).json({ message: 'Users not found.'});
       }
 
-      const emitterWallet = await this.walletRepository.findById(emitter.wallet);
-      const receiverWallet = await this.walletRepository.findById(receiver.wallet);
+      const emitterWallet = await this.walletRepository.findById(emitter.wallet.id);
+      const receiverWallet = await this.walletRepository.findById(receiver.wallet.id);
+
+      if (!emitterWallet || !receiverWallet) {
+        return res.status(400).json({ message: 'Users not found.'});
+      }
 
       if (emitterWallet.balance < value) {
         return res.status(400).json({ message: 'Not enought money'});
@@ -59,7 +91,7 @@ class TransactionController {
     }
   }
 
-  async toggleLike(req, res) {
+  async toggleLike(req: Request, res: Response) {
     try {
       const { userId } = req;
       const { transactionId } = req.body;
@@ -70,12 +102,14 @@ class TransactionController {
         return res.status(400).json({ message: 'Transaction not found.'});
       }
 
-      const alreadyLiked = transaction.likes.filter(
-        likeAuthor => String(likeAuthor._id) === String(userId)
+      const alreadyLiked = transaction.likes.find(
+        likeAuthorId => String(likeAuthorId) === String(userId)
       );
 
-      if (alreadyLiked.length) {
-        transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor._id === userId);
+      if (alreadyLiked) {
+        transaction.likes = transaction.likes.filter(
+          likeAuthorId => String(likeAuthorId) !== String(userId)
+        );
         await this.transactionRepository.save(transaction);
         return res.status(200).send();
       }
