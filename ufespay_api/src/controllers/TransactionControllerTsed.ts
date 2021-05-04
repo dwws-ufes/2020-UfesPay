@@ -58,6 +58,11 @@ export class TransactionControllerTsed {
         comments: [],
       });
 
+      //new code begin
+      emitterWallet?.transactions?.push(transaction);
+      receiverWallet?.transactions?.push(transaction);
+      //new code end
+
       emitterWallet.balance = emitterWallet.balance - value;
       await this.walletService.UpdateWallet(emitterWallet.id, emitterWallet);
 

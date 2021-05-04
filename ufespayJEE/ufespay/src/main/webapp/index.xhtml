@@ -16,6 +16,13 @@
 </ui:define>
 
 <ui:define name="body">
+	<h:form>
+		<center>
+			<p:commandLink id="userRegister" action="#{userController.createUser}" ajax="false">
+				<h:outputText value="Cadastrar-se"/>
+			</p:commandLink>
+		</center>
+	</h:form>
 	<p><h:outputText value="#{msgs['text.home.about01']}" /></p>
 	
 	<p><h:outputText value="#{msgs['text.home.about02']}" escape="false" /></p>
