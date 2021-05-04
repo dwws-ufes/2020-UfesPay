@@ -6,9 +6,11 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 import User from '../models/User';
+import Transaction from '../models/Transaction';
 
 @Entity('comment')
 class Comment {
@@ -24,6 +26,9 @@ class Comment {
   @OneToOne(() => User)
   @JoinColumn({ name: 'author_id' })
   author: User;
+
+  @ManyToOne(type => Transaction)
+  transaction: Transaction;
 
   @CreateDateColumn()
   created_at: Date;

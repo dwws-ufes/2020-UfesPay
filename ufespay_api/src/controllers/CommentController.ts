@@ -2,13 +2,17 @@ import { Request, Response } from 'express';
 
 import { ICommentRepository } from '../database/repositories/CommentRepository';
 import { ITransactionRepository } from '../database/repositories/TransactionRepository';
+import { IUserRepository } from '../database/repositories/UserRepository';
 
 export interface ICommentController {
   transactionRepository: ITransactionRepository;
   commentRepository: ICommentRepository;
+  userRepository: IUserRepository;
+
   setDependencies: (
     transactionRepository: ITransactionRepository,
     commentRepository: ICommentRepository,
+    userRepository: IUserRepository,
   ) => void;
   create: (req: Request, res: Response) => Promise<Response>;
   delete: (req: Request, res: Response) => Promise<Response>;
@@ -17,13 +21,16 @@ export interface ICommentController {
 class CommentController implements ICommentController {
   transactionRepository: ITransactionRepository;
   commentRepository: ICommentRepository;
+  userRepository: IUserRepository;
 
   setDependencies(
     transactionRepository: ITransactionRepository,
     commentRepository: ICommentRepository,
+    userRepository: IUserRepository,
   ){
     this.transactionRepository = transactionRepository;
     this.commentRepository = commentRepository;
+    this.userRepository = userRepository;
   }
 
   async create(req: Request, res: Response) {
@@ -32,12 +39,17 @@ class CommentController implements ICommentController {
       const { userId } = req;
 
       const transaction = await this.transactionRepository.findById(transactionId);
+      const user = await this.userRepository.findById(userId);
   
       if (!transaction) {
         return res.status(400).json({ message: 'Invalid transaction'});
       }
 
-      const comment = await this.commentRepository.create({text, author: userId});
+      const comment = await this.commentRepository.create({
+        text,
+        author: user,
+        transaction,
+      });
   
       transaction?.comments?.push(comment);
       await this.transactionRepository.save(transaction);
@@ -61,7 +73,7 @@ class CommentController implements ICommentController {
         return res.status(400).json({ message: 'Comment not found.'});
       }
 
-      if (userId !== String(comment.author)) {
+      if (userId !== String(comment.author_id)) {
         return res.status(400).json({ message: 'You cannot delete this comment.'});
       }
 

@@ -52,7 +52,6 @@ class TransactionController implements ITransactionController {
       // check if email already exist
       const emitter = await this.userRepository.findById(userId);
       const receiver = await this.userRepository.findById(receiverId);
-      console.log(emitter?.name, receiver?.name)
 
       if (!emitter || !receiver) {
         return res.status(400).json({ message: 'Users not found.'});
@@ -103,12 +102,14 @@ class TransactionController implements ITransactionController {
         return res.status(400).json({ message: 'Transaction not found.'});
       }
 
-      const alreadyLiked = transaction.likes.filter(
-        likeAuthor => String(likeAuthor.id) === String(userId)
+      const alreadyLiked = transaction.likes.find(
+        likeAuthorId => String(likeAuthorId) === String(userId)
       );
 
-      if (alreadyLiked.length) {
-        transaction.likes = transaction.likes.filter(likeAuthor => likeAuthor.id === userId);
+      if (alreadyLiked) {
+        transaction.likes = transaction.likes.filter(
+          likeAuthorId => String(likeAuthorId) !== String(userId)
+        );
         await this.transactionRepository.save(transaction);
         return res.status(200).send();
       }

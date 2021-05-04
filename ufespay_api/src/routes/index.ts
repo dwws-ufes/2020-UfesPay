@@ -25,7 +25,7 @@ const commentRepository = new CommentRepository();
 userController.setDependencies(userRepository, walletRepository)
 sessionController.setDependencies(userRepository)
 transactionController.setDependencies(transactionRepository, userRepository, walletRepository)
-commentController.setDependencies(transactionRepository, commentRepository)
+commentController.setDependencies(transactionRepository, commentRepository, userRepository)
 
 const routes = Router();
 

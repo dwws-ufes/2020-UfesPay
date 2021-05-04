@@ -37,18 +37,10 @@ class Transaction {
   @JoinColumn({ name: 'receiver_id' })
   receiver: User;
 
-  @Column({nullable: true})
-  likes_id: string;
+  @Column("varchar", { default: [], array: true })
+  likes: string[];
 
-  @OneToMany(() => User, () => null)
-  @JoinColumn({ name: 'likes_id' })
-  likes: User[];
-
-  @Column({nullable: true})
-  comments_id: string;
-
-  @OneToMany(() => Comment, () => null)
-  @JoinColumn({ name: 'comments_id' })
+  @OneToMany(() => Comment, comment => comment.transaction)
   comments: Comment[];
 
   @CreateDateColumn()

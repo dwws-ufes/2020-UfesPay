@@ -23,32 +23,22 @@ class TransactionRepository implements ITransactionRepository {
   }
 
   async getAll() {
-    // const transaction = await Transaction.find({})
-    //   .populate('emitter receiver', 'name email')
-    //   .populate('comments')
-    //   .populate({
-    //     path : 'comments',
-    //     populate : {
-    //       path : 'author',
-    //       select: 'name email'
-    //     }
-    //   })
-    //   .exec();
-    const transactions = await this.ormRepository.find();
+    const transactions = await this.ormRepository.find({
+      join: {
+        alias: "transaction",
+        leftJoinAndSelect: {
+            comments: "transaction.comments",
+            author: "comments.author"
+        }
+      }
+    });
 
     return transactions || [];
   }
 
   async findById(id: string) {
-    // return Transaction.findById(id).populate('likes');
     const findTransaction = await this.ormRepository.findOne({
-      where: { id },
-      join: {
-        alias: "transaction",
-        leftJoinAndSelect: {
-            profile: "transaction.likes",
-        }
-      }
+      where: { id }
     });
 
     return findTransaction || undefined;
