@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import br.ufes.dwws.ufespay.core.domain.User;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseJPADAO;

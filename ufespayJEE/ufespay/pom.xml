@@ -31,6 +31,12 @@
 		<url>http://dev.nemo.inf.ufes.br/maven2</url>
 		<layout>default</layout>
 	</repository>
+	<repository>  
+	    <id>prime-repo</id>  
+	    <name>PrimeFaces Maven Repository</name>  
+	    <url>http://repository.primefaces.org</url>  
+	    <layout>default</layout>  
+	</repository>
 </repositories>
 
   <dependencies>
@@ -60,30 +66,30 @@
     <dependency>
     <groupId>org.primefaces</groupId>
     <artifactId>primefaces</artifactId>
-    <version>8.0</version>
+    <version>8.0</version> 
   </dependency>
   <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>omnifaces</artifactId>
       <version>2.7.1</version>
   </dependency>
-<dependency>
-    <groupId>br.ufes.inf.nemo</groupId>
-    <artifactId>jbutler-wp</artifactId>
-    <version>1.2.7</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.spec.javax.transaction</groupId>
-    <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-    <version>1.1.1.Final</version>
-    <scope>provided</scope>
-</dependency>
-<dependency>
-    <groupId>jakarta.validation</groupId>
-    <artifactId>jakarta.validation-api</artifactId>
-    <version>2.0.2</version>
-    <scope>provided</scope>
-</dependency>
+	<dependency>
+	    <groupId>br.ufes.inf.nemo</groupId>
+	    <artifactId>jbutler-wp</artifactId>
+	    <version>1.2.7</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jboss.spec.javax.transaction</groupId>
+	    <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+	    <version>1.1.1.Final</version>
+	    <scope>provided</scope>
+	</dependency>
+	<dependency>
+	    <groupId>jakarta.validation</groupId>
+	    <artifactId>jakarta.validation-api</artifactId>
+	    <version>2.0.2</version>
+	    <scope>provided</scope>
+	</dependency>
   </dependencies>
 
   <build>

@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import br.ufes.dwws.ufespay.core.domain.Comment;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseJPADAO;

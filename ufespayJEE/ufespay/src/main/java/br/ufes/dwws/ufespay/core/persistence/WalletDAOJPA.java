@@ -3,8 +3,8 @@ package br.ufes.dwws.ufespay.core.persistence;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
-import br.ufes.dwws.ufespay.core.domain.User;
 import br.ufes.dwws.ufespay.core.domain.Wallet;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseJPADAO;
 

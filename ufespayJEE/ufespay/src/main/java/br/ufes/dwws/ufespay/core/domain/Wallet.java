@@ -3,6 +3,7 @@ package br.ufes.dwws.ufespay.core.domain;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,8 @@ public class Wallet extends PersistentObjectSupport implements Comparable<Wallet
 	private Date created_at;
 
 	@OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
-	private Set <Transaction>transactions;
+	//private List <Transaction>transactions = new ArrayList<Transaction>();
+	private Set <Transaction>transactions = new HashSet<Transaction>();
 	
 	private User owner;
 	
@@ -42,7 +44,17 @@ public class Wallet extends PersistentObjectSupport implements Comparable<Wallet
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
+
 	
+	/*
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
+	}*/
+
 	public Set<Transaction> getTransactions() {
 		return transactions;
 	}
