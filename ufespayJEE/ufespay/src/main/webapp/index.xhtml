@@ -17,13 +17,55 @@
 </ui:define>
 
 <ui:define name="body">
-	<h:form>
-		<center>
-			<p:commandLink id="userRegister" action="#{userController.createUser}" ajax="false">
-				<h:outputText value="Cadastrar-se"/>
-			</p:commandLink>
-		</center>
-	</h:form>
+
+<p:card>
+	<p:panel header="#{userController.userName}" align="center">
+		<h:form id="form-wallet">
+			<p><h:outputText align="center" value="#{msgs['text.currentAmount']}" /> <h:outputText align="center" value="#{userController.userName}" /></p>
+			<p>
+				<p:inputNumber id="new_ballance" symbol="#{msgs['text.currencySymbol']}" symbolPosition="s" decimalSeparator="." thousandSeparator="," />
+				<p:commandButton type="button" value="#{msgs['text.walletAddBalance']}" styleClass="rounded-button" />
+			</p>
+		</h:form>
+	</p:panel>
+    <p:divider />
+    <h:form id="form-transaction">
+		<p:toolbar>
+            <p:toolbarGroup align="center">
+                <p:commandButton value="#{msgs['text.newTransaction']}" icon="pi pi-plus" 
+                                 styleClass="ui-button-success" style="margin-right: .5rem"  action="#{userController.createUser}" />
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:dataTable id="dt-transactions" widgetVar="dtTransactions" var="transaction" value="#{transactionController.transactions}"
+                     reflow="true" styleClass="products-table"
+                     rowKey="#{transaction.id}" paginator="true"
+                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
+            <f:facet name="header">
+                <div class="products-table-header">
+                    <span style="font-weight: bold">TRANSACTIONS</span>
+                    <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtTransactions').filter()" placeholder="Search"/>
+                    </span>
+                </div>
+            </f:facet>
+            <p:column headerText="Emitter" sortBy="#{transaction.emitter.name}" filterBy="#{transaction.emitter.name}">
+                <h:outputText value="#{transaction.emitter.name}"/>
+            </p:column>
+			<p:column headerText="Receiver" sortBy="#{transaction.receiver.name}" filterBy="#{transaction.receiver.name}">
+                <h:outputText value="#{transaction.receiver.name}"/>
+            </p:column>
+			<p:column headerText="Value" sortBy="#{transaction.value}">
+                <h:outputText value="#{transaction.value}" style="font-weight: 700">
+                    <f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency"/>
+                </h:outputText>
+            </p:column>   
+			<p:column headerText="Date" sortBy="#{transaction.created_at}">
+				<h:outputText value="#{transaction.created_at}"/>
+            </p:column>    
+        </p:dataTable>
+      </h:form>
+</p:card>
 	<p><h:outputText value="#{msgs['text.home.about01']}" /></p>
 	
 	<p><h:outputText value="#{msgs['text.home.about02']}" escape="false" /></p>

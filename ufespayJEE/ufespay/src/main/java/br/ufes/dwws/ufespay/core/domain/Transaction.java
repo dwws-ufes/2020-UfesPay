@@ -9,6 +9,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -87,16 +90,6 @@ public class Transaction extends PersistentObjectSupport implements Comparable<T
 		this.value = value;
 	}
 
-	
-	/*
-	public Set<User> getLikes() {
-		return likes;
-	}
-
-	public void setLikes(Set<User> likes) {
-		this.likes = likes;
-	}*/
-
 	public Set<User> getLikes() {
 		return likes;
 	}
@@ -134,15 +127,6 @@ public class Transaction extends PersistentObjectSupport implements Comparable<T
     	this.setCreated_at( new Timestamp((new Date()).getTime()));
     }
 
-    /*
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}*/
-
 	public Set<Comment> getComments() {
 		return comments;
 	}
@@ -167,4 +151,13 @@ public class Transaction extends PersistentObjectSupport implements Comparable<T
 		// FIXME: auto-generated method stub
 		return super.compareTo(o);
 	}
+	
+	public boolean equals​(Object obj) {
+		if((obj instanceof Transaction)&&(obj!=null)){
+			return ((Transaction)obj).getUuid().equals(this.getUuid());
+		}else {
+			return false;
+		}		
+	}
+
 }

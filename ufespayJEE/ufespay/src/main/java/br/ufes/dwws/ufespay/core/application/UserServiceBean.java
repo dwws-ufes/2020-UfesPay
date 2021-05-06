@@ -40,7 +40,7 @@ public class UserServiceBean implements UserService {
 
 	// @Transactional
 	public void createUser() {
-
+		this.populateDataBase();
 	}
 
 	
