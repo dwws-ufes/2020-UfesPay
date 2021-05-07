@@ -5,7 +5,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui"
     xmlns:adm="http://github.com/adminfaces"
-    template="/WEB-INF/templates/template.xhtml">
+    template="/WEB-INF/templates/templateLogin.xhtml">
 
 
 <ui:define name="title">
@@ -17,58 +17,21 @@
 </ui:define>
 
 <ui:define name="body">
-
-<p:card>
-	<p:panel header="#{userController.userName}" align="center">
-		<h:form id="form-wallet">
-			<p><h:outputText align="center" value="#{msgs['text.currentAmount']}" /> <h:outputText align="center" value="#{userController.userName}" /></p>
-			<p>
-				<p:inputNumber id="new_ballance" symbol="#{msgs['text.currencySymbol']}" symbolPosition="s" decimalSeparator="." thousandSeparator="," />
-				<p:commandButton type="button" value="#{msgs['text.walletAddBalance']}" styleClass="rounded-button" />
-			</p>
-		</h:form>
-	</p:panel>
-    <p:divider />
-    <h:form id="form-transaction">
-		<p:toolbar>
-            <p:toolbarGroup align="center">
-                <p:commandButton value="#{msgs['text.newTransaction']}" icon="pi pi-plus" 
-                                 styleClass="ui-button-success" style="margin-right: .5rem"  action="#{userController.createUser}" />
-            </p:toolbarGroup>
-        </p:toolbar>
-        <p:dataTable id="dt-transactions" widgetVar="dtTransactions" var="transaction" value="#{transactionController.transactions}"
-                     reflow="true" styleClass="products-table"
-                     rowKey="#{transaction.id}" paginator="true"
-                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
-            <f:facet name="header">
-                <div class="products-table-header">
-                    <span style="font-weight: bold">TRANSACTIONS</span>
-                    <span class="filter-container ui-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <p:inputText id="globalFilter" onkeyup="PF('dtTransactions').filter()" placeholder="Search"/>
-                    </span>
-                </div>
-            </f:facet>
-            <p:column headerText="Emitter" sortBy="#{transaction.emitter.name}" filterBy="#{transaction.emitter.name}">
-                <h:outputText value="#{transaction.emitter.name}"/>
-            </p:column>
-			<p:column headerText="Receiver" sortBy="#{transaction.receiver.name}" filterBy="#{transaction.receiver.name}">
-                <h:outputText value="#{transaction.receiver.name}"/>
-            </p:column>
-			<p:column headerText="Value" sortBy="#{transaction.value}">
-                <h:outputText value="#{transaction.value}" style="font-weight: 700">
-                    <f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency"/>
-                </h:outputText>
-            </p:column>   
-			<p:column headerText="Date" sortBy="#{transaction.created_at}">
-				<h:outputText value="#{transaction.created_at}"/>
-            </p:column>    
-        </p:dataTable>
-      </h:form>
-</p:card>
-	<p><h:outputText value="#{msgs['text.home.about01']}" /></p>
-	
-	<p><h:outputText value="#{msgs['text.home.about02']}" escape="false" /></p>
+	<h:form id="form-login">
+		<p:card>
+			<div align="center">
+			 	<p><h:outputText value="#{msgs['text.home.about01']}" /></p>
+			 	<p><p:commandButton id="loginButton" styleClass="rounded-button" value="#{msgs['login.button.main']}" ajax="false"  action="#{sessionController.redirectLoggin}" update="@form" /></p>
+			 	<p><p:button value="#{msgs['login.button.main']}" styleClass="rounded-button"  outcome="/login.xhtml" ajax="false" /></p>
+			 </div>
+		</p:card>
+	</h:form>
 </ui:define>
-
+<ui:define name="footer">
+		<p><h:outputText value="#{msgs['text.home.about02']}" escape="false" /></p>
+		<h:outputText value="#{msgs['text.developedBy']}" escape="false" />
+		<div class="pull-right hidden-xs" style="color: gray">
+			<i>1.0.0</i>
+		</div>
+</ui:define>
 </ui:composition>

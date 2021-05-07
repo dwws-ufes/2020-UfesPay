@@ -9,9 +9,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -150,6 +147,15 @@ public class Transaction extends PersistentObjectSupport implements Comparable<T
 	public int compareTo(Transaction o) {
 		// FIXME: auto-generated method stub
 		return super.compareTo(o);
+	}
+	
+	public boolean isLikedByUser(User user) {
+		if (this.likes == null) {
+			return false;
+		}
+		else {
+			return this.likes.contains(user);
+		}
 	}
 	
 	public boolean equals​(Object obj) {

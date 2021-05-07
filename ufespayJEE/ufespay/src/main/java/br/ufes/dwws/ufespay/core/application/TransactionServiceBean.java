@@ -54,8 +54,8 @@ public class TransactionServiceBean implements TransactionService {
 			receiver.getWallet().setBalance(receiverBalance);
 			receiver.getWallet().getTransactions().add(newTransaction);
 
-			this.walletDAO.save(emitter.getWallet());
-			this.walletDAO.save(receiver.getWallet());
+			//this.walletDAO.save(emitter.getWallet());
+			//this.walletDAO.save(receiver.getWallet());
 			this.transactionDAO.save(newTransaction);
 
 			return newTransaction;
