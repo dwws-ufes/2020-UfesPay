@@ -35,19 +35,3 @@ function App() {
 }
 
 export default App;
-
-{/* <ProtectedRoute 
-  path="/*"
-  element={
-    <Layout>
-      
-      <ProtectedRoute 
-        path="/home" 
-        element={<Home />}/>
-
-      <ProtectedRoute 
-        path="/transfer" 
-        element={<Transfer />}/>
-
-    </Layout>
-  }/> */}

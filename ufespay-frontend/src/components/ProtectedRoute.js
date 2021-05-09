@@ -12,7 +12,7 @@ function ProtectedRoute(props) {
       {user != undefined ? (
             <Route path={props.path}>
               
-              {props.hasNav ? <Navtop /> : <></>}
+              {props.hasNav && <Navtop />}
 
               {props.element}
               
