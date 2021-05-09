@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+// import { autoInjectable } from 'tsyringe';
 
 import { IUserRepository } from '../database/repositories/UserRepository';
 import { IWalletRepository } from '../database/repositories/WalletRepository';
 
+// @autoInjectable()
 export interface IUserController {
   userRepository: IUserRepository;
   walletRepository: IWalletRepository;
@@ -90,14 +92,16 @@ class UserController implements IUserController {
 
       const user = await this.userRepository.findById(userId);
 
-      if(newPassword && user.password !== password) {
+      if(newPassword && user?.password !== password) {
         return res.status(400).json({ message: 'Wrong password.' });
       } 
 
       const newUserData = { name, email, password: newPassword };
+      let newUser = {};
 
-      Object.keys(newUserData).forEach(key => {
-        if (!newUserData[key]) delete newUserData[key];
+      Object.keys(newUserData).forEach((key, value) => {
+        if(value)
+          newUser = {...newUser, [key]: value}
       });
 
       const updatedUser = await this.userRepository.update(userId, newUserData);
@@ -121,7 +125,7 @@ class UserController implements IUserController {
       }
 
       // delete wallet
-      await this.walletRepository.delete(user.wallet);
+      await this.walletRepository.delete(user.wallet.id);
 
       // delete user
       await this.userRepository.delete(user.email);

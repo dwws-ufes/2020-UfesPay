@@ -11,10 +11,12 @@ export default function News() {
 
   useEffect(() => {
     const loadData = async () => {
+
       const resp = await listTransactions();
+
       setTransactions(resp.transactions);
     };
-
+    
     loadData();
   }, []);
 
@@ -22,7 +24,7 @@ export default function News() {
     <div className="container-transactions-list">
       <div className="content-transactions-list">
         {transactions.map(transaction => (
-          <TransferCard key={transaction._id} transaction={transaction} />
+          <TransferCard key={transaction.id} transaction={transaction} />
         ))}
       </div>
     </div>

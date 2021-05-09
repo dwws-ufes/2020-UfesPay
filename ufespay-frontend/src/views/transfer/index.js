@@ -57,7 +57,7 @@ export default function Transaction() {
         })}. Deseja confirma a transferência?`,
       );
       if (isConfirmed) {
-        pay(receiver._id, value, message).then(() => {
+        pay(receiver.id, value, message).then(() => {
           fireToastAlert('success', 'Success!');
           refreshUser();
           history.push('/home');
