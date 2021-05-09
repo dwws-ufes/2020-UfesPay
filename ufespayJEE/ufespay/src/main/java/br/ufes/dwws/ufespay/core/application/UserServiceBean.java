@@ -35,8 +35,28 @@ public class UserServiceBean implements UserService {
 	@EJB
 	private CommentService commentService;
 
-	public void createUser() {
-		
+	public User createUser(String name, String email, String password, BigDecimal initialBalance) {
+		 return this.createNewUser(name,email,password,initialBalance); 
+	}
+	
+	@Transactional
+	private User createNewUser(String name, String email, String password, BigDecimal initialBalance) {
+		User newUser = new User();
+		Wallet newUserWallet = new Wallet();
+
+		newUser.setName(name);
+		newUser.setEmail(email);
+		newUser.setPassword(password);
+		newUser.setWallet(newUserWallet);
+
+		newUserWallet.setBalance(initialBalance);
+		newUserWallet.setOwner(newUser);
+
+		//walletDAO.save(newUser.getWallet());
+		userDAO.save(newUser);
+
+		return newUser;
+
 	}
 	
 	@Override
@@ -127,25 +147,7 @@ public class UserServiceBean implements UserService {
 		//userDAO.save(user);
 	}
 
-	@Transactional
-	private User createNewUser(String name, String email, String password, BigDecimal initialBalance) {
-		User newUser = new User();
-		Wallet newUserWallet = new Wallet();
 
-		newUser.setName(name);
-		newUser.setEmail(email);
-		newUser.setPassword(password);
-		newUser.setWallet(newUserWallet);
-
-		newUserWallet.setBalance(initialBalance);
-		newUserWallet.setOwner(newUser);
-
-		walletDAO.save(newUser.getWallet());
-		userDAO.save(newUser);
-
-		return newUser;
-
-	}
 
 	@Transactional
 	private Transaction createTransaction(User emitter, User receiver, BigDecimal value, String message) {

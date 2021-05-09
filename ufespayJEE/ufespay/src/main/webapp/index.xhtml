@@ -21,8 +21,7 @@
 		<p:card>
 			<div align="center">
 			 	<p><h:outputText value="#{msgs['text.home.about01']}" /></p>
-			 	<p><p:commandButton id="loginButton" styleClass="rounded-button" value="#{msgs['login.button.main']}" ajax="false"  action="#{sessionController.redirectLoggin}" update="@form" /></p>
-			 	<p><p:button value="#{msgs['login.button.main']}" styleClass="rounded-button"  outcome="/login.xhtml" ajax="false" /></p>
+			 	<p><p:button value="#{msgs['login.button.main']}" styleClass="rounded-button"  outcome="/core/loginUser/index.xhtml" ajax="false" /></p>
 			 </div>
 		</p:card>
 	</h:form>
