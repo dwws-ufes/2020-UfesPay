@@ -67,7 +67,7 @@ class UserRepository implements IUserRepository {
   async getOthers(id: string) {
     const findUsers = await this.ormRepository.find({
       where: { id: Not(id) },
-      select: ['name', 'email'],
+      select: ['id', 'name', 'email'],
     });
 
     return findUsers || [];

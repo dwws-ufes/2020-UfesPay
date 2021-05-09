@@ -39,8 +39,6 @@ export const AuthProvider = ({ children }) => {
 
   }, []);
 
-
-
   const logOut = useCallback(async () => {
     await signOut();
     api.defaults.headers.common.authorization = undefined;
@@ -50,8 +48,6 @@ export const AuthProvider = ({ children }) => {
     setUser(undefined);
 
   }, [history]);
-
-
 
   return (
     <AuthContext.Provider value={{ user, logOut, logIn, refreshUser }}>

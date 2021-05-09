@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { IUserRepository } from '../database/repositories/UserRepository';
 import { IWalletRepository } from '../database/repositories/WalletRepository';
 import { ITransactionRepository } from '../database/repositories/TransactionRepository';
+import User from 'database/models/User';
 
 export interface ITransactionController {
   transactionRepository: ITransactionRepository;
@@ -34,10 +35,12 @@ class TransactionController implements ITransactionController {
   }
 
   async list(req: Request, res: Response) {
+
     try {
       const transactions = await this.transactionRepository.getAll();
-  
+
       return res.status(200).json({ transactions });
+      
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: 'Something went wrong!' });
@@ -95,6 +98,8 @@ class TransactionController implements ITransactionController {
     try {
       const { userId } = req;
       const { transactionId } = req.body;
+
+      console.log(req.body)
 
       const transaction = await this.transactionRepository.findById(transactionId);
 

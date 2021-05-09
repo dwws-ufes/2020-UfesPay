@@ -23,12 +23,15 @@ class TransactionRepository implements ITransactionRepository {
   }
 
   async getAll() {
+
     const transactions = await this.ormRepository.find({
       join: {
         alias: "transaction",
         leftJoinAndSelect: {
             comments: "transaction.comments",
-            author: "comments.author"
+            author: "comments.author",
+            emitter: "transaction.emitter",
+            receiver: "transaction.receiver"
         }
       }
     });

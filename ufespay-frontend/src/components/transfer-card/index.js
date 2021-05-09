@@ -66,7 +66,7 @@ const TransferCard = ({ transaction }) => {
     e => {
       e.preventDefault();
       if (!newComment) return;
-      addComment(transac._id, newComment).then(resp => {
+      addComment(transac.id, newComment).then(resp => {
         const updatedTransaction = { ...transac };
         updatedTransaction.comments.push(resp.comment);
         setTransac(updatedTransaction);
@@ -86,7 +86,7 @@ const TransferCard = ({ transaction }) => {
       deleteComment(id).then(resp => {
         const updatedTransaction = { ...transac };
         updatedTransaction.comments = updatedTransaction.comments.filter(
-          comment => comment._id !== id,
+          comment => comment.id !== id,
         );
         setTransac(updatedTransaction);
       });
@@ -95,7 +95,7 @@ const TransferCard = ({ transaction }) => {
   );
 
   const handleLike = useCallback(() => {
-    toggleLike(transac._id).then(() => {
+    toggleLike(transac.id).then(() => {
       const updatedTransaction = { ...transac };
       const liked = !!updatedTransaction.likes.filter(
         likeAuthor => likeAuthor === user._id,
@@ -159,13 +159,13 @@ const TransferCard = ({ transaction }) => {
           </Typography>
 
           {transac.comments.map(comment => (
-            <ul key={comment._id}>
+            <ul key={comment.id}>
               <div id="comment">
                 <Typography>
                   <strong>{comment.author.name}:</strong> {comment.text}
                 </Typography>
                 {comment.author._id === user._id && (
-                  <IconButton onClick={() => handleDeleteComment(comment._id)}>
+                  <IconButton onClick={() => handleDeleteComment(comment.id)}>
                     <Delete />
                   </IconButton>
                 )}

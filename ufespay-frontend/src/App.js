@@ -7,9 +7,7 @@ import Home from './views/home';
 import Transfer from './views/transfer';
 
 import ProtectedRoute from './components/ProtectedRoute';
-// import PublicRoute from './components/PublicRoute';
 import { AuthProvider } from './hooks/auth';
-import Layout from './components/Layout';
 
 function App() {
   return (
@@ -18,15 +16,17 @@ function App() {
         <Switch>
           <AuthProvider>
             <Route path="/" exact component={LandingPage} />
-            <Layout>
-              <ProtectedRoute 
-                path="/home" 
-                element={<Home />}/>
 
-              <ProtectedRoute 
-                path="/transfer" 
-                element={<Transfer />}/>
-            </Layout>
+            <ProtectedRoute 
+              path="/home"
+              hasNav={true}
+              element={<Home />}/>
+
+            <ProtectedRoute 
+              path="/transfer"
+              hasNav={true}
+              element={<Transfer />}/>
+
           </AuthProvider>
         </Switch>
       </BrowserRouter>
