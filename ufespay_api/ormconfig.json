@@ -5,7 +5,7 @@
   "port": 5432,
   "username": "postgres",
   "password": "docker",
-  "database": "ufespay",
+  "database": "postgres",
   "synchronize": true,
   "migrations": [
     "./src/database/migrations/*.ts"

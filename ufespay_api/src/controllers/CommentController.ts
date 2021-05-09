@@ -38,6 +38,8 @@ class CommentController implements ICommentController {
       const { text, transactionId } = req.body;
       const { userId } = req;
 
+      console.log(req.body);
+
       const transaction = await this.transactionRepository.findById(transactionId);
       const user = await this.userRepository.findById(userId);
   
@@ -66,6 +68,8 @@ class CommentController implements ICommentController {
     try {
       const { userId } = req;
       const { id } = req.query;
+
+      console.log(req.query)
       
       const comment = await this.commentRepository.findById(id as string);
 

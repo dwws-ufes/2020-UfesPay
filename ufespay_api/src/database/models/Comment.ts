@@ -23,7 +23,7 @@ class Comment {
   @Column()
   author_id: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User) // era onetoone
   @JoinColumn({ name: 'author_id' })
   author: User;
 
