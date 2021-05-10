@@ -59,9 +59,9 @@ public class TransactionController extends JSFController {
 	public void toggleLike() throws IOException {
 		User currentUser = this.loginUserController.getCurrentUser();
 		if (this.selectedTransaction.isLikedByUser(currentUser)) {
-			this.transactionService.disLikeTransaction(currentUser, selectedTransaction);
+			this.selectedTransaction = this.transactionService.disLikeTransaction(currentUser, selectedTransaction);
 		} else {
-			this.transactionService.likeTransaction(currentUser, selectedTransaction);
+			this.selectedTransaction = this.transactionService.likeTransaction(currentUser, selectedTransaction);
 		}
 		Utils.redirectsToUrl("/ufespay/core/transactionManage/index.xhtml");
 	}

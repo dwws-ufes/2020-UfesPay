@@ -26,7 +26,7 @@ public interface TransactionService extends Serializable {
 	
 	public Transaction getTransactionById(Long transacId);
 	
-	public boolean likeTransaction(User user, Transaction transac);
+	public Transaction likeTransaction(User user, Transaction transac);
 	
-	public boolean disLikeTransaction(User user, Transaction transac);
+	public Transaction disLikeTransaction(User user, Transaction transac);
 }

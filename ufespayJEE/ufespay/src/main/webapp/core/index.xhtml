@@ -24,19 +24,33 @@
 
 <p:card>
 	<h:form id="form-wallet">
+		
 		<p:messages id="messages" showDetail="true" closable="true">
             <p:autoUpdate/>
         </p:messages>
-		<p:panel header="#{loginUserController.currentUser.name}" align="center">
-			 <h:outputText align="center" value="#{msgs['text.currentAmount']}" /> 
-			   <h:outputText align="center" value="#{userController.currentAmountBalance}" /> <br/>
+        
+		<p:panel header="#{loginUserController.currentUser.name}" style="display:block; text-align:center">
+			 <p:avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" style="background-color:#2196F3; color: #ffffff" shape="circle" /> <br/>
+			 
+			 <h:outputText align="center" value="#{msgs['text.currentAmount']}" />  <br/>
+			 
+			 <h:outputText align="center" value="#{userController.currentAmountBalance}" > 
+			 	<f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency" maxFractionDigits="2" locale="#{loginUserController.userLocale}"/>
+			 </h:outputText>
+			 
+			 <br/>
+			   
 				<p:inputNumber id="new_ballance" symbol="#{msgs['text.currencySymbol']}" 
 												value="#{userController.addNewAmountBalance}" symbolPosition="p" decimalSeparator="," thousandSeparator="." 
 												emptyValue="zero"/>
+												
 				 <p:commandButton value="#{msgs['text.walletAddBalance']}" icon="pi pi-plus" 
                                  styleClass="ui-button-success" action="#{userController.addWalletAmount}" update="@form"/>      								
 		</p:panel>
+		
     </h:form>
+    
+    
     <p:divider />
     
     <h:form id="form-transaction">
@@ -69,7 +83,7 @@
             	</p:column>
 				<p:column headerText="#{msgs['text.transactionDataTableValue']}" sortBy="#{transaction.value}">
                 	<h:outputText value="#{transaction.value}" style="font-weight: 700">
-                    <f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency" maxFractionDigits="2"/>
+                    <f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency" maxFractionDigits="2" locale="#{loginUserController.userLocale}"/>
 	                </h:outputText>
     	        </p:column>   
 				<p:column headerText="#{msgs['text.transactionDataTableDate']}" sortBy="#{transaction.created_at}">

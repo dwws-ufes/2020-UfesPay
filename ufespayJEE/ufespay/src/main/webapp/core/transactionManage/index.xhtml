@@ -34,9 +34,9 @@
 	                    </div>
 						<div class="p-field">
 	                        <p:outputLabel for="transacValue" value="#{msgs['text.updateTransaction.value']}"/>
-							<p:inputNumber id="transacValue" value="#{transactionController.selectedTransaction.value}"
-                                           symbol="#{msgs['text.currencySymbol']}" symbolPosition="p"
-                                           decimalSeparator="," thousandSeparator="." readonly="true"/>
+								<h:outputText id="transacValue" value="#{transactionController.selectedTransaction.value}" > 
+			 						<f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency" maxFractionDigits="2" locale="#{loginUserController.userLocale}"/>
+			 					</h:outputText>
 	                    </div>
 						<div class="p-field">
 	                        <p:outputLabel for="transacDateCreate" value="#{msgs['text.updateTransaction.createDt']}"/>
@@ -47,20 +47,26 @@
             	
             	<p:divider />
             	<p:card id="likeTransacCard" class="ui-fluid">
-            		<p:outputPanel id="transacLikeHolder" class="ui-fluid">
-           				<p:commandButton for ="transacLikeHolder" icon="pi pi-heart" 
-                                 styleClass="rounded-button ui-button-help" 
-                                 action="#{transactionController.toggleLike}" 
-                                 rendered="#{transactionController.selectedTransaction.isLikedByUser(loginUserController.currentUser)}"
-                                 update="@form"/>      	
-
-           				<p:commandButton for ="transacLikeHolder" icon="pi pi-heart" 
+					<p:outputLabel for="likePanel" value="#{msgs['text.updateTransaction.likeDataText']}"/>
+					<p:outputPanel id="likePanel" class="ui-fluid">
+           				<p:commandButton for ="likeTransacCard" icon="pi pi-heart"
+           						 style="background-color:pink" 
                                  styleClass="rounded-button ui-button-help ui-button-outlined" 
                                  action="#{transactionController.toggleLike}" 
+                                 rendered="#{transactionController.selectedTransaction.isLikedByUser(loginUserController.currentUser)}"
+                                 update="@parent"/>      	
+
+           				<p:commandButton for ="likeTransacCard" icon="pi pi-heart" 
+                                 styleClass="rounded-button ui-button-help ui-button-outlined" 
+                                 style="background-color:transparent"
+                                 action="#{transactionController.toggleLike}" 
                                  rendered="#{not transactionController.selectedTransaction.isLikedByUser(loginUserController.currentUser)}"
-                                 update="@form"/>      	
+                                 update="@parent"/>      	
             		</p:outputPanel>  
+            		
+
             	</p:card>	          	
+
             	<p:divider />
             	<p:divider />
             	

@@ -71,26 +71,26 @@ public class TransactionServiceBean implements TransactionService {
 		}
 	}
 
-	public boolean likeTransaction(User user, Transaction transac) {
+	public Transaction likeTransaction(User user, Transaction transac) {
 		User retrievedUser = this.userDAO.retrieveById(user.getId());
 		Transaction retrievedTransac = this.transactionDAO.retrieveById(transac.getId());
 		if ((retrievedUser!=null)&&(retrievedTransac!=null)) {
 			retrievedTransac.getLikes().add(retrievedUser);
 			this.transactionDAO.save(retrievedTransac);
-			return true;
+			return retrievedTransac;
 		}else
-			return false;
+			return retrievedTransac;
 	}
 
-	public boolean disLikeTransaction(User user, Transaction transac) {
+	public Transaction disLikeTransaction(User user, Transaction transac) {
 		User retrievedUser = this.userDAO.retrieveById(user.getId());
 		Transaction retrievedTransac = this.transactionDAO.retrieveById(transac.getId());
 		if ((retrievedUser!=null)&&(retrievedTransac!=null)) {
 			retrievedTransac.getLikes().remove(retrievedUser);
 			this.transactionDAO.save(retrievedTransac);
-			return true;
+			return retrievedTransac;
 		}else
-			return false;
+			return retrievedTransac;
 	}
 
 	public void createTranscation(Transaction transac) {
