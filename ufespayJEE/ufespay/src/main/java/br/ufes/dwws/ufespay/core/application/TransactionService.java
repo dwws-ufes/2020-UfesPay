@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import br.ufes.dwws.ufespay.core.domain.Comment;
 import br.ufes.dwws.ufespay.core.domain.Transaction;
 import br.ufes.dwws.ufespay.core.domain.User;
 
@@ -21,4 +22,11 @@ public interface TransactionService extends Serializable {
 	
 	public List<Transaction> readAllTranscations();
 
+	public List<Comment> retrieveAllComments(Long transacId);
+	
+	public Transaction getTransactionById(Long transacId);
+	
+	public boolean likeTransaction(User user, Transaction transac);
+	
+	public boolean disLikeTransaction(User user, Transaction transac);
 }

@@ -2,6 +2,7 @@ package br.ufes.dwws.ufespay.core.application;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -36,7 +37,7 @@ public class UserServiceBean implements UserService {
 	private CommentService commentService;
 
 	public User createUser(String name, String email, String password, BigDecimal initialBalance) {
-		 return this.createNewUser(name,email,password,initialBalance); 
+		return this.createNewUser(name, email, password, initialBalance);
 	}
 	
 	@Transactional
@@ -52,26 +53,32 @@ public class UserServiceBean implements UserService {
 		newUserWallet.setBalance(initialBalance);
 		newUserWallet.setOwner(newUser);
 
-		//walletDAO.save(newUser.getWallet());
+		// walletDAO.save(newUser.getWallet());
 		userDAO.save(newUser);
 
 		return newUser;
 
 	}
-	
+
 	@Override
 	public User getByEmail(String email) {
 		return this.userDAO.getByEmail(email);
 	}
-	
 
 	// @Transactional
 	public void updateUser(User user) {
 		this.userDAO.update(user);
 	}
+	
+	public User getUserById(Long Id) {
+		return this.userDAO.retrieveById(Id);
+	}
 
-	
-	
+
+	public List<User> getOthers(Long Id) {
+		return this.userDAO.getOthers(Id);
+	}
+
 	private void populateDataBase() {
 		List<User> users = new ArrayList<User>();
 		User newUserA = this.createNewUser("AAAAA", "aaa@gmail.com", "123456", BigDecimal.valueOf(2000, 00));
@@ -85,46 +92,46 @@ public class UserServiceBean implements UserService {
 
 		Transaction transacAB = this.createTransaction(newUserA, newUserB, BigDecimal.valueOf(100, 00), "A para B");
 		if (transacAB != null) {
-			for(User aux  : users){
+			for (User aux : users) {
 				this.addLike(transacAB, aux);
 			}
 
 			for (int i = 0; i < 2; i++) {
-				createComment(transacAB,newUserC,"Comment C [" + i + "]");
+				createComment(transacAB, newUserC, "Comment C [" + i + "]");
 			}
 		}
 
 		Transaction transacAC = this.createTransaction(newUserA, newUserC, BigDecimal.valueOf(50, 00), "A para C");
 		if (transacAC != null) {
-			for(User aux  : users){
+			for (User aux : users) {
 				this.addLike(transacAC, aux);
 			}
 
 			for (int i = 0; i < 2; i++) {
-				createComment(transacAC,newUserB,"Comment B [" + i + "]");
+				createComment(transacAC, newUserB, "Comment B [" + i + "]");
 			}
 		}
 
 		Transaction transacBC = this.createTransaction(newUserB, newUserC, BigDecimal.valueOf(80, 00), "B para C");
 		if (transacBC != null) {
-			for(User aux  : users){
+			for (User aux : users) {
 				this.addLike(transacBC, aux);
 			}
 			for (int i = 0; i < 2; i++) {
-				createComment(transacBC,newUserA,"Comment A [" + i + "]");
+				createComment(transacBC, newUserA, "Comment A [" + i + "]");
 			}
 
 			for (int i = 0; i < 2; i++) {
-				createComment(transacBC,newUserB,"Comment B [" + i + "]");
+				createComment(transacBC, newUserB, "Comment B [" + i + "]");
 			}
 			transactionService.updateTranscation(transacBC);
 
 			for (int i = 0; i < 2; i++) {
-				createComment(transacBC,newUserC,"Comment C [" + i + "]");
+				createComment(transacBC, newUserC, "Comment C [" + i + "]");
 			}
-		}		
+		}
 	}
-	
+
 	@Transactional
 	private Comment createComment(Transaction transac, User author, String message) {
 		Comment newComment = new Comment();
@@ -132,22 +139,20 @@ public class UserServiceBean implements UserService {
 		newComment.setAuthor(author);
 		newComment.setTransaction(transac);
 		transac.getComments().add(newComment);
-		
+
 		commentService.createComment(newComment);
 		transactionService.updateTranscation(transac);
-		
+
 		return newComment;
 	}
-	
+
 	@Transactional
-	private void addLike(Transaction transac,User user) {
+	private void addLike(Transaction transac, User user) {
 		transac.getLikes().add(user);
-		//user.getLikedTransactions().add(transac);
+		// user.getLikedTransactions().add(transac);
 		transactionService.updateTranscation(transac);
-		//userDAO.save(user);
+		// userDAO.save(user);
 	}
-
-
 
 	@Transactional
 	private Transaction createTransaction(User emitter, User receiver, BigDecimal value, String message) {

@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -46,31 +47,25 @@ public class CreateAccountController extends JSFController {
 					Faces.getExternalContext().getFlash().setKeepMessages(true);
 					Faces.redirect("/ufespay/core/loginUser/index.xhtml");
 					// loginUserController.login
-				}catch(NoSuchAlgorithmException e){
-					Faces.getExternalContext().getFlash().setKeepMessages(true);
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"error encripting user password", "error encripting user password"));
-					Faces.redirect("/ufespay/core/createAccount/index.xhtml");
+				} catch (NoSuchAlgorithmException e) {
+					Utils.showMessageRedirec("error encripting user password", "error encripting user password",
+							"/ufespay/core/createAccount/index.xhtml", FacesMessage.SEVERITY_ERROR);
 				}
 			} else {
-				Faces.getExternalContext().getFlash().setKeepMessages(true);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-						"password does not macth", "password does not macth"));
-				Faces.redirect("/ufespay/core/createAccount/index.xhtml");
+				Utils.showMessageRedirec("password does not macth", "password does not macth",
+						"/ufespay/core/createAccount/index.xhtml", FacesMessage.SEVERITY_WARN);
 			}
 		} else {
-			Faces.getExternalContext().getFlash().setKeepMessages(true);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "email already registred", "email already registred"));
-			Faces.redirect("/ufespay/core/createAccount/index.xhtml");
+			Utils.showMessageRedirec("email already registred",  "email already registred",
+					"/ufespay/core/createAccount/index.xhtml", FacesMessage.SEVERITY_WARN);
 		}
 
 	}
-	
+
 	private boolean validatePassword(String pass1, String pass2) {
-		return (Utils.checkStringIsNUllEmpty(pass1))&&(Utils.checkStringIsNUllEmpty(pass2))&&(pass1.equals(pass2));
+		return (Utils.checkStringIsNUllEmpty(pass1)) && (Utils.checkStringIsNUllEmpty(pass2)) && (pass1.equals(pass2));
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}

@@ -45,7 +45,7 @@ public class UserController extends JSFController {
 
 	public void addWalletAmount() throws IOException {
 
-		if (addNewAmountBalance.compareTo(BigDecimal.valueOf(0.0)) >= 0) {
+		if (addNewAmountBalance.compareTo(BigDecimal.valueOf(0.0)) > 0) {
 			// amount > 0
 			this.user = userService.getByEmail(user.getEmail());
 			this.currentAmountBalance = this.user.getWallet().getBalance();

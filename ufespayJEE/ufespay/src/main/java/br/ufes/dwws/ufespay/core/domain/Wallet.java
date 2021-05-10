@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
@@ -31,7 +32,7 @@ public class Wallet extends PersistentObjectSupport implements Comparable<Wallet
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created_at;
 
-	@OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	//private List <Transaction>transactions = new ArrayList<Transaction>();
 	private Set <Transaction>transactions = new HashSet<Transaction>();
 	

@@ -3,6 +3,7 @@ package br.ufes.dwws.ufespay.core.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Locale;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
@@ -17,7 +18,6 @@ import org.omnifaces.util.Faces;
 
 import br.ufes.dwws.ufespay.core.application.UserService;
 import br.ufes.dwws.ufespay.core.domain.User;
-import br.ufes.dwws.ufespay.core.util.AppSetupSettings;
 import br.ufes.dwws.ufespay.core.util.Utils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.JSFController;
 
@@ -40,6 +40,8 @@ public class LoginUserController extends JSFController {
 	private String email;
 
 	private String password;
+	
+	private Locale userLocale;
 
 	/*@PostConstruct
 	private void setupLoggedUser() {
@@ -51,6 +53,7 @@ public class LoginUserController extends JSFController {
 	public void login() throws IOException {
 		try {
 			this.currentUser = userService.getByEmail(email);
+			this.userLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
 			//
 			if ((this.currentUser != null)&& (Utils.validatePassword(this.password, this.currentUser.getPassword()))) {
 				/*HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -117,4 +120,14 @@ public class LoginUserController extends JSFController {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Locale getUserLocale() {
+		return userLocale;
+	}
+
+	public void setUserLocale(Locale userLocale) {
+		this.userLocale = userLocale;
+	}
+	
+	
 }

@@ -24,13 +24,31 @@
 	                        <p:outputLabel for="emitterNameNew" value="#{msgs['text.newTransaction.emitter']}" />
 	                        <p:inputText id="emitterNameNew" value="#{transactionController.selectedTransaction.emitter.name}" readonly="true"/>
 	                    </div>
+	                    <div class="p-field p-col-12 p-md-4">
+                			<p:outputLabel for="receiverSelection" value="#{msgs['text.newTransaction.emitterSel']}"/>
+							<p:selectOneMenu id="receiverSelection"
+									value="#{transactionController.selectedEmiter}"
+									converter="omnifaces.SelectItemsConverter">
+									<p:ajax event="change" process="@this" />
+									<f:selectItems value="#{transactionController.availabeReceivers}"
+												var="emitterSelected" itemLabel="#{emitterSelected.name}"
+												itemValue="#{emitterSelected}"></f:selectItems>
+							</p:selectOneMenu>	
+            			</div>
 	                    <div class="p-field">
-	                        <p:outputLabel for="receiverNameNew" value="#{msgs['text.newTransaction.selectReceiver']}" />
-	                        <p:inputText id="receiverNameNew" value="#{transactionController.selectedTransaction.emitter.name}"/>
+	                        <p:outputLabel for="transacMaxValueNew" value="#{msgs['text.newTransaction.maxvalue']}" />
+	                        	<p:inputNumber id="transacMaxValueNew" symbol="#{msgs['text.currencySymbol']}" 
+												value="#{transactionController.selectedTransaction.wallet.balance}" symbolPosition="p" 
+												decimalSeparator="," thousandSeparator="." readonly="true"/>
+	                        <!--  <p:inputText id="transacMaxValueNew" value="#{transactionController.selectedTransaction.wallet.balance}" readonly="true"/> -->
 	                    </div>
-	                    <div class="p-field">
+						<div class="p-field">
 	                        <p:outputLabel for="transacValueNew" value="#{msgs['text.newTransaction.value']}" />
-	                        <p:inputText id="transacValueNew" value="#{transactionController.selectedTransaction.value}"/>
+	                        <p:inputText id="transacValueNew" value="#{transactionController.selectedTransaction.value}"  required="true"/>
+	                    </div>
+						<div class="p-field">
+	                        <p:outputLabel for="transacMsgNew" value="#{msgs['text.newTransaction.msg']}" />
+	                        <p:inputText id="transacMsgNew" value="#{transactionController.selectedTransaction.message}"  required="true"/>
 	                    </div>
             	</p:outputPanel>
             	

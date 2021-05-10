@@ -19,36 +19,101 @@
 	<ui:define name="body">
 	<h:form id="form-newTransaction">
 		<div class="card">
-		            	<p:outputPanel id="manage-transaction-content" class="ui-fluid">
+				<p:messages id="messages" showDetail="true">
+					<p:autoUpdate />
+				</p:messages>	
+		        <p:outputPanel id="manage-transaction-content" class="ui-fluid">
             		<p:outputPanel rendered="#{not empty transactionController.selectedTransaction}">
 	            		<div class="p-field">
-	                        <p:outputLabel for="emitterName" value="#{msgs['text.transactionDataTableEmitter']}" />
+	                        <p:outputLabel for="emitterName" value="#{msgs['text.updateTransaction.emitter']}" />
 	                        <p:inputText id="emitterName" value="#{transactionController.selectedTransaction.emitter.name}" readonly="true"/>
 	                    </div>
 						<div class="p-field">
-	                        <p:outputLabel for="receiverName" value="#{msgs['text.transactionDataTableReceiver']}"/>
+	                        <p:outputLabel for="receiverName" value="#{msgs['text.updateTransaction.receiver']}"/>
 	                        <p:inputText id="receiverName" value="#{transactionController.selectedTransaction.receiver.name}" readonly="true"/>
 	                    </div>
 						<div class="p-field">
-	                        <p:outputLabel for="transacValue" value="#{msgs['text.transactionDataTableValue']}"/>
+	                        <p:outputLabel for="transacValue" value="#{msgs['text.updateTransaction.value']}"/>
 							<p:inputNumber id="transacValue" value="#{transactionController.selectedTransaction.value}"
                                            symbol="#{msgs['text.currencySymbol']}" symbolPosition="p"
                                            decimalSeparator="," thousandSeparator="." readonly="true"/>
 	                    </div>
+						<div class="p-field">
+	                        <p:outputLabel for="transacDateCreate" value="#{msgs['text.updateTransaction.createDt']}"/>
+							<h:outputText id="transacDateCreate"  value="#{transactionController.selectedTransaction.created_at}"/>
+	                    </div>        
             		</p:outputPanel>	
             	</p:outputPanel>
             	
-                <p:commandButton value="#{msgs['text.updateTransaction.update']}"  icon="pi pi-check" 
-                						actionListener="#{transactionController.updateTransaction}"
-                						update="@form"/>
+            	<p:divider />
+            	<p:card id="likeTransacCard" class="ui-fluid">
+            		<p:outputPanel id="transacLikeHolder" class="ui-fluid">
+           				<p:commandButton for ="transacLikeHolder" icon="pi pi-heart" 
+                                 styleClass="rounded-button ui-button-help" 
+                                 action="#{transactionController.toggleLike}" 
+                                 rendered="#{transactionController.selectedTransaction.isLikedByUser(loginUserController.currentUser)}"
+                                 update="@form"/>      	
+
+           				<p:commandButton for ="transacLikeHolder" icon="pi pi-heart" 
+                                 styleClass="rounded-button ui-button-help ui-button-outlined" 
+                                 action="#{transactionController.toggleLike}" 
+                                 rendered="#{not transactionController.selectedTransaction.isLikedByUser(loginUserController.currentUser)}"
+                                 update="@form"/>      	
+            		</p:outputPanel>  
+            	</p:card>	          	
+            	<p:divider />
+            	<p:divider />
+            	
+            	<p:card id="addCommentCard" class="ui-fluid">
+         				   	<p:inputText id="commentText" value="#{transactionController.newComment.text}" maxlength="140"/>
+            				<p:commandButton for ="commentText" value="#{msgs['text.updateTransaction.addComment']}" icon="pi pi-plus" 
+                                 styleClass="ui-button-success" action="#{transactionController.addCommentTransac}" update="@form"/>      	
+            	</p:card>
+            	
+            	<p:divider />
+            	
+				<p:card id="transactionComments" class="ui-fluid">
+					        <p:dataTable id="dt-comments" widgetVar="dtComments" var="currentComment" 
+					        				value="#{transactionController.selectedTransaction.comments}"
+                     						reflow="true" styleClass="products-table"
+                     						rowKey="#{currentComment.id}" paginator="true"
+                     						rows="10" rowSelectMode="add" 
+                     						paginatorPosition="bottom" 
+                     						selectionMode="single" 
+                     						disabledSelection="true">
+                     						
+                     			<f:facet name="header">
+                     				<div class="products-table-header">
+                    					<span style="font-weight: bold">
+                    						<h:outputText align="center" 
+                    					                  value="#{msgs['text.updateTransaction.commentDataHeader']}" />
+                    					</span>
+                    					<span class="filter-container ui-input-icon-left">
+                        				<i class="pi pi-search"></i>
+                        					<p:inputText id="globalFilter" onkeyup="PF('dtComments').filter()" placeholder="Search"/>
+                    					</span>
+                					</div>
+            					</f:facet>
+            					
+								<p:column headerText="#{msgs['text.updateTransaction.commentDataAuthor']}" 
+											sortBy="#{currentComment.author.name}" 
+											filterBy="#{currentComment.author.name}">
+                							<h:outputText value="#{currentComment.author.name}"/>
+            					</p:column>
+            					
+            					<p:column headerText="#{msgs['text.updateTransaction.commentDataText']}" 
+											sortBy="#{currentComment.text}" 
+											filterBy="#{currentComment.text}">
+                							<h:outputText value="#{currentComment.text}"/>
+            					</p:column>
+                	</p:dataTable> 				
+            	</p:card>
+            	            	
+            	<p:divider />
                 						
                 <p:commandButton value="#{msgs['text.newTransaction.cancel']}"  icon="pi pi-times" 
                 				 action="#{transactionController.redirectsHome}"
                                  class="ui-button-secondary"/>
-                                 
-				<p:messages id="messages" showDetail="true">
-					<p:autoUpdate />
-				</p:messages>		
 			</div>
 		</h:form>
 	</ui:define>
@@ -59,6 +124,6 @@
 		<div class="pull-right hidden-xs" style="color: gray">
 			<i>1.0.0</i>
 		</div>
-</ui:define>
+	</ui:define>
 </ui:composition>
 
