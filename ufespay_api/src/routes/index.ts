@@ -7,25 +7,12 @@ import SessionController from '../controllers/SessionController';
 import TransactionController from '../controllers/TransactionController';
 import CommentController from '../controllers/CommentController';
 
-import UserRepository from '../database/repositories/UserRepository';
-import WalletRepository from '../database/repositories/WalletRepository';
-import TransactionRepository from '../database/repositories/TransactionRepository';
-import CommentRepository from '../database/repositories/CommentRepository';
+import { container } from 'tsyringe';
 
-const userController = new UserController();
-const sessionController = new SessionController();
-const transactionController = new TransactionController();
-const commentController = new CommentController();
-
-const userRepository = new UserRepository();
-const walletRepository = new WalletRepository();
-const transactionRepository = new TransactionRepository();
-const commentRepository = new CommentRepository();
-
-userController.setDependencies(userRepository, walletRepository)
-sessionController.setDependencies(userRepository)
-transactionController.setDependencies(transactionRepository, userRepository, walletRepository)
-commentController.setDependencies(transactionRepository, commentRepository, userRepository)
+const userController = container.resolve(UserController);
+const sessionController = container.resolve(SessionController);
+const transactionController = container.resolve(TransactionController);
+const commentController = container.resolve(CommentController);
 
 const routes = Router();
 

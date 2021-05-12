@@ -1,44 +1,33 @@
 import { Request, Response } from 'express';
+import { inject, injectable } from 'tsyringe';
 
 import { ICommentRepository } from '../database/repositories/CommentRepository';
 import { ITransactionRepository } from '../database/repositories/TransactionRepository';
 import { IUserRepository } from '../database/repositories/UserRepository';
 
 export interface ICommentController {
-  transactionRepository: ITransactionRepository;
-  commentRepository: ICommentRepository;
-  userRepository: IUserRepository;
-
-  setDependencies: (
-    transactionRepository: ITransactionRepository,
-    commentRepository: ICommentRepository,
-    userRepository: IUserRepository,
-  ) => void;
   create: (req: Request, res: Response) => Promise<Response>;
   delete: (req: Request, res: Response) => Promise<Response>;
 }
 
+@injectable()
 class CommentController implements ICommentController {
-  transactionRepository: ITransactionRepository;
-  commentRepository: ICommentRepository;
-  userRepository: IUserRepository;
 
-  setDependencies(
-    transactionRepository: ITransactionRepository,
-    commentRepository: ICommentRepository,
-    userRepository: IUserRepository,
-  ){
-    this.transactionRepository = transactionRepository;
-    this.commentRepository = commentRepository;
-    this.userRepository = userRepository;
-  }
+  constructor(
+    @inject('ITransactionRepository')
+    private transactionRepository: ITransactionRepository,
+
+    @inject('ICommentRepository')
+    private commentRepository: ICommentRepository,
+
+    @inject('IUserRepository')
+    private userRepository: IUserRepository,
+  ) { }
 
   async create(req: Request, res: Response) {
     try {
       const { text, transactionId } = req.body;
       const { userId } = req;
-
-      console.log(req.body);
 
       const transaction = await this.transactionRepository.findById(transactionId);
       const user = await this.userRepository.findById(userId);
@@ -68,8 +57,6 @@ class CommentController implements ICommentController {
     try {
       const { userId } = req;
       const { id } = req.query;
-
-      console.log(req.query)
       
       const comment = await this.commentRepository.findById(id as string);
 

@@ -1,5 +1,6 @@
 import Wallet from '../models/Wallet';
 import { Repository, getRepository } from 'typeorm';
+import { delay, registry } from 'tsyringe';
 
 export interface IWalletRepository{
   create: () => Promise<Wallet>;
@@ -8,6 +9,12 @@ export interface IWalletRepository{
   delete: (id: string) => Promise<void>;
 }
 
+@registry([
+  {
+    token: "IWalletRepository",
+    useToken: delay(() => WalletRepository)
+  }
+])
 class WalletRepository implements IWalletRepository {
   private ormRepository: Repository<Wallet>;
 

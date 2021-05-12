@@ -2,22 +2,20 @@ import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
 import { IUserRepository } from '../database/repositories/UserRepository';
+import { inject, injectable } from 'tsyringe';
 
 export interface ISessionController {
-  userRepository: IUserRepository;
-  setDependencies: (
-    userRepository: IUserRepository,
-  ) => void;
   signIn: (req: Request, res: Response) => Promise<Response>;
   signOut: (req: Request, res: Response) => Promise<Response>;
 }
 
+@injectable()
 class SessionController implements ISessionController{
-  userRepository: IUserRepository;
 
-  setDependencies(userRepository: IUserRepository){
-    this.userRepository = userRepository;
-  }
+  constructor(
+    @inject('IUserRepository')
+    private userRepository: IUserRepository
+  ) { }
 
   async signIn(req: Request, res: Response) {
     try {

@@ -3,36 +3,28 @@ import { Request, Response } from 'express';
 import { IUserRepository } from '../database/repositories/UserRepository';
 import { IWalletRepository } from '../database/repositories/WalletRepository';
 import { ITransactionRepository } from '../database/repositories/TransactionRepository';
-import User from 'database/models/User';
+
+import { inject, injectable } from 'tsyringe';
 
 export interface ITransactionController {
-  transactionRepository: ITransactionRepository;
-  userRepository: IUserRepository;
-  walletRepository: IWalletRepository;
-  setDependencies: (
-    transactionRepository: ITransactionRepository,
-    userRepository: IUserRepository,
-    walletRepository: IWalletRepository,
-  ) => void;
   create: (req: Request, res: Response) => Promise<Response>;
   list: (req: Request, res: Response) => Promise<Response>;
   toggleLike: (req: Request, res: Response) => Promise<Response>;
 }
 
+@injectable()
 class TransactionController implements ITransactionController {
-  transactionRepository: ITransactionRepository;
-  userRepository: IUserRepository;
-  walletRepository: IWalletRepository;
 
-  setDependencies(
-    transactionRepository: ITransactionRepository,
-    userRepository: IUserRepository,
-    walletRepository: IWalletRepository,
-  ){
-    this.transactionRepository = transactionRepository;
-    this.userRepository = userRepository;
-    this.walletRepository = walletRepository;
-  }
+  constructor(
+    @inject('ITransactionRepository')
+    private transactionRepository: ITransactionRepository,
+
+    @inject('IUserRepository')
+    private userRepository: IUserRepository,
+
+    @inject('IWalletRepository')
+    private walletRepository: IWalletRepository
+  ) { }
 
   async list(req: Request, res: Response) {
 
@@ -49,6 +41,7 @@ class TransactionController implements ITransactionController {
 
   async create(req: Request, res: Response) {
     try {
+
       const { receiverId, value, message } = req.body;
       const { userId } = req;
 
@@ -82,9 +75,10 @@ class TransactionController implements ITransactionController {
       });
 
       emitterWallet.balance = emitterWallet.balance - value;
+
       await this.walletRepository.save(emitterWallet);
 
-      receiverWallet.balance = receiverWallet.balance + value;
+      receiverWallet.balance += eval(value);
       await  this.walletRepository.save(receiverWallet);
 
       return res.status(200).json({ transaction });
@@ -98,8 +92,6 @@ class TransactionController implements ITransactionController {
     try {
       const { userId } = req;
       const { transactionId } = req.body;
-
-      console.log(req.body)
 
       const transaction = await this.transactionRepository.findById(transactionId);
 

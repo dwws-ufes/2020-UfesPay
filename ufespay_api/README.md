@@ -102,7 +102,8 @@ yarn dev:server
 ```
 
 
-cainan:
+
+ajeitar este texto
 
 tem coisa de postgre rodando na porta 5432 qnd eu reinicio o pc
 
