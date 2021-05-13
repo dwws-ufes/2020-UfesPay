@@ -1,0 +1,47 @@
+
+Retrieve all countries
+PREFIX  rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?countryUri ?countryName
+WHERE {   
+   ?countryUri rdf:type  <http://dbpedia.org/class/yago/WikicatMemberStatesOfTheUnitedNations> .
+    ?countryUri  rdfs:label ?countryName .
+FILTER (langMatches(lang(?countryName), 'EN'))
+}
+ORDER BY ?countryName
+
+
+Retrieve selected country info
+PREFIX  rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbo: <http://dbpedia.org/ontology/>
+PREFIX  dbp: <http://dbpedia.org/property/>
+SELECT ?countryUri ?countryName ?countryCurrencyUri ?currencyLabel ?symbol 
+WHERE {
+  ?countryUri rdf:type  <http://dbpedia.org/class/yago/WikicatMemberStatesOfTheUnitedNations> .
+   ?countryUri dbo:currency   ?countryCurrencyUri . 
+  ?countryCurrencyUri rdfs:label ?currencyLabel .
+  ?countryUri  dbo:currencyCode ?currencyCode .
+   ?countryCurrencyUri dbp:symbol ?symbol.
+  ?countryUri  rdfs:label ?countryName.
+FILTER ( LANG ( ?countryName ) = 'en' )
+FILTER ( LANG ( ?currencyLabel  ) = 'en' )
+FILTER CONTAINS ( ?countryName, Param) 
+}
+
+PREFIX  rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbo: <http://dbpedia.org/ontology/>
+SELECT ?countryUri ?countryName ?countryCurrencyUri ?currencyLabel ?symbol 
+WHERE {
+  ?countryUri rdf:type  <http://dbpedia.org/class/yago/WikicatMemberStatesOfTheUnitedNations> .
+   ?countryUri dbo:currency   ?countryCurrencyUri . 
+  ?countryCurrencyUri rdfs:label ?currencyLabel .
+  ?countryUri  dbo:currencyCode ?currencyCode .
+   ?countryCurrencyUri dbp:symbol ?symbol.
+  ?countryUri  rdfs:label ?countryName.
+FILTER (langMatches(lang(?countryName), 'EN'))
+FILTER (langMatches(lang(?currencyLabel), 'EN'))
+FILTER CONTAINS ( ?countryName, Param) 
+}
+

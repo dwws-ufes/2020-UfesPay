@@ -8,11 +8,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.apache.jena.ext.com.google.common.base.Strings;
 import org.omnifaces.util.Faces;
 
 import br.ufes.dwws.ufespay.core.application.UserService;
 import br.ufes.dwws.ufespay.core.domain.User;
-import br.ufes.dwws.ufespay.core.util.Utils;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.controller.JSFController;
 
@@ -33,7 +33,7 @@ public class ChangePasswordController extends JSFController{
 	public void updatePassword() throws IOException {
 		try {
 			User currentUser = userService.getByEmail(email);
-			if ((!password.equals(repeatPassword)) || Utils.checkStringIsNUllEmpty(password)) {
+			if ((!password.equals(repeatPassword)) || Strings.isNullOrEmpty(password)) {
 				this.password = null;
 				this.repeatPassword = null;
 				//this.retrieveLoggedUser();

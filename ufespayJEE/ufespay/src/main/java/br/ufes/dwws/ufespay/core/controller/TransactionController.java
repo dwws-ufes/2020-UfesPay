@@ -3,6 +3,7 @@ package br.ufes.dwws.ufespay.core.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -134,6 +135,10 @@ public class TransactionController extends JSFController {
 
 	public void redirectsHome() throws IOException {
 		Utils.redirectsToUrl("/ufespay/core/index.xhtml");
+	}
+	
+	public void redirectsLinkedData() throws IOException {
+		Utils.redirectsToUrl("/ufespay/core/linkeddata/index.xhtml");
 	}
 
 	public Transaction getSelectedTransaction() {

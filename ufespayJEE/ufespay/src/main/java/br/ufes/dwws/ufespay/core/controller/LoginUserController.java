@@ -80,7 +80,7 @@ public class LoginUserController extends JSFController {
 	}
 
 	public void logout() throws IOException {
-		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
+		//((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
 		Faces.getExternalContext().getFlash().setKeepMessages(true);
 		Faces.redirect("/ufespay/core/loginUser/index.xhtml");
 	}

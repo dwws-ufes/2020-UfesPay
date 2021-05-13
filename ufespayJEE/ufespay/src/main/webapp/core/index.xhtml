@@ -29,8 +29,17 @@
             <p:autoUpdate/>
         </p:messages>
         
+
 		<p:panel header="#{loginUserController.currentUser.name}" style="display:block; text-align:center">
 			 <p:avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" style="background-color:#2196F3; color: #ffffff" shape="circle" /> <br/>
+			 
+			 	<p:commandButton value="#{msgs['text.logout']}" 
+			 	style="text-align:center"
+			 	styleClass="rounded-button ui-button-secondary" action="#{loginUserController.logout}" update="@form"/>	 <br/>
+			 	
+			 	<p:commandButton value="#{msgs['text.home.linkeddata.featues']}" 
+			 		style="text-align:center"
+			 		styleClass="rounded-button ui-button-secondary" action="#{transactionController.redirectsLinkedData}" update="@form"/>	 <br/>
 			 
 			 <h:outputText align="center" value="#{msgs['text.currentAmount']}" />  <br/>
 			 
@@ -56,7 +65,7 @@
     <h:form id="form-transaction">
 		<p:toolbar>
             <p:toolbarGroup align="center">
-                <p:commandButton value="#{msgs['text.newTransaction']}" icon="pi pi-plus" 
+                <p:commandButton value="#{msgs['text.newTransaction']}" icon="pi pi-plus"
                                  styleClass="ui-button-success" style="margin-right: .5rem"  
                                  actionListener="#{transactionController.openNewTransaction}">       
                  </p:commandButton>

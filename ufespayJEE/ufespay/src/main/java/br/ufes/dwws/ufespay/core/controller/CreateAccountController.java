@@ -1,16 +1,14 @@
 package br.ufes.dwws.ufespay.core.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.apache.jena.ext.com.google.common.base.Strings;
 import org.omnifaces.util.Faces;
 
 import br.ufes.dwws.ufespay.core.application.UserService;
@@ -63,7 +61,7 @@ public class CreateAccountController extends JSFController {
 	}
 
 	private boolean validatePassword(String pass1, String pass2) {
-		return (Utils.checkStringIsNUllEmpty(pass1)) && (Utils.checkStringIsNUllEmpty(pass2)) && (pass1.equals(pass2));
+		return (!Strings.isNullOrEmpty(pass1)) && (!Strings.isNullOrEmpty(pass2)) && (pass1.equals(pass2));
 	}
 
 	public String getEmail() {

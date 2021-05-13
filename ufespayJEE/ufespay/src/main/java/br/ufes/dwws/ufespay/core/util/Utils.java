@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
+import org.apache.jena.ext.com.google.common.base.Strings;
 import org.omnifaces.util.Faces;
 
 import br.ufes.dwws.ufespay.core.persistence.UserDAOJPA;
@@ -20,13 +21,9 @@ public class Utils {
 	/** The logger. */
 	private static final Logger logger = Logger.getLogger(UserDAOJPA.class.getCanonicalName());
 
-	public static boolean checkStringIsNUllEmpty(String str) {
-		return (str != null && !str.trim().isEmpty());
-	}
-
 	public static boolean validatePassword(String inputPassword, String retriedvedPassword) {
 		boolean result = false;
-		if (!Utils.checkStringIsNUllEmpty(inputPassword))
+		if (Strings.isNullOrEmpty(inputPassword))
 			return false;
 		else {
 			try {
