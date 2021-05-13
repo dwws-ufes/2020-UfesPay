@@ -2,6 +2,8 @@ import User from '../models/User';
 import { Repository, getRepository, Not } from 'typeorm';
 import Wallet from '../models/Wallet';
 
+import { delay, registry } from 'tsyringe';
+
 interface CreateUserDTO {
   name: string;
   email: string;
@@ -18,6 +20,12 @@ export interface IUserRepository {
   update: (id: string, newUserData: object) => Promise<User | undefined>;
 }
 
+@registry([
+  {
+    token: "IUserRepository",
+    useToken: delay(() => UserRepository)
+  }
+])
 class UserRepository implements IUserRepository {
   ormRepository: Repository<User>;
 

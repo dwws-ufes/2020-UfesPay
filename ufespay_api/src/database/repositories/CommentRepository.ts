@@ -1,5 +1,6 @@
 import Comment from '../models/Comment';
 import { Repository, getRepository } from 'typeorm';
+import { delay, registry } from 'tsyringe';
 
 export interface ICommentRepository {
   create: (data: object) => Promise<Comment>;
@@ -7,15 +8,13 @@ export interface ICommentRepository {
   delete: (id: string) => Promise<void>;
 }
 
+@registry([
+  {
+    token: "ICommentRepository",
+    useToken: delay(() => CommentRepository)
+  }
+])
 class CommentRepository implements ICommentRepository{
-  // async create(data: object){
-  //   const newComment = new Comment(data);
-  //   const {_id} = await newComment.save();
-  //   const comment = await Comment.findById(_id)
-  //     .populate({path : 'author', select: 'name email'});
-
-  //   return comment;
-  // }
 
   private ormRepository: Repository<Comment>;
 

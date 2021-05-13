@@ -1,3 +1,4 @@
+import { delay, registry } from 'tsyringe';
 import { Repository, getRepository } from 'typeorm';
 import Transaction from '../models/Transaction';
 
@@ -9,6 +10,12 @@ export interface ITransactionRepository {
   delete: (id: string) => Promise<void>;
 }
 
+@registry([
+  {
+    token: "ITransactionRepository",
+    useToken: delay(() => TransactionRepository)
+  }
+])
 class TransactionRepository implements ITransactionRepository {
   private ormRepository: Repository<Transaction>;
 

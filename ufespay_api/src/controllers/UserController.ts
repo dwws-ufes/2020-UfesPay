@@ -1,17 +1,10 @@
 import { Request, Response } from 'express';
-// import { autoInjectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 
 import { IUserRepository } from '../database/repositories/UserRepository';
 import { IWalletRepository } from '../database/repositories/WalletRepository';
 
-// @autoInjectable()
 export interface IUserController {
-  userRepository: IUserRepository;
-  walletRepository: IWalletRepository;
-  setDependencies: (
-    userRepository: IUserRepository,
-    walletRepository: IWalletRepository,
-  ) => void;
   create: (req: Request, res: Response) => Promise<Response>;
   delete: (req: Request, res: Response) => Promise<Response>;
   update: (req: Request, res: Response) => Promise<Response>;
@@ -19,29 +12,29 @@ export interface IUserController {
   list: (req: Request, res: Response) => Promise<Response>;
 }
 
-class UserController implements IUserController {
-  userRepository: IUserRepository;
-  walletRepository: IWalletRepository;
-
-  setDependencies (
-    userRepository: IUserRepository,
-    walletRepository: IWalletRepository,
-  ){
-    this.userRepository = userRepository;
-    this.walletRepository = walletRepository;
-  }
+  @injectable()
+  class UserController implements IUserController {
+  
+    constructor(
+      @inject('IUserRepository')
+      private userRepository: IUserRepository,
+  
+      @inject('IWalletRepository')
+      private walletRepository: IWalletRepository,
+    ) { }
 
   async create(req: Request, res: Response) {
+    
     try {
       const { name, email, password } = req.body;
-  
+
       // check if email already exist
       const existentUser = await this.userRepository.findByEmail(email);
   
       if (existentUser) {
         return res.status(400).json({ message: 'E-mail already in use.'});
       }
-  
+
       // create wallet
       const wallet = await this.walletRepository.create();
   
