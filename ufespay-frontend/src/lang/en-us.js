@@ -7,6 +7,7 @@ export default {
     createAccount: "Create Account",
     name: "Name",
     email: "Email",
+    emailPlaceholder: "example@example.com",
     password: "Password",
     confirmPassword: "Confirm Password",
     signUp: "Sign Up",
@@ -14,6 +15,7 @@ export default {
   login: {
     welcomeBack: "Welcome back!",
     email: "Email",
+    emailPlaceholder: "example@example.com",
     password: "Password",
     login: "Log In",
   },

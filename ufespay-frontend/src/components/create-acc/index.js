@@ -58,7 +58,7 @@ const CreateAcc = () => {
               variant="outlined"
               color="primary"
               label={translate[language].createAcc.email}
-              placeholder="johndoe@email.com"
+              placeholder={translate[language].createAcc.emailPlaceholder}
               type="text"
               required
               value={email}

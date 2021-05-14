@@ -37,7 +37,7 @@ const Login = () => {
               variant="outlined"
               color="primary"
               label={translate[language].login.email}
-              placeholder="johndoe@email.com"
+              placeholder={translate[language].login.emailPlaceholder}
               type="text"
               required
               value={email}
