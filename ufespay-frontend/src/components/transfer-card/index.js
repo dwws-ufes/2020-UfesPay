@@ -9,7 +9,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { Typography, TextField } from '@material-ui/core';
-import { grey, red } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Delete, Send } from '@material-ui/icons';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
@@ -18,10 +18,12 @@ import {
   deleteComment,
   toggleLike,
 } from '../../services/TransactionService';
+import translate from '../../lang';
 
 import './transfer-card.css';
 
 import { useAuth } from '../../hooks/auth';
+import { useLang } from '../../hooks/lang';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,6 +55,7 @@ const TransferCard = ({ transaction }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const { user } = useAuth();
+  const { language } = useLang();
 
   const [newComment, setNewComment] = useState('');
   const [transac, setTransac] = useState(transaction);
@@ -126,12 +129,12 @@ const TransferCard = ({ transaction }) => {
 
       <CardContent>
         <Typography paragraph className={classes.subtitle}>
-          Transferiu{' '}
-          {transac.value.toLocaleString('pt-br', {
+          {translate[language].transferCard.transfered + ' '}
+          {(translate[language].exchangeRate * transac.value).toLocaleString(translate[language].lang, {
             style: 'currency',
-            currency: 'BRL',
-          })}{' '}
-          para {transac.receiver.name}
+            currency: translate[language].currency,
+          })}
+          {` ${translate[language].transferCard.to} ${transac.receiver.name}`}
         </Typography>
 
         <Typography paragraph>{transac.message}</Typography>
@@ -155,7 +158,7 @@ const TransferCard = ({ transaction }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography color="primary" variant="subtitle1" paragraph>
-            Comentários:
+            {translate[language].transferCard.comments + ':'}
           </Typography>
 
           {transac.comments.map(comment => (
@@ -179,7 +182,7 @@ const TransferCard = ({ transaction }) => {
                 className="TextField"
                 variant="outlined"
                 id="outlined-multiline-static"
-                placeholder="Escreva um comentário"
+                placeholder={translate[language].transferCard.addAComment}
                 type="text"
                 required
                 value={newComment}

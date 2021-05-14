@@ -11,6 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from '../../hooks/auth';
 import { updateUser } from '../../services/UserService';
 import { fireToastAlert } from '../../services/AlertService';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,6 +36,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Profile() {
   const classes = useStyles();
+  const { language } = useLang();
   const { user, refreshUser } = useAuth();
 
   const [edit, setEdit] = useState(false);
@@ -87,10 +90,13 @@ export default function Profile() {
             <h3>{user.email}</h3>
 
             <h1>
-              {user.wallet.balance.toLocaleString('pt-br', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
+              {
+                (translate[language].exchangeRate * user.wallet.balance)
+                  .toLocaleString(translate[language].lang, {
+                    style: 'currency',
+                    currency: translate[language].currency,
+                  })
+              }
             </h1>
           </div>
 
@@ -103,12 +109,12 @@ export default function Profile() {
               setEdit(!edit);
             }}
           >
-            Editar Perfil
+            {translate[language].profile.editProfile}
           </Button>
         </div>
       ) : (
         <div className="edit-profile">
-          <h1>Editar Perfil</h1>
+          <h1>{translate[language].profile.editProfile}</h1>
 
           <form onSubmit={saveProfileChanges}>
             <div className="TextField">
@@ -116,8 +122,8 @@ export default function Profile() {
                 className="TextField"
                 variant="outlined"
                 color="primary"
-                label="Nome"
-                placeholder="Nome completo"
+                label={translate[language].profile.name}
+                placeholder={translate[language].profile.name}
                 type="text"
                 required
                 value={name}
@@ -130,8 +136,8 @@ export default function Profile() {
                 className="TextField"
                 variant="outlined"
                 color="primary"
-                label="Email"
-                placeholder="exemplo@exemplo.com"
+                label={translate[language].profile.email}
+                placeholder={translate[language].profile.email}
                 type="text"
                 required
                 value={email}
@@ -144,8 +150,8 @@ export default function Profile() {
                 className="TextField"
                 variant="outlined"
                 color="primary"
-                label="Senha"
-                placeholder="Senha"
+                label={translate[language].profile.password}
+                placeholder={translate[language].profile.password}
                 type="password"
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
@@ -157,8 +163,8 @@ export default function Profile() {
                 className="TextField"
                 variant="outlined"
                 color="primary"
-                label="Nova Senha"
-                placeholder="Nova Senha"
+                label={translate[language].profile.newPassword}
+                placeholder={translate[language].profile.newPassword}
                 type="password"
                 disabled={!currentPassword}
                 required={!!currentPassword}
@@ -172,8 +178,8 @@ export default function Profile() {
                 className="TextField"
                 variant="outlined"
                 color="primary"
-                label="Repita a Senha"
-                placeholder="Repita a Senha"
+                label={translate[language].profile.confirmPassword}
+                placeholder={translate[language].profile.confirmPassword}
                 type="password"
                 disabled={!currentPassword}
                 required={!!currentPassword}
@@ -189,7 +195,7 @@ export default function Profile() {
                 color="primary"
                 type="submit"
               >
-                Salvar
+                {translate[language].profile.save}
               </Button>
             </div>
 
@@ -201,7 +207,7 @@ export default function Profile() {
                 type="button"
                 onClick={handleCancel}
               >
-                Cancelar
+                {translate[language].profile.cancel}
               </Button>
             </div>
           </form>
