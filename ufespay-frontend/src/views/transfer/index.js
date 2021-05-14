@@ -23,6 +23,8 @@ import {
   fireToastAlert,
 } from '../../services/AlertService';
 import { pay } from '../../services/TransactionService';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -32,6 +34,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Transaction() {
+  const { language } = useLang();
   const classes = useStyles();
   const { user, refreshUser } = useAuth();
   const history = useHistory();
@@ -49,15 +52,15 @@ export default function Transaction() {
     async e => {
       e.preventDefault();
       const isConfirmed = await fireConfimationAlert(
-        `Depois dessa transferência, sua carteira ficará com um saldo de ${(
-          user.wallet.balance - value
-        ).toLocaleString('pt-br', {
+        `${translate[language].transfer.afterTransferYouWillHave} ${(
+          (translate[language].exchangeRate * user.wallet.balance) - value
+        ).toLocaleString(translate[language].lang, {
           style: 'currency',
-          currency: 'BRL',
-        })}. Deseja confirma a transferência?`,
+          currency: translate[language].currency,
+        })}. ${translate[language].transfer.confirmTransfer}`,
       );
       if (isConfirmed) {
-        pay(receiver.id, value, message).then(() => {
+        pay(receiver.id, (value/translate[language].exchangeRate), message).then(() => {
           fireToastAlert('success', 'Success!');
           refreshUser();
           history.push('/home');
@@ -72,11 +75,16 @@ export default function Transaction() {
       <div className="transaction-content">
         <Card className={classes.card}>
           <CardHeader
-            title="Faça uma tranferência"
-            subheader={`Você tem ${user.wallet.balance.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
-            })} na carteira`}
+            title={translate[language].transfer.makeATransfer}
+            subheader={`${translate[language].transfer.youHave}
+            ${(translate[language].exchangeRate * user.wallet.balance)
+              .toLocaleString(
+                translate[language].lang,
+                {
+                  style: 'currency',
+                  currency: translate[language].currency,
+                }
+            )} ${translate[language].transfer.onYourWallet}`}
           />
           <CardContent>
             <form className="" onSubmit={handlePay}>
@@ -101,7 +109,7 @@ export default function Transaction() {
                 renderInput={params => (
                   <TextField
                     {...params}
-                    label="Destinatário"
+                    label={translate[language].transfer.receiver}
                     variant="outlined"
                     required
                   />
@@ -114,7 +122,7 @@ export default function Transaction() {
                 required
                 value={value}
                 onChange={e => setValue(e.target.value)}
-                label="Valor"
+                label={translate[language].transfer.value}
               />
 
               <TextField
@@ -124,18 +132,18 @@ export default function Transaction() {
                 rows={4}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
-                label="Escreva um comentário"
+                label={translate[language].transfer.addMessage}
                 type="text"
               />
 
               <Button
                 type="submit"
-                aria-label="pay"
+                aria-label={translate[language].transfer.pay}
                 variant="contained"
                 color="primary"
               >
                 <AttachMoney />
-                Pagar
+                {translate[language].transfer.pay}
               </Button>
             </form>
           </CardContent>

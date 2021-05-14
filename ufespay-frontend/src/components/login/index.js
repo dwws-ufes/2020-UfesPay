@@ -9,8 +9,12 @@ import './login.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { useAuth } from '../../hooks/auth';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
+
 
 const Login = () => {
+  const { language } = useLang();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { logIn } = useAuth();
@@ -24,7 +28,7 @@ const Login = () => {
   return (
     <div id="login">
       <div id="form-login">
-        <h1>Bem vindo de volta</h1>
+        <h1>{translate[language].login.welcomeBack}</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="TextField">
@@ -32,8 +36,8 @@ const Login = () => {
               className="TextField"
               variant="outlined"
               color="primary"
-              label="Email"
-              placeholder="exemplo@exemplo.com"
+              label={translate[language].login.email}
+              placeholder="johndoe@email.com"
               type="text"
               required
               value={email}
@@ -46,8 +50,8 @@ const Login = () => {
               className="TextField"
               variant="outlined"
               color="primary"
-              label="Senha"
-              placeholder="Senha"
+              label={translate[language].login.password}
+              placeholder={translate[language].login.password}
               type="password"
               required
               value={password}
@@ -61,7 +65,7 @@ const Login = () => {
             color="primary"
             type="submit"
           >
-            Entrar
+            {translate[language].login.login}
           </Button>
         </form>
       </div>

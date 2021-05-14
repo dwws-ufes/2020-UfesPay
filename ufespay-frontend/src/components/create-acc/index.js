@@ -5,8 +5,11 @@ import './create-acc.css';
 import { Button, TextField } from '@material-ui/core';
 import { createUser } from '../../services/UserService';
 import { fireToastAlert } from '../../services/AlertService';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
 const CreateAcc = () => {
+  const { language } = useLang();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +24,7 @@ const CreateAcc = () => {
         setPassword('');
         setRepPassword('');
 
-        fireToastAlert('success', 'Cadastro realizado com sucesso!');
+        fireToastAlert('success', translate[language].createAcc.successMessage);
       });
     },
     [name, email, password],
@@ -32,7 +35,7 @@ const CreateAcc = () => {
       <div id="form-create-acc">
         <h1>UfesPay</h1>
 
-        <h3>Cadastre-se!</h3>
+        <h3>{translate[language].createAcc.createAccount}</h3>
 
         <form onSubmit={handleSubmit}>
           <div className="TextField">
@@ -40,8 +43,8 @@ const CreateAcc = () => {
               className="TextField"
               variant="outlined"
               color="primary"
-              label="Nome"
-              placeholder="Nome completo"
+              label={translate[language].createAcc.name}
+              placeholder={translate[language].createAcc.name}
               type="text"
               required
               value={name}
@@ -54,8 +57,8 @@ const CreateAcc = () => {
               className="TextField"
               variant="outlined"
               color="primary"
-              label="Email"
-              placeholder="exemplo@exemplo.com"
+              label={translate[language].createAcc.email}
+              placeholder="johndoe@email.com"
               type="text"
               required
               value={email}
@@ -68,8 +71,8 @@ const CreateAcc = () => {
               className="TextField"
               variant="outlined"
               color="primary"
-              label="Senha"
-              placeholder="Senha"
+              label={translate[language].createAcc.password}
+              placeholder={translate[language].createAcc.password}
               type="password"
               required
               value={password}
@@ -82,8 +85,8 @@ const CreateAcc = () => {
               className="TextField"
               variant="outlined"
               color="primary"
-              label="Confirme a senha"
-              placeholder="Confirme a senha"
+              label={translate[language].createAcc.confirmPassword}
+              placeholder={translate[language].createAcc.confirmPassword}
               type="password"
               required
               value={repPassword}
@@ -97,7 +100,7 @@ const CreateAcc = () => {
             color="primary"
             type="submit"
           >
-            Cadastrar
+            {translate[language].createAcc.signUp}
           </Button>
         </form>
       </div>
