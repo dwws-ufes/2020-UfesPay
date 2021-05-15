@@ -1,19 +1,26 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-unused-state */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { 
+  Button, 
+  TextField, 
+  makeStyles,
+} from '@material-ui/core';
 
 import './login.css';
-
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { useAuth } from '../../hooks/auth';
 import { useLang } from '../../hooks/lang';
 import translate from '../../lang';
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    margin: 0,
+    marginBottom: 10,
+    width: 500,
+  }
+}));
 
 const Login = () => {
+  const classes = useStyles();
   const { language } = useLang();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,9 +38,8 @@ const Login = () => {
         <h1>{translate[language].login.welcomeBack}</h1>
 
         <form onSubmit={handleSubmit}>
-          <div className="TextField">
             <TextField
-              className="TextField"
+              className={classes.input}
               variant="outlined"
               color="primary"
               label={translate[language].login.email}
@@ -43,21 +49,18 @@ const Login = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
-          </div>
 
-          <div className="TextField">
-            <TextField
-              className="TextField"
-              variant="outlined"
-              color="primary"
-              label={translate[language].login.password}
-              placeholder={translate[language].login.password}
-              type="password"
-              required
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            color="primary"
+            label={translate[language].login.password}
+            placeholder={translate[language].login.password}
+            type="password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
 
           <Button
             className="Button"

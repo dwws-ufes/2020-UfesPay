@@ -8,6 +8,7 @@ import {
   Select,
 } from '@material-ui/core';
 import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -34,10 +35,10 @@ const LanguagePicker = () => {
   return (
     <Card className={classes.card}>
       <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="language-select-label">Language</InputLabel>
+        <InputLabel id="language-select-label">{translate[language].languagePicker.label}</InputLabel>
         <Select
           labelId="language-select-label"
-          label="Language"
+          label={translate[language].languagePicker.label}
           value={language}
           onChange={handleChange}
         >

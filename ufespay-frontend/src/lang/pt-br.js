@@ -1,16 +1,20 @@
 export default {
   lang: "pt-br",
   currency: 'BRL',
-  exchangeRate: 0.19,
+  exchangeRate: 1,
   createAcc: {
     successMessage: "Conta criada com sucesso!",
     createAccount: "Criar conta",
     name: "Nome",
     email: "Email",
     emailPlaceholder: "exemplo@exemplo.com",
+    country: "País",
     password: "Senha",
     confirmPassword: "Repita a senha",
     signUp: "Cadastrar",
+  },
+  languagePicker: {
+    label: "Língua",
   },
   login: {
     welcomeBack: "Bem-vindo de volta!",
