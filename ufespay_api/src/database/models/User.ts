@@ -22,6 +22,9 @@ class User {
   @Column()
   email: string;
 
+  @Column({ nullable: true })
+  country: string;
+
   @Column()
   @Exclude()
   password: string;
