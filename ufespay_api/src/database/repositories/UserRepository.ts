@@ -8,6 +8,7 @@ interface CreateUserDTO {
   name: string;
   email: string;
   password: string;
+  country: string;
   wallet: Wallet;
 } 
 
@@ -33,11 +34,12 @@ class UserRepository implements IUserRepository {
     this.ormRepository = getRepository(User);
   }
 
-  async create({name, email, password, wallet}: CreateUserDTO) {
+  async create({name, email, password, country, wallet}: CreateUserDTO) {
     const newUser = this.ormRepository.create({
       name,
       email,
       password,
+      country,
       wallet,
     });
     await this.ormRepository.save(newUser);

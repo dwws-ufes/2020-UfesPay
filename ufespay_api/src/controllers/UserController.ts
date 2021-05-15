@@ -26,7 +26,7 @@ export interface IUserController {
   async create(req: Request, res: Response) {
     
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, country } = req.body;
 
       // check if email already exist
       const existentUser = await this.userRepository.findByEmail(email);
@@ -39,7 +39,13 @@ export interface IUserController {
       const wallet = await this.walletRepository.create();
   
       // create user
-      const user = await this.userRepository.create({name, email, password, wallet});
+      const user = await this.userRepository.create({
+        name,
+        email,
+        password,
+        wallet,
+        country,
+      });
   
       return res.status(200).json({ user });
     } catch (e) {
