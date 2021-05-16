@@ -1,26 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Home, ExitToApp, AttachMoney } from '@material-ui/icons';
 
-import NavItem from '../navitem'
-import Menu from '../menu'
+import './navtop.css';
+import { useAuth } from '../../hooks/auth';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
-import './styles.css'
+export default function Navtop() {
+  const { logOut } = useAuth();
+  const { language } = useLang();
 
-import MenuIcon from '@material-ui/icons/Menu';
+  return (
+    <div className="navbar">
+      <Link to="/home" id="go-home">
+        UfesPay
+      </Link>
 
-export default function Navtop(props) {
-
-    return (
-        <nav className='navbar'>
-
-            <ul className='navbar-nav'>
-
-                <a href="/home" id="go-home">UfesPay</a>
-
-                <NavItem className="nav-item" icon={<MenuIcon />}>
-                    <Menu />
-                </NavItem>
-            </ul>
-        </nav>
-    )
+      <div className="actions">
+        <Link className="action" to="/home">
+          <Home />
+          <span className="action-label">{translate[language].navtop.home}</span>
+        </Link>
+        <Link className="action" to="/transfer">
+          <AttachMoney />
+          <span className="action-label">{translate[language].navtop.pay}</span>
+        </Link>
+        <button type="button" className="action" onClick={logOut}>
+          <ExitToApp />
+          <span className="action-label">{translate[language].navtop.logout}</span>
+        </button>
+      </div>
+    </div>
+  );
 }
-
