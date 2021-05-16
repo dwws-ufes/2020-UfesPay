@@ -60,7 +60,7 @@ export default function Transaction() {
         })}. ${translate[language].transfer.confirmTransfer}`,
       );
       if (isConfirmed) {
-        pay(receiver.id, (value/translate[language].exchangeRate), message).then(() => {
+        pay(receiver.id, (Math.round(value/translate[language].exchangeRate)), message).then(() => {
           fireToastAlert('success', 'Success!');
           refreshUser();
           history.push('/home');
