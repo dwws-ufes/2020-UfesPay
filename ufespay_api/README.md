@@ -100,18 +100,3 @@ yarn typeorm migration:run
 ```
 yarn dev:server
 ```
-
-
-
-ajeitar este texto
-
-tem coisa de postgre rodando na porta 5432 qnd eu reinicio o pc
-
-p apagar ele preciso pegar o PID em:
-  sudo lsof -i :5432
-
-e matar o processo com:
-  sudo kill -9 <PID>
-
-só então devo dar start no container:
-  sudo docker start ufespay-postgres
