@@ -4,6 +4,8 @@ import { injectable, inject } from 'tsyringe';
 import { IUserRepository } from '../database/repositories/UserRepository';
 import { IWalletRepository } from '../database/repositories/WalletRepository';
 
+import { getByQuery } from '../services/DBPediaService';
+
 export interface IUserController {
   create: (req: Request, res: Response) => Promise<Response>;
   delete: (req: Request, res: Response) => Promise<Response>;
@@ -27,6 +29,12 @@ export interface IUserController {
     
     try {
       const { name, email, password, country } = req.body;
+
+      const countryData = await getByQuery(country);
+
+      if (!countryData) {
+        return res.status(404).json({ message: 'Invalid country.'});
+      }
 
       // check if email already exist
       const existentUser = await this.userRepository.findByEmail(email);
@@ -63,8 +71,11 @@ export interface IUserController {
       if (!user) {
         return res.status(400).json({ message: 'User do not exist.'});
       }
+
+      const { Currency, Language } = await getByQuery(user.country);
+
   
-      return res.status(200).json({ user });
+      return res.status(200).json({ user: { ...user, currency: Currency.value, language: Language.value } });
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: 'Something went wrong!' });

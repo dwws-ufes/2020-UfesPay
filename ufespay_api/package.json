@@ -4,10 +4,13 @@
   "description": "REST API for UfesPay aplication",
   "main": "src/server.ts",
   "dependencies": {
+    "@types/jsonld": "^1.5.5",
+    "axios": "^0.21.1",
     "class-transformer": "^0.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonld": "^5.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.2",
     "pg": "8.2.1",

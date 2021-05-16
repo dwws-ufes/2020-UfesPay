@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import ensureAuth from '../middlewares/ensureAuth'
+import ldroutes from './linkedData.routes';
 
 import UserController from '../controllers/UserController';
 import SessionController from '../controllers/SessionController';
@@ -15,6 +16,8 @@ const transactionController = container.resolve(TransactionController);
 const commentController = container.resolve(CommentController);
 
 const routes = Router();
+
+routes.use(ldroutes);
 
 routes.post('/sign-in', (req,res) => sessionController.signIn(req,res));
 routes.delete('/sign-out', (req,res) => sessionController.signOut(req,res));
