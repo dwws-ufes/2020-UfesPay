@@ -1,0 +1,272 @@
+@prefix map: <#> .
+@prefix db: <> .
+@prefix vocab: <vocab/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+
+map:database a d2rq:Database;
+	d2rq:jdbcDriver "org.postgresql.Driver";
+	d2rq:jdbcDSN "jdbc:postgresql://localhost:5439/ufespayjee";
+	d2rq:username "postgres";
+	d2rq:password "admin";
+	.
+
+# Table comment
+map:comment a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "comment/@@comment.id@@";
+	d2rq:class vocab:comment;
+	d2rq:classDefinitionLabel "comment";
+	.
+map:comment__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property rdfs:label;
+	d2rq:pattern "comment #@@comment.id@@";
+	.
+map:comment_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property vocab:comment_id;
+	d2rq:propertyDefinitionLabel "comment id";
+	d2rq:column "comment.id";
+	d2rq:datatype xsd:integer;
+	.
+map:comment_uuid a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property vocab:comment_uuid;
+	d2rq:propertyDefinitionLabel "comment uuid";
+	d2rq:column "comment.uuid";
+	.
+map:comment_version a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property vocab:comment_version;
+	d2rq:propertyDefinitionLabel "comment version";
+	d2rq:column "comment.version";
+	d2rq:datatype xsd:integer;
+	.
+map:comment_text a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property vocab:comment_text;
+	d2rq:propertyDefinitionLabel "comment text";
+	d2rq:column "comment.text";
+	.
+map:comment_transactionid__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property vocab:comment_transactionid;
+	d2rq:refersToClassMap map:transaction;
+	d2rq:join "comment.transactionid => transaction.id";
+	.
+map:comment_authorid__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:comment;
+	d2rq:property vocab:comment_authorid;
+	d2rq:refersToClassMap map:loggeduser;
+	d2rq:join "comment.authorid => loggeduser.id";
+	.
+
+# Table loggeduser
+map:loggeduser a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "loggeduser/@@loggeduser.id@@";
+	d2rq:class vocab:loggeduser;
+	d2rq:classDefinitionLabel "loggeduser";
+	.
+map:loggeduser__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property rdfs:label;
+	d2rq:pattern "loggeduser #@@loggeduser.id@@";
+	.
+map:loggeduser_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_id;
+	d2rq:propertyDefinitionLabel "loggeduser id";
+	d2rq:column "loggeduser.id";
+	d2rq:datatype xsd:integer;
+	.
+map:loggeduser_uuid a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_uuid;
+	d2rq:propertyDefinitionLabel "loggeduser uuid";
+	d2rq:column "loggeduser.uuid";
+	.
+map:loggeduser_version a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_version;
+	d2rq:propertyDefinitionLabel "loggeduser version";
+	d2rq:column "loggeduser.version";
+	d2rq:datatype xsd:integer;
+	.
+map:loggeduser_created_at a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_created_at;
+	d2rq:propertyDefinitionLabel "loggeduser created_at";
+	d2rq:column "loggeduser.created_at";
+	d2rq:datatype xsd:dateTime;
+	.
+map:loggeduser_email a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_email;
+	d2rq:propertyDefinitionLabel "loggeduser email";
+	d2rq:column "loggeduser.email";
+	.
+map:loggeduser_name a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_name;
+	d2rq:propertyDefinitionLabel "loggeduser name";
+	d2rq:column "loggeduser.name";
+	.
+map:loggeduser_password a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_password;
+	d2rq:propertyDefinitionLabel "loggeduser password";
+	d2rq:column "loggeduser.password";
+	.
+map:loggeduser_updated_at a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_updated_at;
+	d2rq:propertyDefinitionLabel "loggeduser updated_at";
+	d2rq:column "loggeduser.updated_at";
+	d2rq:datatype xsd:dateTime;
+	.
+map:loggeduser_walletid__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:loggeduser_walletid;
+	d2rq:refersToClassMap map:wallet;
+	d2rq:join "loggeduser.walletid => wallet.id";
+	.
+
+# Table transaction
+map:transaction a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "transaction/@@transaction.id@@";
+	d2rq:class vocab:transaction;
+	d2rq:classDefinitionLabel "transaction";
+	.
+map:transaction__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property rdfs:label;
+	d2rq:pattern "transaction #@@transaction.id@@";
+	.
+map:transaction_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_id;
+	d2rq:propertyDefinitionLabel "transaction id";
+	d2rq:column "transaction.id";
+	d2rq:datatype xsd:integer;
+	.
+map:transaction_uuid a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_uuid;
+	d2rq:propertyDefinitionLabel "transaction uuid";
+	d2rq:column "transaction.uuid";
+	.
+map:transaction_version a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_version;
+	d2rq:propertyDefinitionLabel "transaction version";
+	d2rq:column "transaction.version";
+	d2rq:datatype xsd:integer;
+	.
+map:transaction_created_at a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_created_at;
+	d2rq:propertyDefinitionLabel "transaction created_at";
+	d2rq:column "transaction.created_at";
+	d2rq:datatype xsd:dateTime;
+	.
+map:transaction_message a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_message;
+	d2rq:propertyDefinitionLabel "transaction message";
+	d2rq:column "transaction.message";
+	.
+map:transaction_value a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_value;
+	d2rq:propertyDefinitionLabel "transaction value";
+	d2rq:column "transaction.value";
+	d2rq:datatype xsd:decimal;
+	.
+map:transaction_receiverid__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_receiverid;
+	d2rq:refersToClassMap map:loggeduser;
+	d2rq:join "transaction.receiverid => loggeduser.id";
+	.
+map:transaction_wallet_id__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_wallet_id;
+	d2rq:refersToClassMap map:wallet;
+	d2rq:join "transaction.wallet_id => wallet.id";
+	.
+map:transaction_emitterid__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:transaction;
+	d2rq:property vocab:transaction_emitterid;
+	d2rq:refersToClassMap map:loggeduser;
+	d2rq:join "transaction.emitterid => loggeduser.id";
+	.
+
+# Table transaction_likes_user (n:m)
+map:transaction_likes_user__link a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:loggeduser;
+	d2rq:property vocab:transaction_likes_user;
+	d2rq:refersToClassMap map:transaction;
+	d2rq:join "transaction_likes_user.userid => loggeduser.id";
+	d2rq:join "transaction_likes_user.transactionid => transaction.id";
+	.
+
+# Table wallet
+map:wallet a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "wallet/@@wallet.id@@";
+	d2rq:class vocab:wallet;
+	d2rq:classDefinitionLabel "wallet";
+	.
+map:wallet__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property rdfs:label;
+	d2rq:pattern "wallet #@@wallet.id@@";
+	.
+map:wallet_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property vocab:wallet_id;
+	d2rq:propertyDefinitionLabel "wallet id";
+	d2rq:column "wallet.id";
+	d2rq:datatype xsd:integer;
+	.
+map:wallet_uuid a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property vocab:wallet_uuid;
+	d2rq:propertyDefinitionLabel "wallet uuid";
+	d2rq:column "wallet.uuid";
+	.
+map:wallet_version a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property vocab:wallet_version;
+	d2rq:propertyDefinitionLabel "wallet version";
+	d2rq:column "wallet.version";
+	d2rq:datatype xsd:integer;
+	.
+map:wallet_balance a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property vocab:wallet_balance;
+	d2rq:propertyDefinitionLabel "wallet balance";
+	d2rq:column "wallet.balance";
+	d2rq:datatype xsd:decimal;
+	.
+map:wallet_created_at a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property vocab:wallet_created_at;
+	d2rq:propertyDefinitionLabel "wallet created_at";
+	d2rq:column "wallet.created_at";
+	d2rq:datatype xsd:dateTime;
+	.
+map:wallet_owner a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:wallet;
+	d2rq:property vocab:wallet_owner;
+	d2rq:propertyDefinitionLabel "wallet owner";
+	d2rq:column "wallet.owner";
+	d2rq:datatype xsd:hexBinary;
+	.
+

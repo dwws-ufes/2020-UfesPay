@@ -46,4 +46,20 @@ public class TransactionDAOJPA extends BaseJPADAO<Transaction> implements Transa
 
 		return result;
 	}
+
+	public List<Transaction> retrieveAllTransactions(String userEmail, boolean asEmitter) {
+		List<Transaction> result = null;
+
+		String query;
+
+		if (asEmitter)
+			query = "SELECT t from Transaction t where t.emitter.email = :userEmail";
+		else
+			query = "SELECT t from Transaction t where t.receiver.email = :userEmail";
+
+		result = ((entityManager.createQuery(query, Transaction.class)).setParameter("userEmail", userEmail))
+				.getResultList();
+
+		return result;
+	}
 }

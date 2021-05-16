@@ -14,7 +14,7 @@ public interface CommentService extends Serializable {
 
 	public void createComment(Comment newComment);
 	
-	public void deleteComment(Long id);
+	public boolean deleteComment(Long idTransac, Long idComment, Long idUser) ;
 	
 	public void getCommentById(Long id);
 	

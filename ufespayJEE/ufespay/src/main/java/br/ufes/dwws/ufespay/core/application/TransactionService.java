@@ -29,4 +29,6 @@ public interface TransactionService extends Serializable {
 	public Transaction likeTransaction(User user, Transaction transac);
 	
 	public Transaction disLikeTransaction(User user, Transaction transac);
+	
+	public List<Transaction> retrieveAllTransactions(String userEmail, boolean asEmitter);
 }

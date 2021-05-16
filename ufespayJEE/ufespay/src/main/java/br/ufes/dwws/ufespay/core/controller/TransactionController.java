@@ -3,7 +3,6 @@ package br.ufes.dwws.ufespay.core.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -51,6 +50,8 @@ public class TransactionController extends JSFController {
 	private User selectedEmiter;
 
 	private Comment newComment;
+	
+	private Comment selectedComment;
 
 	@PostConstruct
 	public void retriedAllTransactions() {
@@ -100,6 +101,20 @@ public class TransactionController extends JSFController {
 		} else {
 			Utils.showMessage("unknown error", "could not create comment", FacesMessage.SEVERITY_ERROR);
 			this.prepareUpdateTransac();
+		}
+	}
+	
+	public void deleteCommentTransac() throws IOException {
+		
+		if ((this.selectedComment != null)&&(this.selectedTransaction!=null)){
+			if (this.selectedComment.getAuthor().getEmail().equalsIgnoreCase(this.loginUserController.getCurrentUser().getEmail())){
+				this.commentService.deleteComment(this.selectedTransaction.getId(), selectedComment.getId(), this.loginUserController.getCurrentUser().getId());
+				Utils.showMessage("Comment Removed", "Comment Removed successfully", FacesMessage.SEVERITY_INFO);
+				this.prepareUpdateTransac();
+			}else {
+				Utils.showMessage("author error", "you must be comment author to delete it", FacesMessage.SEVERITY_ERROR);
+				this.prepareUpdateTransac();			
+			}
 		}
 	}
 
@@ -179,6 +194,14 @@ public class TransactionController extends JSFController {
 
 	public void setNewComment(Comment newComment) {
 		this.newComment = newComment;
+	}
+
+	public Comment getSelectedComment() {
+		return selectedComment;
+	}
+
+	public void setSelectedComment(Comment selectedComment) {
+		this.selectedComment = selectedComment;
 	}
 
 }

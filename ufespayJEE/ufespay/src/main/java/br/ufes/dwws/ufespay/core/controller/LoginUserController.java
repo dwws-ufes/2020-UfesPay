@@ -3,6 +3,7 @@ package br.ufes.dwws.ufespay.core.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Locale;
 
 import javax.enterprise.context.SessionScoped;
@@ -12,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.omnifaces.util.Faces;
 
@@ -48,13 +48,18 @@ public class LoginUserController extends JSFController {
 		this.retrieveLoggedUser();
 	}*/
 	
-
+	/* @Produce @RequestScoped @Named
+	    public ResourceBundle getMsgBundle() {
+	        Locale userLocale = Faces.getLocale();
+	        return ResourceBundle.getBundle("messages", userLocale);
+	    }*/
 
 	public void login() throws IOException {
 		try {
 			this.currentUser = userService.getByEmail(email);
 			this.userLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-			//
+		
+			 
 			if ((this.currentUser != null)&& (Utils.validatePassword(this.password, this.currentUser.getPassword()))) {
 				/*HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 						.getRequest();

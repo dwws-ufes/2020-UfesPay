@@ -7,6 +7,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.transaction.Transactional;
 
+import org.apache.jena.ext.com.google.common.base.Strings;
+
 import br.ufes.dwws.ufespay.core.domain.Comment;
 import br.ufes.dwws.ufespay.core.domain.Transaction;
 import br.ufes.dwws.ufespay.core.domain.User;
@@ -74,22 +76,22 @@ public class TransactionServiceBean implements TransactionService {
 	public Transaction likeTransaction(User user, Transaction transac) {
 		User retrievedUser = this.userDAO.retrieveById(user.getId());
 		Transaction retrievedTransac = this.transactionDAO.retrieveById(transac.getId());
-		if ((retrievedUser!=null)&&(retrievedTransac!=null)) {
+		if ((retrievedUser != null) && (retrievedTransac != null)) {
 			retrievedTransac.getLikes().add(retrievedUser);
 			this.transactionDAO.save(retrievedTransac);
 			return retrievedTransac;
-		}else
+		} else
 			return retrievedTransac;
 	}
 
 	public Transaction disLikeTransaction(User user, Transaction transac) {
 		User retrievedUser = this.userDAO.retrieveById(user.getId());
 		Transaction retrievedTransac = this.transactionDAO.retrieveById(transac.getId());
-		if ((retrievedUser!=null)&&(retrievedTransac!=null)) {
+		if ((retrievedUser != null) && (retrievedTransac != null)) {
 			retrievedTransac.getLikes().remove(retrievedUser);
 			this.transactionDAO.save(retrievedTransac);
 			return retrievedTransac;
-		}else
+		} else
 			return retrievedTransac;
 	}
 
@@ -100,6 +102,13 @@ public class TransactionServiceBean implements TransactionService {
 	@Override
 	public Transaction updateTranscation(Transaction transac) {
 		return transactionDAO.update(transac);
+	}
+
+	public List<Transaction> retrieveAllTransactions(String userEmail, boolean asEmitter) {
+		if (!Strings.isNullOrEmpty(userEmail))
+			return transactionDAO.retrieveAllTransactions(userEmail, asEmitter);
+		else
+			return null;
 	}
 
 }

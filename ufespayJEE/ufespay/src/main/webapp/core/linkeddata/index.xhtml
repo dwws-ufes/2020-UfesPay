@@ -22,10 +22,30 @@
 			<p:messages id="messages" showDetail="true" closable="true">
 	            <p:autoUpdate/>
 	        </p:messages>
-	        
 	        <div class="card">
-					<a style="float: right;" href="#{facesContext.externalContext.requestContextPath}/data/transactions">RDF/XML</a>
+					<a style="float: center;" href="#{facesContext.externalContext.requestContextPath}/data/transactions">
+						<h:outputText value="#{msgs['text.home.linkeddata.featues.country.getAllRDF']}"/>
+					</a> <br/>
+					<a style="float: center;" 
+							href="#{facesContext.externalContext.requestContextPath}/data/transactions?emitterEmail=#{loginUserController.currentUser.email}">
+						<h:outputText value="#{msgs['text.home.linkeddata.featues.country.getAllRDFEmitter']}"/>
+					</a> <br/>
+					<a style="float: center;" 
+							href="#{facesContext.externalContext.requestContextPath}/data/transactions?receiverEmail=#{loginUserController.currentUser.email}">
+						<h:outputText value="#{msgs['text.home.linkeddata.featues.country.getAllRDFReceiver']}"/>
+					</a> <br/>
 	        </div>
+	        
+	        <br />
+	        
+	        <div class="card" id = "executeSPARQL">
+	        	    <p:commandButton    style="float: center;"
+	        	    					value="#{msgs['text.home.linkeddata.featues.country.executeQuery']}"  icon="pi pi-check" 
+                						actionListener="#{linkedDataController.retriedAllCountries}"
+                						update="@form"/>
+	        </div>
+	        
+	        <br />
 	        
 	        <div class="card" id = "selectCountryChoices">
 	        	 <p:outputLabel for="countries" value="#{msgs['text.home.linkeddata.featues.select']}"/>	  
@@ -39,8 +59,9 @@
 												itemValue="#{countrySelected}">
 						</f:selectItems>
 					</p:selectOneMenu>	   	
-				</div>
-				<p:card id = "selectedCountryInfo">
+			</div>
+			
+			<p:card id = "selectedCountryInfo">
 					<p:outputPanel id = "selectedCountryInfoPanel" rendered="#{not empty linkedDataController.retrivedCountry}">
 							<div class="p-field">
 		                        <p:outputLabel for="retrievedCountryName" value="#{msgs['text.home.linkeddata.featues.country.name']}"/>
@@ -65,7 +86,14 @@
 								<h:outputText id="retrievedCountrycurrencyURI"  value="#{linkedDataController.retrivedCountry.currencyUri}"/>
 		                    </div>
 					</p:outputPanel>
-				</p:card>	        	
+					
+			</p:card>
+			
+			<p:divider />
+			
+			<p:commandButton value="#{msgs['text.home.linkeddata.back']}"  icon="pi pi-times" 
+                				 action="#{linkedDataController.redirectsHome}"
+                                 class="ui-button-secondary"/>	        	
 	    </h:form>    
 
 	</ui:define>

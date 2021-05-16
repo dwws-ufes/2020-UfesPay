@@ -15,5 +15,7 @@ public interface TransactionDAO extends BaseDAO<Transaction> {
 	public Transaction update(Transaction transac);
 	
 	public List<Comment> retrieveAllComments(Long transacId);
+	
+	public List<Transaction> retrieveAllTransactions(String userEmail, boolean asEmitter);
 
 }

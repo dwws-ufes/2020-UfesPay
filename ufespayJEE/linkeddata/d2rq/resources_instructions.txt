@@ -1,0 +1,44 @@
+URI: "http://localhost:8080/ufespay/data/transactions"
+
+http://localhost:8080/ufespay/data/transactions
+http://localhost:8080/ufespay/data/transactions?emitterEmail=thiagotc@gmail.com
+http://localhost:8080/ufespay/data/transactions?receiverEmail=thiagotc@gmail.com
+
+
+RDFS domain/range
+@prefix book: <http://semantic-web-book.org/> .
+
+emitterEmail
+receiverEmail
+created_at
+message
+value
+
+URI do vocabulario: http://localhost:8080/ufespay/vocab/transactions.owl
+Servlet que mapeia tudo abixo de vocab para uma parte do vocabulario
+
+
+http://localhost:8080/ufespay/vocab/transactions.owl#Transaction
+
+
+http://www.visualdataweb.de/webvowl
+http://owlgred.lumii.lv/
+
+http://d2rq.org/d2r-server
+
+http://d2rq.org/getting-started
+
+ANT_HOME
+ant clean
+ant war
+Diver => org.postgresql.Driver
+DataBase URL =>jdbc:postgresql://localhost:5439/ufespayjee
+generate-mapping -o ufespayjee.ttl -u postgres -p admin jdbc:postgresql://localhost:5439/ufespayjee
+
+d2rq\webapp\WEB-INF\web.xml
+configFile=>>>ufespayjee.ttl
+
+./d2r-server ufespayjee.ttl
+Open =>> http://localhost:2020/
+
+dump-rdf -f TURTLE -b http://localhost:2020/ ufespayjee.ttl > ufespayjeeturtledump

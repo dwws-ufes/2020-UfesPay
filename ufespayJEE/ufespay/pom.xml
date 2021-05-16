@@ -111,17 +111,24 @@
 	    <version>1.2.8</version>
 	</dependency>
 	<dependency>
+    	<groupId>org.wildfly.core</groupId>
+    	<artifactId>wildfly-server</artifactId>
+    	<version>15.0.1.Final</version>
+    	<scope>provided</scope>
+	</dependency>
+	<!--  <dependency>
 	    <groupId>org.jboss.spec.javax.transaction</groupId>
 	    <artifactId>jboss-transaction-api_1.2_spec</artifactId>
 	    <version>1.1.1.Final</version>
 	    <scope>provided</scope>
-	</dependency>
+	</dependency> 
+
 	<dependency>
 	    <groupId>jakarta.validation</groupId>
 	    <artifactId>jakarta.validation-api</artifactId>
 	    <version>2.0.2</version>
-	    <scope>provided</scope>
-	</dependency>
+	    <scope>provided</scope> 
+	</dependency> -->
   </dependencies>
 
   <build>

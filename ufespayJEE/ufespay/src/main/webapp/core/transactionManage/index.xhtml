@@ -112,6 +112,13 @@
 											filterBy="#{currentComment.text}">
                 							<h:outputText value="#{currentComment.text}"/>
             					</p:column>
+								<p:column exportable="false">
+                					<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                				 		action= "#{transactionController.deleteCommentTransac}"
+                				 		rendered="#{currentComment.author.email.equalsIgnoreCase(loginUserController.currentUser.email)}">
+                    					<f:setPropertyActionListener value="#{currentComment}" target="#{transactionController.selectedComment}"/>
+                					</p:commandButton>
+            					</p:column>
                 	</p:dataTable> 				
             	</p:card>
             	            	

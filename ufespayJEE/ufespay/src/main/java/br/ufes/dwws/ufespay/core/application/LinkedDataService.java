@@ -9,6 +9,6 @@ import br.ufes.dwws.ufespay.core.linkeddata.Country;
 
 @Local
 public interface LinkedDataService extends Serializable{
-	public List<Country> retriedAllCountries();
+	public List<Country> retriedAllCountries() ;
 	public Country retrieveCountryInfo(String country);
 }
