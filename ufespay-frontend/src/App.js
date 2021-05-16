@@ -17,8 +17,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <LangProvider>
-            <AuthProvider>
+          
+          <AuthProvider>
+            <LangProvider>
               <LanguagePicker />
               <Route path="/" exact component={LandingPage} />
 
@@ -31,9 +32,8 @@ function App() {
                 path="/transfer"
                 hasNav={true}
                 element={<Transfer />}/>
-
-            </AuthProvider>
-          </LangProvider>
+            </LangProvider>
+          </AuthProvider>
         </Switch>
       </BrowserRouter>
     </div>

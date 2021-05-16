@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import lang from '../lang';
 
