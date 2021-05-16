@@ -1,7 +1,7 @@
 import api from './api';
 
-export const createUser = async (name, email, password) => {
-  return api.post('/user', { name, email, password }).then(resp => resp.data);
+export const createUser = async (name, email, password, country) => {
+  return api.post('/user', { name, email, password, country }).then(resp => resp.data);
 };
 
 export const deleteUser = async () => {

@@ -1,145 +1,79 @@
-import React, { Component } from 'react';
-import { Navigate } from 'react-router'
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { 
+  Button, 
+  TextField, 
+  makeStyles,
+} from '@material-ui/core';
 
-import './styles.css'
+import './login.css';
+import { useAuth } from '../../hooks/auth';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
+const useStyles = makeStyles((theme) => ({
+  input: {
+    margin: 0,
+    marginBottom: 10,
+    width: 500,
+  }
+}));
 
-class Login extends Component {
+const Login = () => {
+  const classes = useStyles();
+  const { language } = useLang();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { logIn } = useAuth();
+  const history = useHistory();
 
-    constructor(props) {
-        super(props)
+  const handleSubmit = event => {
+    event.preventDefault();
+    logIn(email, password).then(() => history.push('/home'));
+  };
 
-        this.state = {
+  return (
+    <div id="login">
+      <div id="form-login">
+        <h1>{translate[language].login.welcomeBack}</h1>
 
-            name: '',
-            email: '',
-            password: '',
+        <form onSubmit={handleSubmit}>
+            <TextField
+              className={classes.input}
+              variant="outlined"
+              color="primary"
+              label={translate[language].login.email}
+              placeholder={translate[language].login.emailPlaceholder}
+              type="text"
+              required
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
 
-            // retorno de validação do backend (caso a validação ocorra lá)
-            success: '',
-            id: '',
-            errorMessages: [],
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            color="primary"
+            label={translate[language].login.password}
+            placeholder={translate[language].login.password}
+            type="password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
 
-            showLoginForm: false,
-            toNext: false
-        }
-    }
-
-    handleSubmit = event => {
-
-        // const PORT = "3333"
-        // const URL = "http://localhost:"
-
-        this.setState({
-            success: 'deu bom'
-        })
-
-        // logica de autorização aqui
-        this.props.auth(true)
-
-        this.setState({
-            toNext: this.props.auth
-        })
-
-        event.preventDefault()
-    }
-    
-
-    handleTextFieldChange = (field, event) => {
-        this.setState({
-            [field]: event.target.value
-        })
-    }
-
-    handleLoginForm = () => {
-        this.setState({
-            showLoginForm: true
-        })
-    }
-
-
-    render() {
-        return (
-            <div id="login">
-                <div id="form-login">
-                    <h1>Bem vindo de volta</h1>
-
-                    {
-                        this.state.showLoginForm ?
-                        (
-                            <form onSubmit = {this.handleSubmit}>
-
-                                <div className="TextField">
-                                    <TextField
-                                        className="TextField"
-                                        variant="outlined"
-                                        color="secondary"
-                                        label="Nome"
-                                        placeholder="Nome completo"
-                                        type="text"
-                                        required
-                                        value={this.state.name}
-                                        onChange={(e) => this.handleTextFieldChange("name", e)}
-                                    />
-                                </div>
-
-                                <div className="TextField">
-                                    <TextField
-                                        className="TextField"
-                                        variant="outlined"
-                                        color="secondary"
-                                        label="Email"
-                                        placeholder="exemplo@exemplo.com"
-                                        type="text"
-                                        required
-                                        value={this.state.email}
-                                        onChange={(e) => this.handleTextFieldChange("email", e)}
-                                    />
-                                </div>
-
-                                <div className="TextField">
-                                    <TextField
-                                        className="TextField"
-                                        variant="outlined"
-                                        color="secondary"
-                                        label="Senha"
-                                        placeholder="Senha"
-                                        type="password"
-                                        required
-                                        value={this.state.password}
-                                        onChange={(e) => this.handleTextFieldChange("password", e)}
-                                    />
-                                </div>
-
-                                <Button className="Button" variant="contained" color="secondary" type="submit">
-                                    Entrar
-                                </Button>
-
-                                { this.state.toNext && <Navigate to="home" /> }
-
-                            </form>
-
-                        )
-                        :
-                        (
-                            <Button
-                                className="Button"
-                                variant="contained"
-                                color="secondary"
-                                type="button"
-                                onClick={this.handleLoginForm}
-                                >
-                                Faça seu login
-                            </Button>
-                        )
-                    }
-
-                </div>
-            </div>
-        )
-    }
-}
+          <Button
+            className="Button"
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            {translate[language].login.login}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default Login;

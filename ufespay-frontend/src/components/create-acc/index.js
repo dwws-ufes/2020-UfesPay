@@ -1,181 +1,139 @@
-import React, { Component } from 'react';
+import React, { useCallback, useState } from 'react';
+import { 
+  Button, 
+  TextField, 
+  makeStyles,
+  FormControl,
+  InputLabel, 
+  Select, 
+  MenuItem 
+} from '@material-ui/core';
 
-import './styles.css'
+import './create-acc.css';
+import { createUser } from '../../services/UserService';
+import { fireToastAlert } from '../../services/AlertService';
+import { useLang } from '../../hooks/lang';
+import translate from '../../lang';
 
-import { Button, TextField, InputAdornment } from '@material-ui/core'
+const useStyles = makeStyles((theme) => ({
+  input: {
+    margin: 0,
+    marginBottom: 10,
+    width: 500,
+  }
+}));
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import EmailIcon from '@material-ui/icons/Email';
-import LockIcon from '@material-ui/icons/Lock';
+const CreateAcc = () => {
+  const classes = useStyles();
+  const { language } = useLang();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repPassword, setRepPassword] = useState('');
+  const [country, setCountry] = useState('');
+  
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault(); // evitar que abra uma nova pagina
+      createUser(name, email, password, country).then(() => {
+        setName('');
+        setEmail('');
+        setPassword('');
+        setRepPassword('');
+        setCountry('');
 
-class CreateAcc extends Component {
+        fireToastAlert('success', translate[language].createAcc.successMessage);
+      });
+    },
+    [name, email, password, country],
+  );
 
-    constructor(props) {
-        super(props)
+  return (
+    <div id="create-acc">
+      <div id="form-create-acc">
+        <h1>UfesPay</h1>
 
-        this.state = {
+        <h3>{translate[language].createAcc.createAccount}</h3>
 
-            name: '',
-            email: '',
-            password: '',
-            repPassword: '',
-            
-            success: '',
-            id: '',
-            errorMessages: []
-        }
-    }
+        <form onSubmit={handleSubmit}>
 
-    handleSubmit = event => {
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            color="primary"
+            label={translate[language].createAcc.name}
+            placeholder={translate[language].createAcc.name}
+            type="text"
+            required
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
 
-        // const PORT = "3333"
-        // const URL = "http://localhost:"
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            color="primary"
+            label={translate[language].createAcc.email}
+            placeholder={translate[language].createAcc.emailPlaceholder}
+            type="text"
+            required
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          
+          <FormControl variant="outlined" className={classes.input}>
+            <InputLabel id="language-select-label">{translate[language].createAcc.country}</InputLabel>
+            <Select
+              labelId="country-select-label"
+              label="Country"
+              required
+              value={country}
+              onChange={e => setCountry(e.target.value)}
+            >
 
-        // const requestOptions = {
-        //     method: "post",
-        //     body: JSON.stringify({
-        //         name: this.state.name,
-        //         email: this.state.email,
-        //         password: this.state.password
-        //     }),
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // }
-        
-        // fetch(`${URL}${PORT}/users`, requestOptions)
-        // .then(response => response.json())
-        // .then(data => {
-        //     if(data.sucesso === true) {
-        //         this.setState({
-        //             success: true,
-        //             id: data.id
-        //         })
-        //     } else {
-        //         this.setState({
-        //             success: false,
-        //             errorMessages: data.errorMessages
-        //         })
-        //     }
-        // })
+              <MenuItem value={"Brazil"}>Brasil</MenuItem>
+              <MenuItem value={"United_States"}>USA</MenuItem>
+              <MenuItem value={"Suriname"}>Suriname</MenuItem>
+              {/* add more countries (?) */}
+            </Select>
+          </FormControl>
 
-        this.setState({
-            success: 'deu bom'
-        })
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            color="primary"
+            label={translate[language].createAcc.password}
+            placeholder={translate[language].createAcc.password}
+            type="password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
 
-        event.preventDefault(); // evitar que abra uma nova pagina
-    }
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            color="primary"
+            label={translate[language].createAcc.confirmPassword}
+            placeholder={translate[language].createAcc.confirmPassword}
+            type="password"
+            required
+            value={repPassword}
+            onChange={e => setRepPassword(e.target.value)}
+          />
 
-
-    handleTextFieldChange = (field, event) => {
-        this.setState({
-            [field]: event.target.value
-        })
-    }
-
-    render() {
-        return (
-            <div id="create-acc">
-                <div id="form-create-acc">
-                    <h1>UfesPay</h1>
-
-                    <h3>Cadastre-se!</h3>
-
-                    <form onSubmit = {this.handleSubmit}>
-
-                        <div className="TextField">
-                            <TextField
-                                className="TextField"
-                                variant="filled"
-                                color="secondary"
-                                label="Nome"
-                                placeholder="Nome completo"
-                                type="text"
-                                required
-                                value={this.state.name}
-                                onChange={(e) => this.handleTextFieldChange("name", e)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <AccountCircleIcon />
-                                        </InputAdornment>
-                                    )
-                                }} 
-                            />
-                        </div>
-
-                        <div className="TextField">
-                            <TextField
-                                className="TextField"
-                                variant="filled"
-                                color="secondary"
-                                label="Email"
-                                placeholder="exemplo@exemplo.com"
-                                type="text"
-                                required
-                                value={this.state.email}
-                                onChange={(e) => this.handleTextFieldChange("email", e)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <EmailIcon />
-                                        </InputAdornment>
-                                    )
-                                }} 
-                            />
-                        </div>
-
-                        <div className="TextField">
-                            <TextField
-                                className="TextField"
-                                variant="filled"
-                                color="secondary"
-                                label="Senha"
-                                placeholder="Senha"
-                                type="password"
-                                required
-                                value={this.state.password}
-                                onChange={(e) => this.handleTextFieldChange("password", e)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <LockIcon />
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </div>
-
-                        <div className="TextField">
-                            <TextField
-                                className="TextField"
-                                variant="filled"
-                                color="secondary"
-                                label="Confirme a senha"
-                                placeholder="Confirme a senha"
-                                type="password"
-                                required
-                                value={this.state.repPassword}
-                                onChange={(e) => this.handleTextFieldChange("repPassword", e)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <LockIcon />
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </div>
-
-                        <Button className="Button" variant="contained" color="secondary" type="submit">
-                            Cadastrar
-                        </Button>
-
-                    </form>
-                </div>
-            </div>
-        )
-    }
-}
+          <Button
+            className="Button"
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            {translate[language].createAcc.signUp}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default CreateAcc;
