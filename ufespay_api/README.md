@@ -34,8 +34,10 @@ Docker version 20.10.5, build 55c4c88
 ```
 
 3. We need to install postgres on the port :5432, so this port should be free.
-To check if the port is free, run the command ```lsof -i :5423```.
+To check if the port is free, run the command ```sudo lsof -i :5423```.
 Nothing should appear in the terminal with this command if the port is free.
+If it's not free, get its PID and free it by killing the process with 
+the command ```sudo kill -9 <PID>```
 
 4. Install the postgres image and create the container:
 ```
@@ -100,18 +102,3 @@ yarn typeorm migration:run
 ```
 yarn dev:server
 ```
-
-
-
-ajeitar este texto
-
-tem coisa de postgre rodando na porta 5432 qnd eu reinicio o pc
-
-p apagar ele preciso pegar o PID em:
-  sudo lsof -i :5432
-
-e matar o processo com:
-  sudo kill -9 <PID>
-
-só então devo dar start no container:
-  sudo docker start ufespay-postgres
