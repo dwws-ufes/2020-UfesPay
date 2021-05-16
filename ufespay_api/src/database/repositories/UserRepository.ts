@@ -17,6 +17,7 @@ export interface IUserRepository {
   getOthers: (id: string) => Promise<User[]>;
   findById: (id: string) => Promise<User | undefined>;
   findByEmail: (email: string) => Promise<User | undefined>;
+  findByName: (name: string) => Promise<User | undefined>;
   delete: (email: string) => Promise<void>;
   update: (id: string, newUserData: object) => Promise<User | undefined>;
 }
@@ -55,6 +56,15 @@ class UserRepository implements IUserRepository {
             profile: "user.wallet",
         }
       }
+    });
+
+    return findUser || undefined;
+  }
+
+  async findByName(name: string) {
+    const findUser = await this.ormRepository.findOne({
+      where: { name },
+      join: { alias: "user" }
     });
 
     return findUser || undefined;

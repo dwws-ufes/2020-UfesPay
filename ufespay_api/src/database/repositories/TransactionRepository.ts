@@ -6,6 +6,7 @@ export interface ITransactionRepository {
   create: (data: object) => Promise<Transaction>;
   getAll: () => Promise<Transaction[]>;
   findById: (id: string) => Promise<Transaction | undefined>;
+  findByEmitterReceiverId: (id: string) => Promise<Transaction[]>;
   save: (transaction: Transaction) => Promise<Transaction>;
   delete: (id: string) => Promise<void>;
 }
@@ -52,6 +53,24 @@ class TransactionRepository implements ITransactionRepository {
     });
 
     return findTransaction || undefined;
+  }
+
+  async findByEmitterReceiverId(id: string) {
+    const findTransaction = await this.ormRepository.find({
+      where: [
+        { receiver_id: id },
+        { emitter_id: id }
+      ],
+      join: {
+        alias: "transaction",
+        innerJoinAndSelect: {
+            emitter: "transaction.emitter",
+            receiver: "transaction.receiver"
+        },
+      },
+    });
+
+    return findTransaction || [];
   }
 
   async save(transaction: Transaction) {
