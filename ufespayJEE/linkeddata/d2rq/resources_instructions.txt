@@ -1,8 +1,17 @@
 URI: "http://localhost:8080/ufespay/data/transactions"
 
-http://localhost:8080/ufespay/data/transactions
-http://localhost:8080/ufespay/data/transactions?emitterEmail=thiagotc@gmail.com
-http://localhost:8080/ufespay/data/transactions?receiverEmail=thiagotc@gmail.com
+http://localhost:8080/ufespay/vocab/transactions/341
+
+
+http://localhost:8080/ufespay/vocab/transactions/338
+
+
+/vocab/transactions/
+http://localhost:8080/ufespay/vocab/transactions/
+
+
+http://localhost:8080/ufespay/vocab/transactions/?emitterEmail=thiagotc@gmail.com
+http://localhost:8080/ufespay/vocab/transactions/?receiverEmail=thiagotc@gmail.com
 
 
 RDFS domain/range

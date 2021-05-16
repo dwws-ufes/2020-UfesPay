@@ -23,15 +23,15 @@
 	            <p:autoUpdate/>
 	        </p:messages>
 	        <div class="card">
-					<a style="float: center;" href="#{facesContext.externalContext.requestContextPath}/data/transactions">
+					<a style="float: center;" href="#{facesContext.externalContext.requestContextPath}/vocab/transactions/?mode=foaf">
 						<h:outputText value="#{msgs['text.home.linkeddata.featues.country.getAllRDF']}"/>
 					</a> <br/>
 					<a style="float: center;" 
-							href="#{facesContext.externalContext.requestContextPath}/data/transactions?emitterEmail=#{loginUserController.currentUser.email}">
+							href="#{facesContext.externalContext.requestContextPath}/vocab/transactions/?emitterEmail=#{loginUserController.currentUser.email}">
 						<h:outputText value="#{msgs['text.home.linkeddata.featues.country.getAllRDFEmitter']}"/>
 					</a> <br/>
 					<a style="float: center;" 
-							href="#{facesContext.externalContext.requestContextPath}/data/transactions?receiverEmail=#{loginUserController.currentUser.email}">
+							href="#{facesContext.externalContext.requestContextPath}/vocab/transactions/?receiverEmail=#{loginUserController.currentUser.email}">
 						<h:outputText value="#{msgs['text.home.linkeddata.featues.country.getAllRDFReceiver']}"/>
 					</a> <br/>
 	        </div>
