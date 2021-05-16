@@ -92,7 +92,8 @@ const CreateAcc = () => {
             >
 
               <MenuItem value={"Brazil"}>Brasil</MenuItem>
-              <MenuItem value={"USA"}>USA</MenuItem>
+              <MenuItem value={"United_States"}>USA</MenuItem>
+              <MenuItem value={"Suriname"}>Suriname</MenuItem>
               {/* add more countries (?) */}
             </Select>
           </FormControl>
