@@ -30,7 +30,19 @@ export interface IUserController {
     try {
       const { name, email, password, country } = req.body;
 
-      const countryData = await getByQuery(country);
+      const formatCountryName = (countryName: string) => {
+        const words = countryName.split(" ");
+
+        for (let i = 0; i < words.length; i++) {
+          words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+        }
+
+        return words.join("_");
+      };
+
+      const formattedCountry = formatCountryName(country);      
+
+      const countryData = await getByQuery(formattedCountry);
 
       if (!countryData) {
         return res.status(404).json({ message: 'Invalid country.'});
@@ -52,7 +64,7 @@ export interface IUserController {
         email,
         password,
         wallet,
-        country,
+        country: formattedCountry,
       });
   
       return res.status(200).json({ user });
