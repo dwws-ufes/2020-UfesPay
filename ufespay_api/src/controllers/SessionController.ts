@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
+import { getByQuery } from '../services/DBPediaService';
+
 import { IUserRepository } from '../database/repositories/UserRepository';
 import { inject, injectable } from 'tsyringe';
 
@@ -37,7 +39,9 @@ class SessionController implements ISessionController{
         expiresIn: 20 * 60,
       });
 
-      return res.status(200).json({ token, user });
+      const { Currency, Language } = await getByQuery(user.country);
+
+      return res.status(200).json({ token, user: { ...user, currency: Currency.value, language: Language.value } });
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: 'Something went wrong!' });
