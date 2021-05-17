@@ -43,7 +43,7 @@
 			 
 			 <h:outputText align="center" value="#{msgs['text.currentAmount']}" />  <br/>
 			 
-			 <h:outputText align="center" value="#{userController.currentAmountBalance}" > 
+			 <h:outputText align="center" value="#{transactionController.currentAmountBalance}" > 
 			 	<f:convertNumber currencySymbol="#{msgs['text.currencySymbol']}" type="currency" maxFractionDigits="2" locale="#{loginUserController.userLocale}"/>
 			 </h:outputText>
 			 

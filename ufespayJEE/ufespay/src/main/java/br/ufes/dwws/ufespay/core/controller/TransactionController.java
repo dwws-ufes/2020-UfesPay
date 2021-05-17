@@ -52,10 +52,13 @@ public class TransactionController extends JSFController {
 	private Comment newComment;
 	
 	private Comment selectedComment;
+	
+	private BigDecimal currentAmountBalance;
 
 	@PostConstruct
 	public void retriedAllTransactions() {
 		this.transactions = transactionService.readAllTranscations();
+		this.currentAmountBalance = this.userService.getUserById(loginUserController.getCurrentUser().getId()).getWallet().getBalance();
 	}
 
 	public void toggleLike() throws IOException {
@@ -73,7 +76,7 @@ public class TransactionController extends JSFController {
 		this.selectedTransaction.setMessage("Write something to receiver");
 		this.selectedTransaction.setValue(BigDecimal.valueOf(0, 0));
 		this.selectedTransaction.setEmitter(loginUserController.getCurrentUser());
-		this.selectedTransaction.setWallet(loginUserController.getCurrentUser().getWallet());
+		this.selectedTransaction.setWallet(this.userService.getUserById(this.loginUserController.getCurrentUser().getId()).getWallet());
 		this.availabeReceivers = this.userService.getOthers(this.selectedTransaction.getEmitter().getId());
 		Utils.redirectsToUrl("/ufespay/core/transactionCreate/index.xhtml");
 	}
@@ -203,5 +206,15 @@ public class TransactionController extends JSFController {
 	public void setSelectedComment(Comment selectedComment) {
 		this.selectedComment = selectedComment;
 	}
+
+	public BigDecimal getCurrentAmountBalance() {
+		return currentAmountBalance;
+	}
+
+	public void setCurrentAmountBalance(BigDecimal currentAmountBalance) {
+		this.currentAmountBalance = currentAmountBalance;
+	}
+	
+	
 
 }
